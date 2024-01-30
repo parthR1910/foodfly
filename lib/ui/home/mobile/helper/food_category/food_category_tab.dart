@@ -14,7 +14,7 @@ class CategoryTabBar extends ConsumerWidget {
       child: TabBar(
           splashFactory: InkSplash.splashFactory,
           onTap: (index) {
-            ref.read(foodCategoryProvider.notifier).navigateToCat(index);
+            ref.read(foodCategoryController.notifier).navigateToCat(index);
           },
           unselectedLabelColor: Colors.grey,
           labelColor: Colors.black,

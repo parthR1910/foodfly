@@ -1,6 +1,6 @@
 import '../../../ui/utils/theme/theme.dart';
 
-final foodCategoryProvider =
+final foodCategoryController =
     ChangeNotifierProvider<FoodCategoryController>((ref) {
   return FoodCategoryController();
 });

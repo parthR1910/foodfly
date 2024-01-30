@@ -5,7 +5,13 @@ String? nameValidator(String? input) {
     return null;
   }
 }
-
+String? requiredFieldValidator(String? input) {
+  if (input == null || input.trim().isEmpty) {
+    return 'Required field';
+  } else {
+    return null;
+  }
+}
 String? phoneValidator(String? input) {
   if (input == null || input == '') {
     return 'Please enter your phone number';

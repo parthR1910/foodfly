@@ -47,30 +47,30 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDF_4caxvLLoPXLh9PeIjr-aZX_AaMqajU',
-    appId: '1:220191486693:web:07487fc3d4554623a3da0c',
-    messagingSenderId: '220191486693',
-    projectId: 'foodyfly-4df9c',
-    authDomain: 'foodyfly-4df9c.firebaseapp.com',
-    storageBucket: 'foodyfly-4df9c.appspot.com',
-    measurementId: 'G-QN161KQT29',
+    apiKey: 'AIzaSyDSD9HI0glE3TgwBvS1gQ1hh4e1QOd5R9w',
+    appId: '1:819838946571:web:3d7ae4563ffe07d53f660e',
+    messagingSenderId: '819838946571',
+    projectId: 'foodfly-baf3c',
+    authDomain: 'foodfly-baf3c.firebaseapp.com',
+    storageBucket: 'foodfly-baf3c.appspot.com',
+    measurementId: 'G-Q1CJEXH5KJ',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAPEt03_HfKBJW0bc3-mQu6ywZ6fG4hJpg',
-    appId: '1:220191486693:android:aa659f1090da9dd3a3da0c',
-    messagingSenderId: '220191486693',
-    projectId: 'foodyfly-4df9c',
-    storageBucket: 'foodyfly-4df9c.appspot.com',
+    apiKey: 'AIzaSyBJexXbNOTl524SbfZa8wOzAOX_svZajeQ',
+    appId: '1:819838946571:android:743bb03cbf6b32ab3f660e',
+    messagingSenderId: '819838946571',
+    projectId: 'foodfly-baf3c',
+    storageBucket: 'foodfly-baf3c.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBmX2cRiQRN09OTkU3GsvTshFJ73j7ppU4',
-    appId: '1:220191486693:ios:3ecf3d062467ab54a3da0c',
-    messagingSenderId: '220191486693',
-    projectId: 'foodyfly-4df9c',
-    storageBucket: 'foodyfly-4df9c.appspot.com',
-    iosClientId: '220191486693-sldo6ck0iscps8t4cjnneo0hb7provo0.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAnmeIQ4Otghqzmn0vdIZAdeeqgRUuojeI',
+    appId: '1:819838946571:ios:7883ce3452d55b7b3f660e',
+    messagingSenderId: '819838946571',
+    projectId: 'foodfly-baf3c',
+    storageBucket: 'foodfly-baf3c.appspot.com',
+    iosClientId: '819838946571-mb868gdo8buuft0jifa817vah3iv92tp.apps.googleusercontent.com',
     iosBundleId: 'com.example.foodFly',
   );
 }

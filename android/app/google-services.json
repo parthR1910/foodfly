@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "220191486693",
-    "project_id": "foodyfly-4df9c",
-    "storage_bucket": "foodyfly-4df9c.appspot.com"
+    "project_number": "819838946571",
+    "project_id": "foodfly-baf3c",
+    "storage_bucket": "foodfly-baf3c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:220191486693:android:aa659f1090da9dd3a3da0c",
+        "mobilesdk_app_id": "1:819838946571:android:743bb03cbf6b32ab3f660e",
         "android_client_info": {
           "package_name": "com.example.food_fly"
         }
       },
       "oauth_client": [
         {
-          "client_id": "220191486693-h1rhclj6n59thbl9ndlc14n03i7p2ugf.apps.googleusercontent.com",
+          "client_id": "819838946571-ojgqn48mcdvfdscti5ciq2rvo0rugcsa.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAPEt03_HfKBJW0bc3-mQu6ywZ6fG4hJpg"
+          "current_key": "AIzaSyBJexXbNOTl524SbfZa8wOzAOX_svZajeQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "220191486693-cs7e98kck7ggi8sikf1nfsoeaq7pbnef.apps.googleusercontent.com",
+              "client_id": "819838946571-ojgqn48mcdvfdscti5ciq2rvo0rugcsa.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -28,9 +28,11 @@ class RegisterInputField extends ConsumerWidget {
         ),
         SizedBox(height: 6.h),
         CommonFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           textInputAction: TextInputAction.newline,
           controller: registerWatch.nameController,
           hintText: appString.keyTypeYourFullName,
+          validator: requiredFieldValidator,
           onSaved: (value) {},
         ),
         SizedBox(height: 16.h),
@@ -43,6 +45,7 @@ class RegisterInputField extends ConsumerWidget {
         ),
         SizedBox(height: 6.h),
         CommonFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: registerWatch.emailController,
           textInputAction: TextInputAction.newline,
           keyboardType: TextInputType.emailAddress,
@@ -60,6 +63,7 @@ class RegisterInputField extends ConsumerWidget {
         ),
         SizedBox(height: 6.h),
         CommonFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: registerWatch.passwordController,
           textInputAction: TextInputAction.done,
           obscureText: registerWatch.isPassNotShow,

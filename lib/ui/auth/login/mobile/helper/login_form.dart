@@ -31,6 +31,7 @@ class LoginForm extends ConsumerWidget {
         ),
         SizedBox(height: 6.h),
         CommonFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: loginWatch.emailController,
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.newline,
@@ -48,6 +49,7 @@ class LoginForm extends ConsumerWidget {
         ),
         SizedBox(height: 6.h),
         CommonFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: loginWatch.passwordController,
           textInputAction: TextInputAction.done,
           obscureText: loginWatch.isPassNotShow,

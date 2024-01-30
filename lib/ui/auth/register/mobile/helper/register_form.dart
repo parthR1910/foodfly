@@ -1,6 +1,6 @@
 import 'package:food_fly/ui/auth/register/mobile/helper/img_input.dart';
 import 'package:food_fly/ui/auth/register/mobile/helper/register_input_field.dart';
-import '../../../../utils/theme/theme.dart';
+import 'package:food_fly/ui/utils/theme/theme.dart';
 
 class RegisterForm extends StatelessWidget {
   const RegisterForm({super.key});
