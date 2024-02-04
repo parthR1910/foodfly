@@ -1,35 +1,65 @@
+
+
 class UserModel {
-  final String uid;
   final String? email;
+  final LatLng? latLong;
   final String? name;
-  final String? profileImg;
-  final String? currentLocation;
   final String? phone;
+  final String? profileImg;
+  final String? uid;
 
+  UserModel({
+    this.email,
+    this.latLong,
+    this.name,
+    this.phone,
+    this.profileImg,
+    this.uid,
+  });
 
-  UserModel(
-      {required this.uid, this.email, this.name, this.profileImg, this.currentLocation, this.phone,});
+  // Convert an instance of Temperatures to a Map
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'latLong': latLong?.toJson(),
+      'name': name,
+      'phone': phone,
+      'profileImage': profileImg,
+      'uid': uid,
+    };
+  }
 
-
-  factory UserModel.fromJson(Map<String, dynamic> json){
+  // Create an instance of Temperatures from a Map
+  factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      uid: json['Uid'],
-      name: json['Name'],
-      email: json['Email'],
-      profileImg: json['ProfileImage'],
-      currentLocation: json['CurrentLocation'],
-      phone: json['Phone']
+      email: json['email'],
+      latLong: LatLng.fromJson(json['latLong']),
+      name: json['name'],
+      phone: json['phone'],
+      profileImg: json['profileImage'],
+      uid: json['uid'],
     );
   }
+}
+
+class LatLng {
+  final double? latitude;
+  final double? longitude;
+
+  LatLng({this.latitude, this.longitude});
 
   Map<String, dynamic> toJson() {
     return {
-      "Uid": uid,
-      "Name": name,
-      "Email": email,
-      "ProfileImage": profileImg,
-      "CurrentLocation": currentLocation,
-      "Phone": phone,
+      'latitude': latitude,
+      'longitude': longitude,
     };
+  }
+
+  // Create an instance of LatLng from a Map
+  factory LatLng.fromJson(Map<String, dynamic> json) {
+    return LatLng(
+      latitude: json['latitude']?.toDouble(),
+      longitude: json['longitude']?.toDouble(),
+    );
   }
 }

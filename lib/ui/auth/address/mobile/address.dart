@@ -1,32 +1,32 @@
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:food_fly/framework/controler/authentication/register_controller.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:food_fly/framework/controler/authentication/address_controller.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
-import 'package:food_fly/ui/utils/theme/app_assets.dart';
 import 'package:food_fly/ui/utils/widgets/common_loading.dart';
 
-import '../../../utils/theme/app_colors.dart';
-import '../../../utils/theme/app_string.dart';
-import '../../../utils/theme/app_text_style.dart';
-import '../../../utils/theme/theme.dart';
-import 'helper/register_view.dart';
+import 'package:food_fly/ui/utils/theme/app_assets.dart';
+import 'package:food_fly/ui/utils/theme/app_colors.dart';
+import 'package:food_fly/ui/utils/theme/app_string.dart';
+import 'package:food_fly/ui/utils/theme/app_text_style.dart';
+import 'package:food_fly/ui/utils/theme/theme.dart';
+import 'helper/address_view.dart';
 
-class RegisterMobile extends ConsumerWidget {
-  const RegisterMobile({super.key});
+class Address extends ConsumerWidget {
+  const Address({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    mobileDeviceConfig(context);
     return CommonLoading(
-      show: ref.watch(registerController).loading,
+      show: ref.watch(addressController).loading,
       child: GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        appBar: _appBar(ref, context),
-        body: const RegisterView(),
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          appBar: _appBar(ref, context),
+          body: const AddressView(),
+        ),
       ),
-    ),);
+    );
   }
 
   AppBar _appBar(WidgetRef ref, BuildContext context) => AppBar(
@@ -42,10 +42,10 @@ class RegisterMobile extends ConsumerWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(ref.watch(appStringController).keySignUp,
+            Text(ref.watch(appStringController).keyAddress,
                 style: AppTextStyle.w5
                     .copyWith(color: AppColors.kBlack, fontSize: 22.sp)),
-            Text(ref.watch(appStringController).keyRegisterAndEat,
+            Text(ref.watch(appStringController).keyMakeSureItsValid,
                 style: AppTextStyle.w3
                     .copyWith(color: AppColors.kGrey, fontSize: 14.sp))
           ],

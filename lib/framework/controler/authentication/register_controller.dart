@@ -5,8 +5,7 @@ import 'package:food_fly/framework/model/user_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
 import 'package:food_fly/ui/utils/widgets/helper.dart';
 import 'package:food_fly/framework/service/auth_service.dart';
-
-import '../../../ui/auth/address/address.dart';
+import '../../../ui/auth/address/mobile/address.dart';
 import '../../../ui/utils/theme/theme.dart';
 import '../../service/storage_service.dart';
 
@@ -39,7 +38,6 @@ class RegisterController extends ChangeNotifier{
       FireStoreService.fireStoreService.addUserToFireStore(user);
       selectedFile = null;
       if(context.mounted){
-        // Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashBoard, (route) => false);
         Navigator.push(
             context,
             MaterialPageRoute(

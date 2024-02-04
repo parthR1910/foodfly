@@ -10,14 +10,14 @@ import '../../utils/theme/theme.dart';
 import '../../utils/widgets/common_button.dart';
 import 'helper/cancel_order_details.dart';
 
-class CancelOrderMobile extends ConsumerStatefulWidget {
-  const CancelOrderMobile({super.key});
+class CancelOrder extends ConsumerStatefulWidget {
+  const CancelOrder({super.key});
 
   @override
-  ConsumerState<CancelOrderMobile> createState() => _CancelOrderMobileState();
+  ConsumerState<CancelOrder> createState() => _CancelOrderMobileState();
 }
 
-class _CancelOrderMobileState extends ConsumerState<CancelOrderMobile> {
+class _CancelOrderMobileState extends ConsumerState<CancelOrder> {
 
   @override
   Widget build(BuildContext context) {

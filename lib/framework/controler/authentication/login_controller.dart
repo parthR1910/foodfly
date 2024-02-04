@@ -21,7 +21,7 @@ class LoginController extends ChangeNotifier{
   }
 
 
-  signInWithEmailAndPassword(BuildContext context)async{
+  Future signInWithEmailAndPassword(BuildContext context)async{
     loading = true;
     final authResponse = await AuthService.authService.signInWithEmailAndPassword(email:emailController.text, password: passwordController.text);
     if(authResponse.user != null){

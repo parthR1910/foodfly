@@ -1,11 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:food_fly/framework/model/user_model.dart';
 import 'package:food_fly/ui/utils/theme/app_assets.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 
 class UserDetails extends StatelessWidget {
-  const UserDetails({super.key});
+  final UserModel userModel;
+  const UserDetails({super.key,required this.userModel});
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +20,29 @@ class UserDetails extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              SvgPicture.asset(AppAssets.dottedEclipSvg, height: 110.h, width: 110.w,),
-              const FlutterLogo(size: 90,),
+              SvgPicture.asset(AppAssets.dottedEclipSvg, height: 115.h, width: 115.w,),
+              userModel.profileImg!=null? Container(
+                height: 100.h,
+                width: 100.w,
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle
+                ),
+                child: CachedNetworkImage(
+                  imageUrl: userModel.profileImg!,
+                  placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(Icons.person),
+                  fit: BoxFit.cover,
+                ),
+              ):
+              FlutterLogo(size: 90.sp,),
             ],
           ),
         ),
       SizedBox(height: 16.h,),
-      Text("Aashifa Sheikh", style: AppTextStyle.w5.copyWith(fontSize: 18.sp, color: AppColors.kBlack),),
+      Text(userModel.name??"", style: AppTextStyle.w5.copyWith(fontSize: 18.sp, color: AppColors.kBlack),),
       SizedBox(height: 6.h,),
-      Text("contact.uiuxexperts@gmail.com", style: AppTextStyle.w3.copyWith(fontSize: 14.sp, color: AppColors.kBlack),),
+      Text(userModel.email??"example@gmail.com", style: AppTextStyle.w3.copyWith(fontSize: 14.sp, color: AppColors.kBlack),),
       ],
     );
   }

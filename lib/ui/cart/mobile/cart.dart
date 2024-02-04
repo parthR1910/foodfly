@@ -6,8 +6,8 @@ import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 
-class CartMobile extends ConsumerWidget {
-  const CartMobile({super.key});
+class Cart extends ConsumerWidget {
+  const Cart({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

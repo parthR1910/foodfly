@@ -1,7 +1,7 @@
-import 'package:food_fly/ui/cart/cart.dart';
-import 'package:food_fly/ui/home/home.dart';
-import 'package:food_fly/ui/user_profile/user_profile.dart';
-import '../../../ui/utils/theme/theme.dart';
+import 'package:food_fly/ui/home/mobile/home.dart';
+import 'package:food_fly/ui/user_profile/mobile/user_profile.dart';
+import 'package:food_fly/ui/cart/mobile/cart.dart';
+import 'package:food_fly/ui/utils/theme/theme.dart';
 
 final navigationStateProvider =
     StateNotifierProvider<NavigationStateNotifier, int>(

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:food_fly/framework/model/food_item.dart';
-import 'package:food_fly/ui/auth/login/login.dart';
-import 'package:food_fly/ui/cancel_order/cancel_order.dart';
-import 'package:food_fly/ui/cart/cart.dart';
-import 'package:food_fly/ui/dashboard/dashboard.dart';
-import 'package:food_fly/ui/splash/splash.dart';
-import 'package:food_fly/ui/success_order/find_foods.dart';
-import 'package:food_fly/ui/success_order/success_order.dart';
-import 'package:food_fly/ui/welcome/welcome.dart';
-import 'package:food_fly/ui/auth/register/register.dart';
-import '../../food_detail/food_detail.dart';
-import '../../payment/payment.dart';
-import '../../user_profile/user_profile.dart';
+import 'package:food_fly/ui/auth/login/mobile/login.dart';
+import 'package:food_fly/ui/splash/mobile/splash.dart';
+import '../../auth/register/mobile/register.dart';
+import '../../cancel_order/mobile/cancel_order.dart';
+import '../../cart/mobile/cart.dart';
+import '../../dashboard/mobile/dashboard.dart';
+import '../../food_detail/mobile/food_detail.dart';
+import '../../payment/mobile/payment.dart';
+import '../../success_order/mobile/find_foods.dart';
+import '../../success_order/mobile/success_order.dart';
+import '../../user_profile/mobile/user_profile.dart';
+import '../../welcome/mobile/welcome.dart';
 
 class AppRoutes {
   static const String splashRoute = '/splash';

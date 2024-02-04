@@ -9,14 +9,14 @@ import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_string.dart';
 import '../../utils/theme/app_text_style.dart';
 
-class PaymentMobile extends ConsumerStatefulWidget {
-  const PaymentMobile({super.key});
+class Payment extends ConsumerStatefulWidget {
+  const Payment({super.key});
 
   @override
-  ConsumerState<PaymentMobile> createState() => _PaymentMobileState();
+  ConsumerState<Payment> createState() => _PaymentMobileState();
 }
 
-class _PaymentMobileState extends ConsumerState<PaymentMobile> {
+class _PaymentMobileState extends ConsumerState<Payment> {
   @override
   Widget build(BuildContext context) {
     mobileDeviceConfig(context);

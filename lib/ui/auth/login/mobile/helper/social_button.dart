@@ -1,6 +1,5 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:food_fly/framework/controler/authentication/login_controller.dart';
-import 'package:food_fly/ui/auth/register/register.dart';
 import 'package:food_fly/ui/utils/theme/app_assets.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
@@ -8,6 +7,7 @@ import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/widgets/common_button.dart';
 
 import '../../../../utils/theme/theme.dart';
+import '../../../register/mobile/register.dart';
 
 class SocialAuthButtons extends ConsumerWidget {
   const SocialAuthButtons({super.key});

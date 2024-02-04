@@ -7,8 +7,8 @@ import '../../utils/theme/app_text_style.dart';
 import '../../utils/theme/theme.dart';
 import '../../utils/widgets/common_button.dart';
 
-class FindFoodsMobile extends ConsumerWidget {
-  const FindFoodsMobile({super.key});
+class FindFoods extends ConsumerWidget {
+  const FindFoods({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

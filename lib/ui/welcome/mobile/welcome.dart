@@ -1,14 +1,14 @@
-import 'package:food_fly/ui/dashboard/dashboard.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:food_fly/ui/utils/widgets/common_button.dart';
 import 'package:food_fly/ui/welcome/mobile/helper/greeting_text.dart';
 
+import '../../dashboard/mobile/dashboard.dart';
 import 'helper/foody_girl.dart';
 
-class WelcomeMobile extends StatelessWidget {
-  const WelcomeMobile({super.key});
+class Welcome extends StatelessWidget {
+  const Welcome({super.key});
 
   @override
   Widget build(BuildContext context) {

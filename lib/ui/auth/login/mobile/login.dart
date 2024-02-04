@@ -7,12 +7,11 @@ import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/widgets/common_loading.dart';
 import '../../../utils/theme/theme.dart';
 
-class LoginMobile extends ConsumerWidget {
-  const LoginMobile({super.key});
+class Login extends ConsumerWidget {
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    mobileDeviceConfig(context);
     return CommonLoading(show: ref.watch(loginController).loading, child: GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();

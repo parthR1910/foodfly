@@ -10,14 +10,14 @@ import '../../../framework/service/auth_service.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/theme.dart';
 
-class SplashMobile extends StatefulWidget {
-  const SplashMobile({super.key});
+class Splash extends StatefulWidget {
+  const Splash({super.key});
 
   @override
-  State<SplashMobile> createState() => _SplashMobileState();
+  State<Splash> createState() => _SplashState();
 }
 
-class _SplashMobileState extends State<SplashMobile> {
+class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();

@@ -11,15 +11,17 @@ class FoodDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        FoodNameAndQuantity(foodItem),
-        SizedBox(height: 14.h),
-        FoodSummery(foodItem),
-        SizedBox(height: 16.h),
-        FoodIngredients(foodItem),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FoodNameAndQuantity(foodItem),
+          SizedBox(height: 14.h),
+          FoodSummery(foodItem),
+          SizedBox(height: 16.h),
+          FoodIngredients(foodItem),
+        ],
+      ),
     );
   }
 }

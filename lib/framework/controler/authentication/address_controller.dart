@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_fly/framework/model/user_model.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -17,6 +18,8 @@ class AddressController extends ChangeNotifier {
 
   bool loading = false;
   String fullAddress = '';
+  double? lat;
+  double? long;
 
   getCurrentLocation() async {
     loading = true;
@@ -31,6 +34,8 @@ class AddressController extends ChangeNotifier {
           desiredAccuracy: LocationAccuracy.high);
       double longitude = position.longitude;
       double latitude = position.latitude;
+      lat = position.latitude;
+      long = position.longitude;
       notifyListeners();
       List<Placemark> placeMarks =
           await placemarkFromCoordinates(latitude, longitude);
@@ -49,8 +54,10 @@ class AddressController extends ChangeNotifier {
   }
 
   Future updateDataToFireStore() async {
+    if(lat==null)return;
+    final latLong = LatLng(latitude: lat,longitude: long);
     await FireStoreService.fireStoreService.updateFireStore(
-        currentLocation: fullAddress, phone: "$countryCode ${phoneController.text}");
+        latLong: latLong, phone: "$countryCode${phoneController.text}");
   }
 
   clearForm(){

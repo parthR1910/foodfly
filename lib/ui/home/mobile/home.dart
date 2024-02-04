@@ -6,8 +6,8 @@ import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import '../../utils/theme/theme.dart';
 import 'helper/home_view.dart';
 
-class HomeMobile extends ConsumerWidget {
-  const HomeMobile({super.key});
+class Home extends ConsumerWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

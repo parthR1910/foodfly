@@ -8,8 +8,8 @@ import 'package:food_fly/ui/utils/widgets/common_button.dart';
 
 import '../../utils/theme/theme.dart';
 
-class SuccessOrderMobile extends ConsumerWidget {
-  const SuccessOrderMobile({super.key});
+class SuccessOrder extends ConsumerWidget {
+  const SuccessOrder({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

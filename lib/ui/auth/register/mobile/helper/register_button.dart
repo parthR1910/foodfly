@@ -1,5 +1,5 @@
 import 'package:food_fly/framework/controler/authentication/register_controller.dart';
-import 'package:food_fly/ui/auth/login/mobile/login_mobile.dart';
+import 'package:food_fly/ui/auth/login/mobile/login.dart';
 
 import '../../../../utils/theme/app_colors.dart';
 import '../../../../utils/theme/app_string.dart';
@@ -43,7 +43,7 @@ class RegisterButton extends ConsumerWidget {
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>const LoginMobile()), (route) => false);
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>const Login()), (route) => false);
                 },
                 child: Text(
                   appString.keyLogIn,

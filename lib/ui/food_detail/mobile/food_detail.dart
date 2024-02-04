@@ -4,12 +4,11 @@ import 'package:food_fly/ui/food_detail/mobile/helper/food_details_view.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
-
-import '../../utils/theme/app_assets.dart';
+import 'package:food_fly/ui/utils/theme/app_assets.dart';
 import 'helper/food_detail/food_price_order_btn.dart';
 
-class FoodDetailMobile extends StatelessWidget {
-  const FoodDetailMobile({super.key, required this.foodItem});
+class FoodDetail extends StatelessWidget {
+  const FoodDetail({super.key, required this.foodItem});
 
   final FoodItem foodItem;
 
@@ -26,26 +25,25 @@ class FoodDetailMobile extends StatelessWidget {
                 SizedBox(
                   height: size.height,
                   width: size.width,
-                  child: SingleChildScrollView(
-                    child: Stack(
-                      children: [
-                        fooImg(foodItem, size, context),
-                        Container(
-                          width: size.width,
-                          margin: EdgeInsets.only(top: size.height * 0.45),
-                          padding: EdgeInsets.only(
-                              top: 26.h, left: 16.w, right: 16.w),
-                          decoration: BoxDecoration(
-                              color: AppColors.kWhite,
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(10.r))),
-                          child: FoodDetailView(foodItem: foodItem),
-                        ),
-                      ],
-                    ),
+                  child: Stack(
+                    children: [
+                      fooImg(foodItem, size, context),
+                      Container(
+                        width: size.width,
+                        margin: EdgeInsets.only(top: size.height * 0.45),
+                        padding: EdgeInsets.only(
+                            top: 26.h, left: 16.w, right: 16.w),
+                        decoration: BoxDecoration(
+                            color: AppColors.kWhite,
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(10.r))),
+                        child: FoodDetailView(foodItem: foodItem),
+                      ),
+                    ],
                   ),
                 ),
-                SafeArea(
+                Positioned(
+                  top: 20.h,
                   child: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -59,9 +57,7 @@ class FoodDetailMobile extends StatelessWidget {
             ),
           ),
           Positioned(
-              left: 0.w,
               bottom: 0.h,
-              right: 0.w,
               child: FoodPriceAndOrderButton(
                 foodItem: foodItem,
               )),

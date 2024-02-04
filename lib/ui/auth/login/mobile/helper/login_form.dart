@@ -54,7 +54,7 @@ class LoginForm extends ConsumerWidget {
           textInputAction: TextInputAction.done,
           obscureText: loginWatch.isPassNotShow,
           hintText: appString.keyTypeYourPassword,
-          validator: passValidator,
+          validator: requiredFieldValidator,
           suffixIcon: IconButton(onPressed: (){
             loginWatch.updatesIsPassNotShow();
           },icon: Icon(loginWatch.isPassNotShow?Icons.remove_red_eye:Icons.clear,color: AppColors.kPrimary,),),
@@ -62,10 +62,10 @@ class LoginForm extends ConsumerWidget {
         ),
         SizedBox(height: 24.h),
         CommonButton(
-          onTap: () {
+          onTap: () async{
             if(loginKey.currentState?.validate() ?? false){
               FocusScope.of(context).unfocus();
-              loginWatch.signInWithEmailAndPassword(context);
+              await loginWatch.signInWithEmailAndPassword(context);
               loginWatch.clearForm();
             }
           },
