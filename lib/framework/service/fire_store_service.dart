@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_fly/framework/model/user_model.dart';
 
@@ -24,10 +26,10 @@ class FireStoreService{
   }
 
 
- Future<void> updateFireStore({required String currentLocation, required String phone}) async {
+ Future<void> updateFireStore({required List<double> latLong, required String phone}) async {
   await fireStore.collection('User').doc(uid).update(
       {
-       "CurrentLocation": currentLocation,
+       "LatLong": latLong,
        "Phone": phone
       }
     );

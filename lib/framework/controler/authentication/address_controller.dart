@@ -17,6 +17,8 @@ class AddressController extends ChangeNotifier {
 
   bool loading = false;
   String fullAddress = '';
+  double? lat;
+  double? long;
 
   getCurrentLocation() async {
     loading = true;
@@ -31,6 +33,8 @@ class AddressController extends ChangeNotifier {
           desiredAccuracy: LocationAccuracy.high);
       double longitude = position.longitude;
       double latitude = position.latitude;
+      lat = position.latitude;
+      long = position.longitude;
       notifyListeners();
       List<Placemark> placeMarks =
           await placemarkFromCoordinates(latitude, longitude);
@@ -49,8 +53,9 @@ class AddressController extends ChangeNotifier {
   }
 
   Future updateDataToFireStore() async {
+    if(lat==null)return;
     await FireStoreService.fireStoreService.updateFireStore(
-        currentLocation: fullAddress, phone: "$countryCode ${phoneController.text}");
+        latLong: [lat!,long!], phone: "$countryCode${phoneController.text}");
   }
 
   clearForm(){
