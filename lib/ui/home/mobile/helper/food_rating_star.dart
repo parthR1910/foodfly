@@ -15,7 +15,7 @@ class FoodRatingStar extends StatelessWidget {
         SizedBox(width: 4.w),
         Text(
           ratingStar.toString(),
-          style: AppTextStyle.w4.copyWith(fontSize: 12, color: AppColors.kGrey),
+          style: AppTextStyle.w4.copyWith(fontSize: 10.sp, color: AppColors.kGrey),
         )
       ],
     );
@@ -27,8 +27,8 @@ List buildStars(int rate) {
   int blankStar = total - rate;
   return [
     ...List.generate(rate,
-        (index) => Icon(Icons.star, size: 16.h, color: AppColors.kPrimary)),
+        (index) => Icon(Icons.star, size: 12.spMax, color: AppColors.kPrimary)),
     ...List.generate(blankStar,
-        (index) => Icon(Icons.star, size: 16.h, color: AppColors.kGrey)),
+        (index) => Icon(Icons.star, size: 12.spMin, color: AppColors.kGrey)),
   ];
 }

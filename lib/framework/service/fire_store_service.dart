@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food_fly/framework/model/user_model.dart';
+import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
+import 'package:food_fly/framework/model/user/user_model.dart';
+import 'package:food_fly/framework/service/fire_base_singleton.dart';
 import 'auth_service.dart';
 
 
@@ -47,4 +49,18 @@ class FireStoreService{
     return myUser;
   }
 
+
+  Stream<List<FoodDataModel>> getFoodDataFireStore(){
+    final foodData = fireStore.collection("Foods").snapshots().map((event) => event.docs.map((e) => FoodDataModel.fromJson(e.data())).toList());
+    return foodData;
+  }
+
+
+  ///-------------------food -----------///
+  Future<void> addFoodToFirebase(FoodDataModel newsTable) async {
+    await FirebaseSingleTon.firebaseSingleTon.fireStore
+        .collection('Foods')
+        .doc(newsTable.foodId)
+        .set(newsTable.toJson());
+  }
 }

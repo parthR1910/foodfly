@@ -54,6 +54,10 @@ dependencies:
   path:
   page_transition: ^2.1.0
   cached_network_image: ^3.3.1
+  shared_preferences: ^2.2.2
+
+
+  uuid: ^3.0.5
 
 dev_dependencies:
   flutter_test:

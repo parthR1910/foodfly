@@ -1,3 +1,5 @@
+import 'package:food_fly/framework/service/shared_pref_services.dart';
+import 'package:food_fly/ui/utils/constant/app_const_list.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:food_fly/ui/utils/widgets/helper.dart';
@@ -25,8 +27,17 @@ class LoginController extends ChangeNotifier{
     loading = true;
     final authResponse = await AuthService.authService.signInWithEmailAndPassword(email:emailController.text, password: passwordController.text);
     if(authResponse.user != null){
-      if(context.mounted){
-        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashBoard, (route) => false);
+
+      if(authResponse.user!.email =="parth123@gmail.com"){
+        SharedPrefServices.services.setBool(isAdminKey, true);
+        if(context.mounted){
+          Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashBoard, (route) => false);
+        }
+      }else{
+        SharedPrefServices.services.setBool(isAdminKey, false);
+        if(context.mounted){
+          Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashBoard, (route) => false);
+        }
       }
       loading=false;
     }else{

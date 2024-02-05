@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/framework/model/food_item.dart';
 import 'package:food_fly/ui/food_detail/mobile/helper/food_details_view.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
@@ -8,9 +10,9 @@ import 'package:food_fly/ui/utils/theme/app_assets.dart';
 import 'helper/food_detail/food_price_order_btn.dart';
 
 class FoodDetail extends StatelessWidget {
-  const FoodDetail({super.key, required this.foodItem});
+  const FoodDetail({super.key,required this.foodData});
 
-  final FoodItem foodItem;
+  final FoodDataModel foodData;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class FoodDetail extends StatelessWidget {
                   width: size.width,
                   child: Stack(
                     children: [
-                      fooImg(foodItem, size, context),
+                      foodImg(foodData, size, context),
                       Container(
                         width: size.width,
                         margin: EdgeInsets.only(top: size.height * 0.45),
@@ -37,7 +39,7 @@ class FoodDetail extends StatelessWidget {
                             color: AppColors.kWhite,
                             borderRadius: BorderRadius.vertical(
                                 top: Radius.circular(10.r))),
-                        child: FoodDetailView(foodItem: foodItem),
+                        child: FoodDetailView(foodData: foodData),
                       ),
                     ],
                   ),
@@ -59,16 +61,16 @@ class FoodDetail extends StatelessWidget {
           Positioned(
               bottom: 0.h,
               child: FoodPriceAndOrderButton(
-                foodItem: foodItem,
+                foodItem: foodData,
               )),
         ],
       ),
     );
   }
 
-  Widget fooImg(FoodItem item, Size size, BuildContext context) {
+  Widget foodImg(FoodDataModel item, Size size, BuildContext context) {
     return Hero(
-      tag: foodItem.name,
+      tag: item.image??"",
       child: GestureDetector(
         onPanUpdate: (details) {
           if (details.delta.dy > 10) {
@@ -79,7 +81,12 @@ class FoodDetail extends StatelessWidget {
           width: size.width,
           height: size.height * 0.5,
           color: Colors.lightBlue,
-          child: const FlutterLogo(),
+          child: CachedNetworkImage(
+            imageUrl: item.image!,
+            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+            errorWidget: (context, url, error) => const FlutterLogo(),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

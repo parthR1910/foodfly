@@ -7,7 +7,7 @@ class CommonFormField extends StatelessWidget {
   const CommonFormField(
       {super.key,
       required this.hintText,
-      required this.onSaved,
+       this.onSaved,
       this.obscureText =false,
       this.suffixIcon,
       this.validator,
@@ -15,7 +15,7 @@ class CommonFormField extends StatelessWidget {
 
   final String hintText;
   final String? Function(String?)? validator;
-  final void Function(String?) onSaved;
+  final void Function(String?)? onSaved;
   final Widget? suffixIcon;
   final String? initialValue;
   final TextEditingController? controller;

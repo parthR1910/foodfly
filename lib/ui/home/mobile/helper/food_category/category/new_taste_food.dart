@@ -1,17 +1,22 @@
 import 'package:food_fly/framework/data/dummy_data.dart';
+import '../../../../../../framework/model/food_data_model/food_data_model.dart';
 import '../../../../../utils/theme/theme.dart';
 import 'category_item.dart';
 
 class NewTasteFood extends ConsumerWidget {
-  const NewTasteFood({super.key});
+  final List<FoodDataModel> foodList;
+
+  const NewTasteFood({super.key,required this.foodList});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final data = foodList.where((element) => element.categoryId! == "New Taste").toList();
     return ListView.builder(
-      itemCount: availableFoods.length,
+      itemCount: data.length,
       itemBuilder: (context, index) {
-        final item = availableFoods[index];
-        return CategoryFoodItem(foodItem: item);
+        // final item = availableFoods[index];
+        final item = data[index];
+        return CategoryFoodItem(foodDate: item,);
       },
     );
   }

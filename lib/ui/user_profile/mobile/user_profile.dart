@@ -1,5 +1,5 @@
 import 'package:food_fly/framework/controler/authentication/login_controller.dart';
-import 'package:food_fly/framework/model/user_model.dart';
+import 'package:food_fly/framework/model/user/user_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
 import 'package:food_fly/ui/user_profile/mobile/helper/user_account_item.dart';
 import 'package:food_fly/ui/user_profile/mobile/helper/user_detail.dart';

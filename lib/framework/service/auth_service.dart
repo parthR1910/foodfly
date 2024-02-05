@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:food_fly/framework/model/auth_response.dart';
+import 'package:food_fly/framework/model/user/auth_response.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../model/user_model.dart';
+import '../model/user/user_model.dart';
 
 class AuthService {
   AuthService._private();

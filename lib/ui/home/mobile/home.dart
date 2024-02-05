@@ -1,9 +1,10 @@
+import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
+import 'package:food_fly/framework/service/fire_store_service.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
-
-import '../../utils/theme/theme.dart';
+import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'helper/home_view.dart';
 
 class Home extends ConsumerWidget {
@@ -40,7 +41,22 @@ class Home extends ConsumerWidget {
               child: const Icon(Icons.person),
             ),
           ]),
-      body: const HomeView(),
+      body: StreamBuilder<List<FoodDataModel>>(
+        stream: FireStoreService.fireStoreService.getFoodDataFireStore(),
+        builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return const Center(child: CircularProgressIndicator(),);
+          } else if(snapshot.hasData){
+            final foodDataList = snapshot.data!;
+            for(var i in foodDataList){
+              print(i.name);
+            }
+            // print(snapshot.data![0].offPrice);
+            return  HomeView(foodList: foodDataList,);
+          }
+         else{ return const Center(child: Text("No data is inserted"),);}
+        }
+      ),
     );
   }
 }

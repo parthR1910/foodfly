@@ -1,3 +1,4 @@
+import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/framework/model/food_item.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
@@ -8,7 +9,7 @@ import '../../../../utils/widgets/common_button.dart';
 
 class FoodPriceAndOrderButton extends ConsumerWidget {
   const FoodPriceAndOrderButton({super.key, required this.foodItem});
-  final FoodItem foodItem;
+  final FoodDataModel foodItem;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

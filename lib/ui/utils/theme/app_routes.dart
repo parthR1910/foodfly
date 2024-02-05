@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/framework/model/food_item.dart';
+import 'package:food_fly/ui/add_food/add_food.dart';
 import 'package:food_fly/ui/auth/login/mobile/login.dart';
 import 'package:food_fly/ui/splash/mobile/splash.dart';
 import '../../auth/register/mobile/register.dart';
@@ -26,6 +28,7 @@ class AppRoutes {
   static const String cancelOrder = '/cancelOrder';
   static const String successOrder = '/successOrder';
   static const String findFoods = '/findFoods';
+  static const String addFood = '/addFood';
 
 
   static Route onGenerateRoute(RouteSettings settings) {
@@ -43,7 +46,7 @@ class AppRoutes {
       case foodDetail:
         return MaterialPageRoute(
             builder: (context) =>
-                FoodDetail(foodItem: settings.arguments as FoodItem));
+                FoodDetail(foodData: settings.arguments as FoodDataModel,));
       case payment:
         return MaterialPageRoute(builder: (context)=> const Payment());
       case cart:
@@ -56,6 +59,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context)=> const SuccessOrder());
       case findFoods:
         return MaterialPageRoute(builder: (context)=> const FindFoods());
+      case addFood:
+        return MaterialPageRoute(builder: (context)=> const AddFood());
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

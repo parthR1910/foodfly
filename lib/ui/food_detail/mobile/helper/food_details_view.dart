@@ -1,13 +1,14 @@
-import 'package:food_fly/framework/model/food_item.dart';
+import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
+import '../../../home/mobile/helper/food_rating_star.dart';
+import '../../../utils/theme/app_colors.dart';
+import '../../../utils/theme/app_text_style.dart';
 import '../../../utils/theme/theme.dart';
-import 'food_detail/food_ingredients.dart';
-import 'food_detail/food_name_quantity.dart';
-import 'food_detail/food_summary.dart';
+import 'food_detail/food_quantity_picker.dart';
 
 class FoodDetailView extends StatelessWidget {
-  const FoodDetailView({super.key, required this.foodItem});
+  const FoodDetailView({super.key, required this.foodData});
 
-  final FoodItem foodItem;
+  final FoodDataModel foodData;
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,30 @@ class FoodDetailView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FoodNameAndQuantity(foodItem),
+          // FoodNameAndQuantity(foodItem),
+        Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                foodData.name??"",
+                style: AppTextStyle.w4.copyWith(fontSize: 16.sp),
+              ),
+              const FoodRatingStar(ratingStar: 4)
+            ],
+          ),
+          const FoodQuantityPicker()
+        ],
+      ),
           SizedBox(height: 14.h),
-          FoodSummery(foodItem),
+        Text(
+          foodData.description??"",
+          style: AppTextStyle.w4.copyWith(fontSize: 14.sp, color: AppColors.kGrey),
+        ),
           SizedBox(height: 16.h),
-          FoodIngredients(foodItem),
+          // FoodIngredients(foodItem),
         ],
       ),
     );

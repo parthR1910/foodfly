@@ -6,11 +6,13 @@ import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 
+import 'framework/service/shared_pref_services.dart';
+
 Future<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  await SharedPrefServices.services.init();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       systemNavigationBarColor: Colors.transparent,

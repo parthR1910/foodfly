@@ -1,7 +1,7 @@
 
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-import 'package:food_fly/framework/model/user_model.dart';
+import 'package:food_fly/framework/model/user/user_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
 import 'package:food_fly/ui/utils/widgets/helper.dart';
 import 'package:food_fly/framework/service/auth_service.dart';

@@ -1,4 +1,4 @@
-import 'package:food_fly/framework/model/user_model.dart';
+import 'package:food_fly/framework/model/user/user_model.dart';
 
 class AuthResponse{
   final UserModel? user;

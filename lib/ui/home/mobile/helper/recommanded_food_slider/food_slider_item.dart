@@ -1,23 +1,26 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:food_fly/framework/model/food_item.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
+import '../../../../../framework/model/food_data_model/food_data_model.dart';
 import '../food_rating_star.dart';
 
 class FoodSliderItem extends ConsumerWidget {
+  final FoodDataModel foodData;
   const FoodSliderItem({
-    required this.foodItem,
+    required this.foodData,
     super.key,
   });
-  final FoodItem foodItem;
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.foodDetail, arguments: foodItem);
+        Navigator.pushNamed(context, AppRoutes.foodDetail, arguments: foodData);
       },
       child: Container(
         width: 200.w,
@@ -35,16 +38,21 @@ class FoodSliderItem extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: foodItem.name,
+              tag: foodData.image??"",
               child: Banner(
                 location: BannerLocation.topEnd,
-                message: 'Sale 50% off ',
+                message: '₹ ${foodData.offPrice} OFF ',
                 color: AppColors.kPrimary,
                 child: Container(
-                  color: Colors.blue,
+                  color: Colors.blue.shade200,
                   height: 140.h,
                   width: 200.w,
-                  child: const FlutterLogo(),
+                  child: CachedNetworkImage(
+                    imageUrl: foodData.image!,
+                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) => const FlutterLogo(),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
@@ -54,11 +62,11 @@ class FoodSliderItem extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    foodItem.name,
+                    foodData.name!,
                     style: AppTextStyle.w4.copyWith(fontSize: 16.sp),
                   ),
                   SizedBox(height: 6.h),
-                  FoodRatingStar(ratingStar: foodItem.star)
+                  const FoodRatingStar(ratingStar: 4)
                 ],
               ),
             )
