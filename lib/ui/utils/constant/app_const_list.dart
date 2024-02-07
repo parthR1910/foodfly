@@ -5,11 +5,11 @@ List<String> catagories = [
 ];
 
 List<String> taxList =[
- "5","12","18"
+ "5.0","12.0","18.0"
 ];
 
 List<String> offPriceList =[
-  "49","75","112","179","249"
+  "49.0","75.0","112.0","179.0","249.0"
 ];
 
 

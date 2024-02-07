@@ -31,7 +31,7 @@ class AddFood extends ConsumerWidget {
             centerTitle:  true,
             automaticallyImplyLeading: false,
             title:  Text(
-              "Add Food",
+              foodWatch.isUpdateButton ?"Update Food":"Add Food",
               style: AppTextStyle.w5.copyWith(fontSize: 25.sp,color: AppColors.kPrimary),
             ),
           ),
@@ -201,8 +201,8 @@ class AddFood extends ConsumerWidget {
                             if(foodWatch.formKey.currentState!.validate()){
                               if(foodWatch.selectedTax != ""){
                                 if(foodWatch.urlFormDataBase!="" || foodWatch.imageFile != null){
-                                  // foodWatch.isUpdateButton?await foodWatch.updateNewsToFireStore(context: context): await foodWatch.addNewsToFireStore(context: context);
-                                  await foodWatch.addFoodToFireStore(context: context);
+                                  foodWatch.isUpdateButton?await foodWatch.updateFoodToFireStore(context: context): await foodWatch.addFoodToFireStore(context: context);
+                                  // await foodWatch.addFoodToFireStore(context: context);
                                 }else{
                                   commonSnackBar(context: context, eText: "Please select Food image!!",backgroundColor: AppColors.textGreyColor);
                                 }
@@ -217,7 +217,7 @@ class AddFood extends ConsumerWidget {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
                             backgroundColor: AppColors.kPrimary,
                             padding: EdgeInsets.symmetric(vertical: 20.h)
-                        ), child:  Text(foodWatch.isUpdateButton? "Update News":"Add News",style: const TextStyle(color: Colors.white),),
+                        ), child:  Text(foodWatch.isUpdateButton? "Update Product":"Add Product",style: const TextStyle(color: Colors.white),),
                       ),
                     )
                   ],

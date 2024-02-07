@@ -50,10 +50,6 @@ class FireStoreService{
   }
 
 
-  Stream<List<FoodDataModel>> getFoodDataFireStore(){
-    final foodData = fireStore.collection("Foods").snapshots().map((event) => event.docs.map((e) => FoodDataModel.fromJson(e.data())).toList());
-    return foodData;
-  }
 
 
   ///-------------------food -----------///
@@ -62,5 +58,35 @@ class FireStoreService{
         .collection('Foods')
         .doc(newsTable.foodId)
         .set(newsTable.toJson());
+  }
+
+  Future<void> updateFoodToFirebase(FoodDataModel newsTable) async {
+    await FirebaseSingleTon.firebaseSingleTon.fireStore
+        .collection('Foods')
+        .doc(newsTable.foodId).update(
+        {
+          "foodId":newsTable.foodId,
+          "categoryId": newsTable.categoryId,
+          "description": newsTable.description,
+          "image": newsTable.image,
+          "price": newsTable.price,
+          "tax": newsTable.tax,
+          "offPrice": newsTable.offPrice,
+          "name": newsTable.name,
+        }
+    );
+  }
+
+
+  Stream<List<FoodDataModel>> getFoodDataFireStore(){
+    final foodData = fireStore.collection("Foods").snapshots().map((event) => event.docs.map((e) => FoodDataModel.fromJson(e.data())).toList());
+    return foodData;
+  }
+
+  Future<void> deleteFoodToFirebase({required String id}) async {
+    await FirebaseSingleTon.firebaseSingleTon.fireStore
+        .collection('Foods')
+        .doc(id)
+        .delete();
   }
 }

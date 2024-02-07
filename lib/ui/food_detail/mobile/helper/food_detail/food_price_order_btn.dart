@@ -13,13 +13,14 @@ class FoodPriceAndOrderButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
     final appString = ref.watch(appStringController);
     return Container(
-      decoration: const BoxDecoration(
+      decoration:  BoxDecoration(
         color: Colors.white,
-        // boxShadow: [
-        //   BoxShadow(color: Colors.grey.shade100, spreadRadius: 5, blurRadius: 10)
-        // ]
+        boxShadow: [
+          BoxShadow(color: Colors.grey.shade100, spreadRadius: 5, blurRadius: 10)
+        ]
       ),
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 13.h),
       child: Row(
@@ -38,6 +39,7 @@ class FoodPriceAndOrderButton extends ConsumerWidget {
               )
             ],
           ),
+          SizedBox(width: size.width * 0.15.w),
           orderNowButton
         ],
       ),

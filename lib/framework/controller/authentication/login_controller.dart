@@ -1,3 +1,4 @@
+import 'package:food_fly/framework/controller/dash_board/dash_board_controller.dart';
 import 'package:food_fly/framework/service/shared_pref_services.dart';
 import 'package:food_fly/ui/utils/constant/app_const_list.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
@@ -6,9 +7,11 @@ import 'package:food_fly/ui/utils/widgets/helper.dart';
 
 import '../../service/auth_service.dart';
 
-final loginController  = ChangeNotifierProvider((ref) => LoginController());
+final loginController  = ChangeNotifierProvider((ref) => LoginController(ref));
 
 class LoginController extends ChangeNotifier{
+  Ref ref;
+  LoginController(this.ref);
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -27,7 +30,8 @@ class LoginController extends ChangeNotifier{
     loading = true;
     final authResponse = await AuthService.authService.signInWithEmailAndPassword(email:emailController.text, password: passwordController.text);
     if(authResponse.user != null){
-
+      loading=false;
+      notifyListeners();
       if(authResponse.user!.email =="parth123@gmail.com"){
         SharedPrefServices.services.setBool(isAdminKey, true);
         if(context.mounted){
@@ -39,7 +43,6 @@ class LoginController extends ChangeNotifier{
           Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashBoard, (route) => false);
         }
       }
-      loading=false;
     }else{
       loading=false;
       if(context.mounted){
@@ -74,12 +77,22 @@ class LoginController extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> signOut()async{
+
+  Future<void> signOut(BuildContext context)async{
     if(isGoogleLogin){
       isGoogleLogin = false;
       await AuthService.authService.googleSignIn.disconnect();
+      ref.watch(dashBoardStateProvider.notifier).navigateTo(0);
+      if(context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.splashRoute, (route) => false);
+      }
+    }else{
+      await AuthService.authService.auth.signOut();
+      ref.watch(dashBoardStateProvider.notifier).navigateTo(0);
+      if(context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.splashRoute, (route) => false);
+      }
     }
-    await AuthService.authService.auth.signOut();
     notifyListeners();
   }
 }

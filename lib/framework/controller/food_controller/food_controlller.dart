@@ -24,14 +24,10 @@ class FoodController extends ChangeNotifier{
   String selectedCategory = '';
   String selectedTax ="";
   String selectedOffPrice ="";
-  bool isLive = false;
   String urlFormDataBase = "";
-  String newsId= "";
+  String foodId= "";
 
-  updateIsLive(){
-    isLive = !isLive;
-    notifyListeners();
-  }
+
   updateSelectedCategory(String value){
     selectedCategory = value;
     notifyListeners();
@@ -83,67 +79,69 @@ class FoodController extends ChangeNotifier{
   }
 
 
-  // updateNewsToFireStore({int? nFlag =0,required BuildContext context,}) async {
-  //   isLoading = true;
-  //   notifyListeners();
-  //   String uploadImg = "";
-  //   if(imageFile!=null){
-  //     final String imgUrl = await StorageService().upLoadImage(imageFile!);
-  //     uploadImg = imgUrl;
-  //   }
-  //   final newsTable = NewsTable(
-  //       id: newsId,
-  //       title: titleController.text,
-  //       subtitle: subtitleController.text,
-  //       description: descriptionController.text,
-  //       image: imageFile!=null? uploadImg :urlFormDataBase,
-  //       liveFlag:isLive?1:0,
-  //       category: selectedCategory,
-  //       nFlag: nFlag
-  //   );
-  //   await FireStoreService.fireStoreService.updateNewsToFirebase(newsTable);
-  //   isLoading = false;
-  //   if(context.mounted){
-  //     Navigator.pop(context);
-  //     Navigator.pop(context);
-  //   }
-  //   clearFormData();
-  //   notifyListeners();
-  // }
-  //
-  // deleteNews({required String id,required BuildContext context})async{
-  //   await FireStoreService.fireStoreService.deleteNewsToFirebase(id: id);
-  //   if(context.mounted){
-  //     Navigator.pop(context);
-  //     Navigator.pop(context);
-  //   }
-  // }
+  updateFoodToFireStore({int? nFlag =0,required BuildContext context,}) async {
+    isLoading = true;
+    notifyListeners();
+    String uploadImg = "";
+    if(imageFile!=null){
+      final String imgUrl = await StorageService.service.upLoadFoodImage(imageFile!);
+      uploadImg = imgUrl;
+    }
+    final foodData = FoodDataModel(
+        foodId: foodId,
+        name: nameController.text,
+        description: descriptionController.text,
+        categoryId: selectedCategory,
+        price: int.parse(priceController.text),
+        image: imageFile!=null? uploadImg :urlFormDataBase,
+        tax: double.parse(selectedTax),
+        offPrice:selectedOffPrice!=""? double.parse(selectedOffPrice):0
+    );
+    await FireStoreService.fireStoreService.updateFoodToFirebase(foodData);
+    isLoading = false;
+    if(context.mounted){
+      Navigator.pop(context);
+      Navigator.pop(context);
+    }
+    clearFormData();
+    notifyListeners();
+  }
+
+
+  deleteFood({required String id,required BuildContext context})async{
+    await FireStoreService.fireStoreService.deleteFoodToFirebase(id: id);
+    if(context.mounted){
+      Navigator.pop(context);
+      Navigator.pop(context);
+    }
+  }
 
   clearFormData(){
     nameController.clear();
     priceController.clear();
     descriptionController.clear();
     imageFile = null;
-    isLive = false;
     urlFormDataBase = "";
     selectedCategory = '';
     selectedTax = '';
+    selectedOffPrice ='';
     isUpdateButton = false;
-    newsId= "";
+    foodId= "";
     notifyListeners();
   }
 
   bool isUpdateButton = false;
 
-  // addExistingDataToFields(NewsTable newsTable,bool updateButtonValue){
-  //   titleController.text = newsTable.title!;
-  //   subtitleController.text = newsTable.subtitle!;
-  //   descriptionController.text = newsTable.description!;
-  //   urlFormDataBase = newsTable.image!;
-  //   isLive = newsTable.liveFlag ==1?true:false;
-  //   selectedCategory = newsTable.category!;
-  //   isUpdateButton = updateButtonValue;
-  //   newsId= newsTable.id!;
-  //   notifyListeners();
-  // }
+  addExistingDataToFields(FoodDataModel foodData,bool updateButtonValue){
+    nameController.text = foodData.name!;
+    descriptionController.text = foodData.description!;
+    priceController.text = foodData.price.toString();
+    urlFormDataBase = foodData.image!;
+    selectedCategory = foodData.categoryId!;
+    selectedOffPrice =foodData.offPrice! > 0? foodData.offPrice!.toString():"";
+    selectedTax = foodData.tax.toString();
+    isUpdateButton = updateButtonValue;
+    foodId= foodData.foodId!;
+    notifyListeners();
+  }
 }

@@ -48,10 +48,9 @@ class Home extends ConsumerWidget {
             return const Center(child: CircularProgressIndicator(),);
           } else if(snapshot.hasData){
             final foodDataList = snapshot.data!;
-            for(var i in foodDataList){
-              print(i.name);
-            }
-            // print(snapshot.data![0].offPrice);
+            // for(var i in foodDataList){
+            //   print(i.name);
+            // }
             return  HomeView(foodList: foodDataList,);
           }
          else{ return const Center(child: Text("No data is inserted"),);}

@@ -20,6 +20,7 @@ class CategoryTabBar extends ConsumerWidget {
           labelColor: Colors.black,
           splashBorderRadius: BorderRadius.circular(8.r),
           indicatorColor: Colors.black,
+          labelPadding: EdgeInsets.symmetric(horizontal: 5.w),
           tabs: [
             Tab(
               child: Text(

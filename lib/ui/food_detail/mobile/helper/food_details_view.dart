@@ -16,7 +16,6 @@ class FoodDetailView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // FoodNameAndQuantity(foodItem),
         Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
