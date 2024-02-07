@@ -4,6 +4,7 @@ import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 
+import '../../../../../framework/data/providers/quantity_state_provider.dart';
 import '../../../../utils/theme/theme.dart';
 import '../../../../utils/widgets/common_button.dart';
 
@@ -34,12 +35,12 @@ class FoodPriceAndOrderButton extends ConsumerWidget {
                 style: AppTextStyle.w4.copyWith(fontSize: 13.sp),
               ),
               Text(
-                'IDR ${foodItem.price}.00',
+                'INR ₹ ${ref.watch(quantityStateProvider) * (foodItem.price! - foodItem.offPrice!)}',
                 style: AppTextStyle.w4.copyWith(fontSize: 18.sp),
               )
             ],
           ),
-          SizedBox(width: size.width * 0.15.w),
+          SizedBox(width: size.width * 0.10.w),
           orderNowButton
         ],
       ),
@@ -53,7 +54,14 @@ class FoodPriceAndOrderButton extends ConsumerWidget {
             padding: EdgeInsets.symmetric(horizontal: 44.w, vertical: 12.h),
             child: Text(appString.keyOrderNow),
             onTap: () {
-              Navigator.pushNamed(context, AppRoutes.payment);
-            });
+              int quantity = ref.watch(quantityStateProvider);
+              Navigator.pushNamed(
+                context,
+                AppRoutes.payment,
+                arguments: {
+                  'foodData': foodItem,
+                  'quantity': quantity,
+                },
+              );            });
       });
 }

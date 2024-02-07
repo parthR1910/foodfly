@@ -6,6 +6,9 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:food_fly/framework/service/fire_store_service.dart';
 
+import '../../../ui/utils/constant/app_const_list.dart';
+import '../../service/hive_service/box_service.dart';
+
 final addressController = ChangeNotifierProvider((ref) => AddressController());
 
 class AddressController extends ChangeNotifier {
@@ -54,10 +57,18 @@ class AddressController extends ChangeNotifier {
   }
 
   Future updateDataToFireStore() async {
-    if(lat==null)return;
+    loading = true;
+    if(lat==null){
+      loading = false;
+      notifyListeners();
+    }
     final latLong = LatLng(latitude: lat,longitude: long);
     await FireStoreService.fireStoreService.updateFireStore(
         latLong: latLong, phone: "$countryCode${phoneController.text}");
+    final userModel = await FireStoreService.fireStoreService.getCUserDataFireStore();
+    BoxService.boxService.addUserDetailToHive(userModelDetailKey, userModel);
+    loading = false;
+    notifyListeners();
   }
 
   clearForm(){

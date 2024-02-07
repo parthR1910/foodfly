@@ -1,17 +1,33 @@
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
+import 'package:food_fly/framework/service/hive_service/box_service.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
+import 'package:food_fly/ui/utils/constant/app_const_list.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'helper/home_view.dart';
 
-class Home extends ConsumerWidget {
+class Home extends ConsumerStatefulWidget {
   const Home({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<Home> createState() => _HomeState();
+}
+
+class _HomeState extends ConsumerState<Home> {
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   final user = BoxService.boxService.userModelBox.get(userModelDetailKey);
+  //   print(user!.email);
+  // }
+
+  @override
+  Widget build(BuildContext context, ) {
     mobileDeviceConfig(context);
     final appString = ref.watch(appStringController);
     return Scaffold(

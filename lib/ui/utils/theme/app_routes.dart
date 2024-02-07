@@ -48,7 +48,10 @@ class AppRoutes {
             builder: (context) =>
                 FoodDetail(foodData: settings.arguments as FoodDataModel,));
       case payment:
-        return MaterialPageRoute(builder: (context)=> const Payment());
+        final Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        final FoodDataModel foodData = arguments['foodData'];
+        final int quantity = arguments['quantity'];
+        return MaterialPageRoute(builder: (context)=>  Payment(foodData: foodData,quantity: quantity,));
       case cart:
         return MaterialPageRoute(builder: (context)=> const Cart());
       case userprofile:

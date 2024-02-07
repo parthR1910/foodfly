@@ -13,4 +13,11 @@ List<String> offPriceList =[
 ];
 
 
+///-----------------Share Pref Keys----------------///
  const String isAdminKey = "isAdminKey";
+
+
+///-----------------Hive box Keys----------------///
+const String userModelBoxKey = "userModelBoxKey";
+const String userModelDetailKey = "userModelDetailKey";
+const String latLngBoxKey = "latLngBoxKey";

@@ -1,16 +1,19 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/ui/payment/mobile/helper/payment_order_detail.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:food_fly/ui/utils/widgets/common_button.dart';
-import '../../utils/theme/app_assets.dart';
-import '../../utils/theme/app_colors.dart';
-import '../../utils/theme/app_string.dart';
-import '../../utils/theme/app_text_style.dart';
+import 'package:food_fly/ui/utils/theme/app_assets.dart';
+import 'package:food_fly/ui/utils/theme/app_colors.dart';
+import 'package:food_fly/ui/utils/theme/app_string.dart';
+import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 
 class Payment extends ConsumerStatefulWidget {
-  const Payment({super.key});
+  final FoodDataModel foodData;
+  final int quantity;
+  const Payment({super.key,required this.foodData,required this.quantity});
 
   @override
   ConsumerState<Payment> createState() => _PaymentMobileState();
@@ -37,7 +40,7 @@ class _PaymentMobileState extends ConsumerState<Payment> {
           SizedBox(
             height: 48.h,
           ),
-          const PaymentOrderDetail(),
+           PaymentOrderDetail(foodData: widget.foodData,quantity: widget.quantity),
           SizedBox(
             height: 64.h,
           ),

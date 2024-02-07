@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_fly/framework/controller/dash_board/dash_board_controller.dart';
+import 'package:food_fly/framework/model/user/user_model.dart';
+import 'package:food_fly/framework/service/fire_store_service.dart';
+import 'package:food_fly/framework/service/hive_service/box_service.dart';
 import 'package:food_fly/framework/service/shared_pref_services.dart';
 import 'package:food_fly/ui/utils/constant/app_const_list.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
@@ -32,6 +36,8 @@ class LoginController extends ChangeNotifier{
     if(authResponse.user != null){
       loading=false;
       notifyListeners();
+      final userModel = await FireStoreService.fireStoreService.getCUserDataFireStore();
+      BoxService.boxService.addUserDetailToHive(userModelDetailKey, userModel);
       if(authResponse.user!.email =="parth123@gmail.com"){
         SharedPrefServices.services.setBool(isAdminKey, true);
         if(context.mounted){

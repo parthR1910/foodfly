@@ -1,12 +1,30 @@
+// To parse this JSON data, do
+//
+//     final userModel = userModelFromJson(jsonString);
 
+import 'package:hive/hive.dart';
+import 'dart:convert';
 
+part 'user_model.g.dart';
+
+UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
+
+String userModelToJson(UserModel data) => json.encode(data.toJson());
+
+@HiveType(typeId: 1)
 class UserModel {
-  final String? email;
-  final LatLng? latLong;
-  final String? name;
-  final String? phone;
-  final String? profileImg;
-  final String? uid;
+  @HiveField(1)
+  String? email;
+  @HiveField(2)
+  LatLng? latLong;
+  @HiveField(3)
+  String? name;
+  @HiveField(4)
+  String? phone;
+  @HiveField(5)
+  String? profileImg;
+  @HiveField(6)
+  String? uid;
 
   UserModel({
     this.email,
@@ -17,49 +35,44 @@ class UserModel {
     this.uid,
   });
 
-  // Convert an instance of Temperatures to a Map
-  Map<String, dynamic> toJson() {
-    return {
-      'email': email,
-      'latLong': latLong?.toJson(),
-      'name': name,
-      'phone': phone,
-      'profileImage': profileImg,
-      'uid': uid,
-    };
-  }
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+    email: json["email"],
+    latLong: json["latLong"] == null ? null : LatLng.fromJson(json["latLong"]),
+    name: json["name"],
+    phone: json["phone"],
+    profileImg: json["profileImg"],
+    uid: json["uid"],
+  );
 
-  // Create an instance of Temperatures from a Map
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      email: json['email'],
-      latLong: LatLng.fromJson(json['latLong']),
-      name: json['name'],
-      phone: json['phone'],
-      profileImg: json['profileImage'],
-      uid: json['uid'],
-    );
-  }
+  Map<String, dynamic> toJson() => {
+    "email": email,
+    "latLong": latLong?.toJson(),
+    "name": name,
+    "phone": phone,
+    "profileImg": profileImg,
+    "uid": uid,
+  };
 }
 
+@HiveType(typeId: 2)
 class LatLng {
-  final double? latitude;
-  final double? longitude;
+  @HiveField(1)
+  double? latitude;
+  @HiveField(2)
+  double? longitude;
 
-  LatLng({this.latitude, this.longitude});
+  LatLng({
+    this.latitude,
+    this.longitude,
+  });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'latitude': latitude,
-      'longitude': longitude,
-    };
-  }
+  factory LatLng.fromJson(Map<String, dynamic> json) => LatLng(
+    latitude: json["latitude"]?.toDouble(),
+    longitude: json["longitude"]?.toDouble(),
+  );
 
-  // Create an instance of LatLng from a Map
-  factory LatLng.fromJson(Map<String, dynamic> json) {
-    return LatLng(
-      latitude: json['latitude']?.toDouble(),
-      longitude: json['longitude']?.toDouble(),
-    );
-  }
+  Map<String, dynamic> toJson() => {
+    "latitude": latitude,
+    "longitude": longitude,
+  };
 }

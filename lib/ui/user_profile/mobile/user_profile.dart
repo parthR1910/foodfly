@@ -39,8 +39,8 @@ class UserProfile extends ConsumerWidget {
          },)
         ],
       ),
-      body: StreamBuilder<UserModel>(
-        stream: FireStoreService.fireStoreService.getCUserDataFireStore(),
+      body: FutureBuilder<UserModel>(
+        future: FireStoreService.fireStoreService.getCUserDataFireStore(),
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.waiting){
             return const Center(child: CircularProgressIndicator(),);

@@ -27,8 +27,8 @@ List buildStars(int rate) {
   int blankStar = total - rate;
   return [
     ...List.generate(rate,
-        (index) => Icon(Icons.star, size: 12.spMax, color: AppColors.kPrimary)),
+        (index) => Icon(Icons.star, size: 15.spMax, color: AppColors.kPrimary,)),
     ...List.generate(blankStar,
-        (index) => Icon(Icons.star, size: 12.spMin, color: AppColors.kGrey)),
+        (index) => Icon(Icons.star, size: 15.spMin, color: AppColors.kGrey)),
   ];
 }

@@ -36,19 +36,29 @@ class FireStoreService{
   }
 
 
+ //
+ // Stream<UserModel> getCUserDataFireStore() {
+ //   final uid = AuthService.authService.auth.currentUser!.uid;
+ //   // print("user id $uid");
+ //    final myUser =
+ //     fireStore.collection("User").doc(uid).snapshots().map((snapshot) {
+ //       // print(snapshot.data()!);
+ //        return UserModel.fromJson(snapshot.data()!);
+ //     });
+ //   // print("user name ${myUser.first}");
+ //    return myUser;
+ //  }
 
- Stream<UserModel> getCUserDataFireStore() {
-   final uid = AuthService.authService.auth.currentUser!.uid;
-   // print("user id $uid");
+
+  Future<UserModel> getCUserDataFireStore() {
+    final uid = AuthService.authService.auth.currentUser!.uid;
     final myUser =
-     fireStore.collection("User").doc(uid).snapshots().map((snapshot) {
-       // print(snapshot.data()!);
-        return UserModel.fromJson(snapshot.data()!);
-     });
-   // print("user name ${myUser.first}");
+    // fireStore.collection("User").doc(uid).snapshots().map((snapshot) {
+    //   return UserModel.fromJson(snapshot.data()!);
+    // });
+    fireStore.collection("User").doc(uid).get().then((value) => UserModel.fromJson(value.data()!));
     return myUser;
   }
-
 
 
 
