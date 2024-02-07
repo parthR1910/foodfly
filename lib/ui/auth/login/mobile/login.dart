@@ -1,6 +1,5 @@
-import 'package:food_fly/framework/controler/authentication/login_controller.dart';
+import 'package:food_fly/framework/controller/authentication/login_controller.dart';
 import 'package:food_fly/ui/auth/login/mobile/helper/login_view.dart';
-import 'package:food_fly/ui/utils/common_device_config.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';

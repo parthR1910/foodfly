@@ -1,4 +1,4 @@
-import 'package:food_fly/framework/controler/authentication/register_controller.dart';
+import 'package:food_fly/framework/controller/authentication/register_controller.dart';
 import 'package:food_fly/ui/auth/login/mobile/login.dart';
 
 import '../../../../utils/theme/app_colors.dart';

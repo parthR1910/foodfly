@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:food_fly/framework/controler/authentication/address_controller.dart';
+import 'package:food_fly/framework/controller/authentication/address_controller.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/widgets/common_loading.dart';
 import '../../../../utils/form_validator.dart';
@@ -40,7 +40,8 @@ class _AddressFormState extends ConsumerState<AddressForm> {
             CommonFormField(
               keyboardType: TextInputType.number,
               inputFormatters: [
-                LengthLimitingTextInputFormatter(10)
+                LengthLimitingTextInputFormatter(10),
+                FilteringTextInputFormatter.digitsOnly,
               ],
               controller: addressWatch.phoneController,
               hintText: appString.keyTypeYourPhoneNumber,

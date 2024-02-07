@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:food_fly/framework/controler/food_controller/food_controlller.dart';
+import 'package:food_fly/framework/controller/food_controller/food_controlller.dart';
 import 'package:food_fly/ui/utils/constant/app_const_list.dart';
 import 'package:food_fly/ui/utils/extension/widget_extension.dart';
 import 'package:food_fly/ui/utils/form_validator.dart';

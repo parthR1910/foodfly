@@ -6,7 +6,7 @@ import 'package:food_fly/ui/utils/extension/widget_extension.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/widgets/common_button.dart';
-import 'package:food_fly/framework/controler/food_category/category_tab_controller.dart';
+import 'package:food_fly/framework/controller/food_category/category_tab_controller.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'food_category/category/new_taste_food.dart';
 import 'food_category/category/popular_food.dart';

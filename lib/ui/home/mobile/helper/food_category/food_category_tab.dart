@@ -1,7 +1,7 @@
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
-import 'package:food_fly/framework/controler/food_category/category_tab_controller.dart';
+import 'package:food_fly/framework/controller/food_category/category_tab_controller.dart';
 
 class CategoryTabBar extends ConsumerWidget {
   const CategoryTabBar({super.key});

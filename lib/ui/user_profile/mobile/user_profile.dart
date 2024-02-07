@@ -1,4 +1,4 @@
-import 'package:food_fly/framework/controler/authentication/login_controller.dart';
+import 'package:food_fly/framework/controller/authentication/login_controller.dart';
 import 'package:food_fly/framework/model/user/user_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
 import 'package:food_fly/ui/user_profile/mobile/helper/user_account_item.dart';
@@ -16,6 +16,7 @@ class UserProfile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final loginWatch = ref.watch(loginController);
     mobileDeviceConfig(context);
     return Scaffold(
       appBar: AppBar(
@@ -23,10 +24,11 @@ class UserProfile extends ConsumerWidget {
          PopupMenuButton(itemBuilder: (context) {
            return  [
              PopupMenuItem(child: InkWell(
-               onTap: (){
-                ref.watch(loginController).signOut();
-                 // ignore: use_build_context_synchronously
-                 Navigator.pushNamedAndRemoveUntil(context, AppRoutes.signInRoute, (route) => false);
+               onTap: () async{
+                 await loginWatch.signOut();
+                 if(context.mounted){
+                   Navigator.pushNamedAndRemoveUntil(context, AppRoutes.signInRoute, (route) => false);
+                 }
                },
                child: Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,

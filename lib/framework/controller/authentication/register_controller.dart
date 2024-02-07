@@ -6,7 +6,9 @@ import 'package:food_fly/framework/service/fire_store_service.dart';
 import 'package:food_fly/ui/utils/widgets/helper.dart';
 import 'package:food_fly/framework/service/auth_service.dart';
 import '../../../ui/auth/address/mobile/address.dart';
+import '../../../ui/utils/constant/app_const_list.dart';
 import '../../../ui/utils/theme/theme.dart';
+import '../../service/shared_pref_services.dart';
 import '../../service/storage_service.dart';
 
 final registerController = ChangeNotifierProvider((ref) => RegisterController());
@@ -33,11 +35,12 @@ class RegisterController extends ChangeNotifier{
     final response = await AuthService.authService.signUpWithEmailAndPassword(email: emailController.text, password: passwordController.text);
     if(response.user != null){
        // ignore: use_build_context_synchronously
-       final imgUrl = await StorageService.service.storeUserProfile(context, selectedFile!,fileName!);
+      final imgUrl = await StorageService.service.storeUserProfile(context, selectedFile!,fileName!);
       final user = UserModel(uid: response.user!.uid, email: emailController.text,name: nameController.text,profileImg: imgUrl);
       FireStoreService.fireStoreService.addUserToFireStore(user);
       selectedFile = null;
       if(context.mounted){
+        SharedPrefServices.services.setBool(isAdminKey, false);
         Navigator.push(
             context,
             MaterialPageRoute(

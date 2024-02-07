@@ -1,4 +1,4 @@
-import 'package:food_fly/framework/controler/navigation/navigation_controller.dart';
+import 'package:food_fly/framework/controller/dash_board/dash_board_controller.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
 
 import '../../utils/theme/theme.dart';
@@ -12,8 +12,8 @@ class DashBoard extends ConsumerWidget {
     mobileDeviceConfig(context);
     return Scaffold(
       body: ref
-          .watch(navigationStateProvider.notifier)
-          .screens[ref.watch(navigationStateProvider)],
+          .watch(dashBoardStateProvider.notifier)
+          .screens[ref.watch(dashBoardStateProvider)],
       bottomNavigationBar: const MyBottomNavigationBar(),
     );
   }

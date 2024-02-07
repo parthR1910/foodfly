@@ -1,5 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:food_fly/framework/controler/navigation/navigation_controller.dart';
+import 'package:food_fly/framework/controller/dash_board/dash_board_controller.dart';
 import 'package:food_fly/ui/utils/theme/app_assets.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import '../../../utils/theme/theme.dart';
@@ -12,9 +12,9 @@ class MyBottomNavigationBar extends ConsumerWidget {
     return BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: AppColors.kPrimary,
-        currentIndex: ref.watch(navigationStateProvider),
+        currentIndex: ref.watch(dashBoardStateProvider),
         onTap: (index) {
-          ref.read(navigationStateProvider.notifier).navigateTo(index);
+          ref.read(dashBoardStateProvider.notifier).navigateTo(index);
         },
         items: [
           BottomNavigationBarItem(
