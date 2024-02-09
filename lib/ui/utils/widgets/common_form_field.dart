@@ -9,14 +9,15 @@ class CommonFormField extends StatelessWidget {
       required this.hintText,
        this.onSaved,
       this.obscureText =false,
-      this.suffixIcon,
+      this.suffixIcon, this.prefixIcon,
       this.validator,
-      this.initialValue, this.controller, this.textInputAction, this.autovalidateMode, this.keyboardType, this.inputFormatters});
+      this.initialValue, this.controller, this.textInputAction, this.autovalidateMode, this.keyboardType, this.inputFormatters, this.onChanged});
 
   final String hintText;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final String? initialValue;
   final TextEditingController? controller;
   final TextInputAction? textInputAction;
@@ -24,6 +25,7 @@ class CommonFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool obscureText;
   final List<TextInputFormatter>? inputFormatters;
+  final void Function(String)? onChanged;
 
 
 
@@ -40,9 +42,11 @@ class CommonFormField extends StatelessWidget {
       keyboardType: keyboardType,
       textAlignVertical: TextAlignVertical.center,
       style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
+      onChanged: onChanged,
       decoration: InputDecoration(
           hintText: hintText,
           suffixIcon: suffixIcon,
+          prefixIcon: prefixIcon,
           hintStyle: AppTextStyle.w4.copyWith(color: AppColors.kGrey),
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
           focusedBorder: OutlineInputBorder(

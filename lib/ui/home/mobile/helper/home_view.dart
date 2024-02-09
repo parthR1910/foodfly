@@ -39,11 +39,12 @@ class HomeView extends ConsumerWidget {
            FoodItemSlider(foodList: foodList,),
           const FoodCategory(),
           Expanded(
-              child: PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: ref.watch(foodCategoryController).pageController,
-            children:  [NewTasteFood(foodList: foodList,), PopularFood(foodList: foodList,), RecommendedFood(foodList: foodList,)],
-          ))
+            child: PageView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          controller: ref.watch(categoryTabController).pageController,
+                          children:  [NewTasteFood(foodList: foodList,), PopularFood(foodList: foodList,), RecommendedFood(foodList: foodList,)],
+                        ),
+          )
 
           // FoodCatPageView(),
         ],

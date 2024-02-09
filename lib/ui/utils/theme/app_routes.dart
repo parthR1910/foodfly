@@ -3,7 +3,9 @@ import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/framework/model/food_item.dart';
 import 'package:food_fly/ui/add_food/add_food.dart';
 import 'package:food_fly/ui/auth/login/mobile/login.dart';
+import 'package:food_fly/ui/edit_profile/edit_profile.dart';
 import 'package:food_fly/ui/splash/mobile/splash.dart';
+import 'package:page_transition/page_transition.dart';
 import '../../auth/register/mobile/register.dart';
 import '../../cancel_order/mobile/cancel_order.dart';
 import '../../cart/mobile/cart.dart';
@@ -29,6 +31,7 @@ class AppRoutes {
   static const String successOrder = '/successOrder';
   static const String findFoods = '/findFoods';
   static const String addFood = '/addFood';
+  static const String editProfile = '/editProfile';
 
 
   static Route onGenerateRoute(RouteSettings settings) {
@@ -64,6 +67,10 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context)=> const FindFoods());
       case addFood:
         return MaterialPageRoute(builder: (context)=> const AddFood());
+
+      case editProfile:
+        return PageTransition(child: const EditProfile(),type: PageTransitionType.rightToLeft,duration: const Duration(milliseconds: 400));
+        // return MaterialPageRoute(builder: (context)=> const EditProfile());
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

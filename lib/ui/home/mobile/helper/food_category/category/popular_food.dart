@@ -11,13 +11,13 @@ class PopularFood extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = foodList.where((element) => element.categoryId! == "Popular").toList();
-    return ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        // final item = availableFoods[index];
-        final item = data[index];
-        return CategoryFoodItem(foodDate: item);
-      },
+    return SingleChildScrollView(
+      child: Column(
+        children: List.generate(data.length, (index) {
+          final item = data[index];
+          return CategoryFoodItem(foodDate: item,);
+        }),
+      ),
     );
   }
 }

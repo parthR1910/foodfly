@@ -15,15 +15,17 @@ class UserFoodMarketDetails extends StatelessWidget {
     ];
     return Consumer(
       builder: (context, ref, child) {
-        return Column(
-            children: List.generate(accountTileList.length, (index){
-              final list = accountTileList[index];
-              return  ListTile(
-                onTap: (){},
-                title: Text(list["title"],style: AppTextStyle.w4.copyWith(fontSize: 14.sp, color: AppColors.kBlack)),
-                trailing:  Icon(list["icon"], size: 20,color: AppColors.kGrey,),
-              );
-            })
+        return SingleChildScrollView(
+          child: Column(
+              children: List.generate(accountTileList.length, (index){
+                final list = accountTileList[index];
+                return  ListTile(
+                  onTap: (){},
+                  title: Text(list["title"],style: AppTextStyle.w4.copyWith(fontSize: 14.sp, color: AppColors.kBlack)),
+                  trailing:  Icon(list["icon"], size: 20,color: AppColors.kGrey,),
+                );
+              })
+          ),
         );
       },
     );

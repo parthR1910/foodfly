@@ -11,7 +11,15 @@ class NewTasteFood extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = foodList.where((element) => element.categoryId! == "New Taste").toList();
-    return ListView.builder(
+    return SingleChildScrollView(
+      child: Column(
+        children: List.generate(data.length, (index) {
+          final item = data[index];
+          return CategoryFoodItem(foodDate: item,);
+        }),
+      ),
+    );
+      ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {
         // final item = availableFoods[index];

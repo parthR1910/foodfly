@@ -36,7 +36,7 @@ class RegisterController extends ChangeNotifier{
     if(response.user != null){
        // ignore: use_build_context_synchronously
       final imgUrl = await StorageService.service.storeUserProfile(context, selectedFile!,fileName!);
-      final user = UserModel(uid: response.user!.uid, email: emailController.text,name: nameController.text,profileImg: imgUrl);
+      final user = UserModel(uid: response.user!.uid, email: emailController.text,name: nameController.text,profileImage: imgUrl);
       FireStoreService.fireStoreService.addUserToFireStore(user);
       selectedFile = null;
       if(context.mounted){

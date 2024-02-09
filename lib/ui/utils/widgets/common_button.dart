@@ -15,7 +15,7 @@ class CommonButton extends StatelessWidget {
       this.icon});
 
   final Widget child;
-  final void Function() onTap;
+  final void Function()? onTap;
   final Color backgroundColor;
   final Color foregroundColor;
   final EdgeInsetsGeometry? padding;

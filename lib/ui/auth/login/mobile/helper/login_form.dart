@@ -69,7 +69,7 @@ class LoginForm extends ConsumerWidget {
               loginWatch.clearForm();
             }
           },
-          padding:  EdgeInsets.symmetric(vertical: 12.h),
+          padding:  EdgeInsets.symmetric(vertical: 12.h,),
           child: Text(
             appString.keySignIn,
             style: AppTextStyle.w5.copyWith(fontSize: 14.sp),

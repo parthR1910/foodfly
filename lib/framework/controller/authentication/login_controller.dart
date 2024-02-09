@@ -34,10 +34,11 @@ class LoginController extends ChangeNotifier{
     loading = true;
     final authResponse = await AuthService.authService.signInWithEmailAndPassword(email:emailController.text, password: passwordController.text);
     if(authResponse.user != null){
+      final uid = AuthService.authService.auth.currentUser!.uid;
+      final userModel = await FireStoreService.fireStoreService.fireStore.collection("User").doc(uid).get().then((value) => UserModel.fromJson(value.data()!));
+      BoxService.boxService.addUserDetailToHive(userModelDetailKey, userModel);
       loading=false;
       notifyListeners();
-      final userModel = await FireStoreService.fireStoreService.getCUserDataFireStore();
-      BoxService.boxService.addUserDetailToHive(userModelDetailKey, userModel);
       if(authResponse.user!.email =="parth123@gmail.com"){
         SharedPrefServices.services.setBool(isAdminKey, true);
         if(context.mounted){

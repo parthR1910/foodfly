@@ -22,7 +22,7 @@ class UserModel {
   @HiveField(4)
   String? phone;
   @HiveField(5)
-  String? profileImg;
+  String? profileImage;
   @HiveField(6)
   String? uid;
 
@@ -31,7 +31,7 @@ class UserModel {
     this.latLong,
     this.name,
     this.phone,
-    this.profileImg,
+    this.profileImage,
     this.uid,
   });
 
@@ -40,7 +40,7 @@ class UserModel {
     latLong: json["latLong"] == null ? null : LatLng.fromJson(json["latLong"]),
     name: json["name"],
     phone: json["phone"],
-    profileImg: json["profileImg"],
+    profileImage: json["profileImage"],
     uid: json["uid"],
   );
 
@@ -49,7 +49,7 @@ class UserModel {
     "latLong": latLong?.toJson(),
     "name": name,
     "phone": phone,
-    "profileImg": profileImg,
+    "profileImage": profileImage,
     "uid": uid,
   };
 }

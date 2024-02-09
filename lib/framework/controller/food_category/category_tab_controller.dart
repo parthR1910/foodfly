@@ -1,11 +1,11 @@
 import '../../../ui/utils/theme/theme.dart';
 
-final foodCategoryController =
-    ChangeNotifierProvider<FoodCategoryController>((ref) {
-  return FoodCategoryController();
+final categoryTabController =
+    ChangeNotifierProvider<CategoryTabController>((ref) {
+  return CategoryTabController();
 });
 
-class FoodCategoryController extends ChangeNotifier {
+class CategoryTabController extends ChangeNotifier {
   PageController pageController = PageController(initialPage: 0);
   navigateToCat(int index) {
     pageController.animateToPage(

@@ -55,7 +55,7 @@ class AuthService {
               uid: user.uid,
               email: user.email,
               name: user.displayName,
-              profileImg: user.photoURL));
+              profileImage: user.photoURL));
     }on FirebaseAuthException catch(e){
       return AuthResponse(error: e.message.toString());
     }

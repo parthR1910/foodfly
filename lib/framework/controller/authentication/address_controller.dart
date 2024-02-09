@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
 
 import '../../../ui/utils/constant/app_const_list.dart';
+import '../../service/auth_service.dart';
 import '../../service/hive_service/box_service.dart';
 
 final addressController = ChangeNotifierProvider((ref) => AddressController());
@@ -65,7 +66,8 @@ class AddressController extends ChangeNotifier {
     final latLong = LatLng(latitude: lat,longitude: long);
     await FireStoreService.fireStoreService.updateFireStore(
         latLong: latLong, phone: "$countryCode${phoneController.text}");
-    final userModel = await FireStoreService.fireStoreService.getCUserDataFireStore();
+    final uid = AuthService.authService.auth.currentUser!.uid;
+    final userModel = await FireStoreService.fireStoreService.fireStore.collection("User").doc(uid).get().then((value) => UserModel.fromJson(value.data()!));
     BoxService.boxService.addUserDetailToHive(userModelDetailKey, userModel);
     loading = false;
     notifyListeners();

@@ -21,7 +21,7 @@ class UserDetails extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               SvgPicture.asset(AppAssets.dottedEclipSvg, height: 115.h, width: 115.w,),
-              userModel.profileImg!=null? Container(
+              userModel.profileImage!=null? Container(
                 height: 100.h,
                 width: 100.w,
                 clipBehavior: Clip.hardEdge,
@@ -29,7 +29,7 @@ class UserDetails extends StatelessWidget {
                   shape: BoxShape.circle
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: userModel.profileImg!,
+                  imageUrl: userModel.profileImage!,
                   placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => const Icon(Icons.person),
                   fit: BoxFit.cover,

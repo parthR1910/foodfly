@@ -1,8 +1,6 @@
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
-import 'package:food_fly/framework/service/hive_service/box_service.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
-import 'package:food_fly/ui/utils/constant/app_const_list.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
@@ -20,7 +18,6 @@ class _HomeState extends ConsumerState<Home> {
 
   // @override
   // void initState() {
-  //   // TODO: implement initState
   //   super.initState();
   //   final user = BoxService.boxService.userModelBox.get(userModelDetailKey);
   //   print(user!.email);
