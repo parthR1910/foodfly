@@ -2,6 +2,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_fly/framework/controller/dash_board/dash_board_controller.dart';
 import 'package:food_fly/ui/utils/theme/app_assets.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
+import '../../../../framework/service/shared_pref_services.dart';
+import '../../../utils/constant/app_const_list.dart';
 import '../../../utils/theme/theme.dart';
 
 class MyBottomNavigationBar extends ConsumerWidget {
@@ -16,7 +18,16 @@ class MyBottomNavigationBar extends ConsumerWidget {
         onTap: (index) {
           ref.read(dashBoardStateProvider.notifier).navigateTo(index);
         },
-        items: [
+        items:SharedPrefServices.services.getBool(isAdminKey)?
+        [
+          BottomNavigationBarItem(
+              icon: homeIcon, activeIcon: homeActiveIcon, label: 'Home'),
+          BottomNavigationBarItem(
+              icon: profileIcon,
+              activeIcon: profileActiveIcon,
+              label: 'Profile'),
+        ]:
+        [
           BottomNavigationBarItem(
               icon: homeIcon, activeIcon: homeActiveIcon, label: 'Home'),
           BottomNavigationBarItem(

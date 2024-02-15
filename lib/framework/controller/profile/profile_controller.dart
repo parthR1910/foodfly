@@ -29,4 +29,27 @@ class ProfileController extends ChangeNotifier{
         break;
     }
   }
+  adminProfileAccountNavigation(int index,BuildContext context){
+    switch(index){
+      case 0:
+        Navigator.pushNamed(context, AppRoutes.editProfile);
+        break;
+      case 1:
+      // Navigator.pushNamed(context, AppRoutes.editProfile);
+        Navigator.push(context, MaterialPageRoute(builder: (_)=>const Scaffold()));
+        break;
+      case 2:
+      // Navigator.pushNamed(context, AppRoutes.editProfile);
+        Navigator.push(context, MaterialPageRoute(builder: (_)=>const Scaffold()));
+        break;
+      case 3:
+      // Navigator.pushNamed(context, AppRoutes.editProfile);
+        Navigator.push(context, MaterialPageRoute(builder: (_)=>const Scaffold()));
+        break;
+      case 4:
+      // Navigator.pushNamed(context, AppRoutes.editProfile);
+        Navigator.push(context, MaterialPageRoute(builder: (_)=>const Scaffold()));
+        break;
+    }
+  }
 }

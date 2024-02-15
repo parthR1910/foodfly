@@ -4,14 +4,12 @@ import 'package:food_fly/firebase_options.dart';
 import 'package:food_fly/framework/model/user/user_model.dart';
 import 'package:food_fly/framework/service/hive_service/box_service.dart';
 import 'package:food_fly/framework/service/hive_service/hive_adapter.dart';
-import 'package:food_fly/ui/edit_profile/edit_profile.dart';
 import 'package:food_fly/ui/utils/constant/app_const_list.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
-import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:hive_flutter/adapters.dart';
-
 import 'framework/service/shared_pref_services.dart';
 
 Future<void> main() async{
@@ -56,8 +54,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: AppRoutes.splashRoute,
       onGenerateRoute: AppRoutes.onGenerateRoute,
-      //   home: const EditProfile(),
       );
     },
     );
 }
+

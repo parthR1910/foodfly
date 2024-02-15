@@ -7,15 +7,15 @@ import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/home/mobile/helper/food_rating_star.dart';
 
 class CategoryFoodItem extends StatelessWidget {
-  final FoodDataModel foodDate;
+  final FoodDataModel foodData;
   const CategoryFoodItem({super.key,
-    required this.foodDate});
+    required this.foodData});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.foodDetail, arguments: foodDate);
+        Navigator.pushNamed(context, AppRoutes.foodDetail, arguments: foodData);
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
@@ -29,7 +29,7 @@ class CategoryFoodItem extends StatelessWidget {
                 borderRadius:BorderRadius.circular(10.r)
               ),
               child:  CachedNetworkImage(
-                imageUrl: foodDate.image!,
+                imageUrl: foodData.image!,
                 placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => const FlutterLogo(),
                 fit: BoxFit.cover,
@@ -41,13 +41,18 @@ class CategoryFoodItem extends StatelessWidget {
               children: [
                 Text(
                   // foodItem.name,
-                  foodDate.name??"",
+                  foodData.name??"",
                   style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
                 ),
-                Text(
-                  'INR ₹ ${foodDate.price}',
-                  style: AppTextStyle.w4
-                      .copyWith(fontSize: 13.sp, color: AppColors.kGrey),
+                Row(
+                  children: [
+                    Text('Price : ',
+                        style: AppTextStyle.w5.copyWith(fontSize: 12.sp)),
+                    foodData.offPrice! == 0? const SizedBox(): Text(foodData.price.toString(),
+                        style: AppTextStyle.w5.copyWith(fontSize: 14.sp,color: AppColors.textGreyColor,decoration: TextDecoration.lineThrough, )),
+                    Text(' ₹ ${foodData.price! - foodData.offPrice!} ',
+                        style: AppTextStyle.w5.copyWith(fontSize: 16.sp,color: AppColors.kPrimary))
+                  ],
                 ),
               ],
             ),

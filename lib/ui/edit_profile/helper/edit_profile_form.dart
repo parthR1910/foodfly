@@ -18,13 +18,13 @@ class EditProfileForm extends ConsumerWidget {
           },
           hintText: "Name ",prefixIcon: const Icon(Icons.person,color: AppColors.kPrimary,),),
         SizedBox(height: 20.h,),
-        CommonFormField(
-            controller: editProfileWatch.emailController,
-            onChanged: (v){
-              editProfileWatch.checkIsUpdateOrNot();
-            },
-            hintText: "email",prefixIcon: const Icon(Icons.email,color: AppColors.kPrimary,)),
-        SizedBox(height: 20.h,),
+        // CommonFormField(
+        //     controller: editProfileWatch.emailController,
+        //     onChanged: (v){
+        //       editProfileWatch.checkIsUpdateOrNot();
+        //     },
+        //     hintText: "email",prefixIcon: const Icon(Icons.email,color: AppColors.kPrimary,)),
+        // SizedBox(height: 20.h,),
         // CommonFormField(
         //     controller: editProfileWatch.addressController,
         //     onChanged: (v){

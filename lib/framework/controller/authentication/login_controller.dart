@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_fly/framework/controller/dash_board/dash_board_controller.dart';
 import 'package:food_fly/framework/model/user/user_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';

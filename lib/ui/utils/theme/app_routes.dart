@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
-import 'package:food_fly/framework/model/food_item.dart';
 import 'package:food_fly/ui/add_food/add_food.dart';
 import 'package:food_fly/ui/auth/login/mobile/login.dart';
 import 'package:food_fly/ui/edit_profile/edit_profile.dart';

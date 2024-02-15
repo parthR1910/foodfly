@@ -1,4 +1,3 @@
-import 'package:food_fly/framework/data/dummy_data.dart';
 
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import '../../../../../../framework/model/food_data_model/food_data_model.dart';
@@ -15,7 +14,7 @@ class PopularFood extends ConsumerWidget {
       child: Column(
         children: List.generate(data.length, (index) {
           final item = data[index];
-          return CategoryFoodItem(foodDate: item,);
+          return CategoryFoodItem(foodData: item,);
         }),
       ),
     );

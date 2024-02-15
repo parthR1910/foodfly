@@ -1,5 +1,4 @@
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
-import 'package:food_fly/framework/model/food_item.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';

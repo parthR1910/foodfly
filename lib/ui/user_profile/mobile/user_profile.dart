@@ -1,10 +1,12 @@
 import 'package:food_fly/framework/controller/authentication/login_controller.dart';
 import 'package:food_fly/framework/model/user/user_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
+import 'package:food_fly/framework/service/shared_pref_services.dart';
 import 'package:food_fly/ui/user_profile/mobile/helper/user_account_item.dart';
 import 'package:food_fly/ui/user_profile/mobile/helper/user_detail.dart';
 import 'package:food_fly/ui/user_profile/mobile/helper/user_food_market_details.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
+import 'package:food_fly/ui/utils/constant/app_const_list.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
@@ -55,7 +57,7 @@ class UserProfile extends ConsumerWidget {
                  UserDetails(userModel: userData,),
                 Expanded(
                   child: DefaultTabController(
-                    length: 2, // Set the number of tabs
+                    length:SharedPrefServices.services.getBool(isAdminKey)?1: 2, // Set the number of tabs
                     child: Padding(
                       padding: EdgeInsets.only(top: 66.h),
                       child: Column(
@@ -64,12 +66,17 @@ class UserProfile extends ConsumerWidget {
                           Row(
                             children: [
                               SizedBox(
-                                width: 300.w,
+                                width:370.w,
                                 child: TabBar(
                                   indicatorColor: AppColors.kBlack,
                                   labelColor: AppColors.kBlack,
                                   unselectedLabelColor: AppColors.kGrey,
-                                  tabs: [
+                                  tabs: SharedPrefServices.services.getBool(isAdminKey)?[
+                                    Tab(
+                                        text: ref
+                                            .watch(appStringController)
+                                            .keyAccount), //
+                                  ]: [
                                     Tab(
                                         text: ref
                                             .watch(appStringController)
@@ -84,11 +91,13 @@ class UserProfile extends ConsumerWidget {
                               const Spacer()
                             ],
                           ),
-                          const Expanded(
+                           Expanded(
                             child: TabBarView(
-                              children: [
-                                UserAccountItem(),
-                                UserFoodMarketDetails(),
+                              children: SharedPrefServices.services.getBool(isAdminKey)?[
+                                const UserAccountItem(),
+                              ]: [
+                                const UserAccountItem(),
+                                const UserFoodMarketDetails(),
                               ],
                             ),
                           ),

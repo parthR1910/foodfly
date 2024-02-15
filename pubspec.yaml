@@ -58,7 +58,7 @@ dependencies:
   dio:
   hive:
   hive_flutter:
-
+  http:
 
   lottie: ^3.0.0
 

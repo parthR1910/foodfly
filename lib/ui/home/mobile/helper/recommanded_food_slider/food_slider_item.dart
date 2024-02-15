@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:food_fly/framework/model/food_item.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
-
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import '../../../../../framework/model/food_data_model/food_data_model.dart';
@@ -24,7 +22,6 @@ class FoodSliderItem extends ConsumerWidget {
       },
       child: Container(
         width: 200.w,
-        height: 210.h,
         clipBehavior: Clip.hardEdge,
         margin: EdgeInsets.only(right: 24.w),
         decoration: BoxDecoration(
@@ -45,7 +42,7 @@ class FoodSliderItem extends ConsumerWidget {
                 color: AppColors.kPrimary,
                 child: Container(
                   color: Colors.blue.shade200,
-                  height: 140.h,
+                  height: 130.h,
                   width: 200.w,
                   child: CachedNetworkImage(
                     imageUrl: foodData.image!,
@@ -65,8 +62,17 @@ class FoodSliderItem extends ConsumerWidget {
                     foodData.name!,
                     style: AppTextStyle.w4.copyWith(fontSize: 16.sp),
                   ),
-                  SizedBox(height: 6.h),
-                  const FoodRatingStar(ratingStar: 4)
+                  SizedBox(height: 4.h),
+                  Row(
+                    children: [
+                      Text('Price : ',
+                          style: AppTextStyle.w5.copyWith(fontSize: 12.sp)),
+                      Text(' ₹ ${foodData.price! - foodData.offPrice!} ',
+                          style: AppTextStyle.w5.copyWith(fontSize: 16.sp,color: AppColors.kPrimary))
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  const FoodRatingStar(ratingStar: 4),
                 ],
               ),
             )

@@ -11,7 +11,7 @@ class FoodItemSlider extends StatelessWidget {
     /// -------- filter data based on the off price tag ----///
     final data = foodList.where((element) => element.offPrice! >= 75).toList();
     return SizedBox(
-        height: 210.h,
+        height: 230.h,
         width: double.infinity,
         child: ListView.builder(
           itemCount: data.length,

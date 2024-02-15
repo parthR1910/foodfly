@@ -16,6 +16,11 @@ class DashBoardStateNotifier extends StateNotifier<int> {
     const UserProfile(),
   ];
 
+  List<Widget> adminScreens = [
+    const Home(),
+    const UserProfile(),
+  ];
+
   void navigateTo(int index) {
     state = index;
   }

@@ -1,4 +1,3 @@
-import 'package:food_fly/framework/data/dummy_data.dart';
 import '../../../../../../framework/model/food_data_model/food_data_model.dart';
 import '../../../../../utils/theme/theme.dart';
 import 'category_item.dart';
@@ -15,17 +14,17 @@ class NewTasteFood extends ConsumerWidget {
       child: Column(
         children: List.generate(data.length, (index) {
           final item = data[index];
-          return CategoryFoodItem(foodDate: item,);
+          return CategoryFoodItem(foodData: item,);
         }),
       ),
     );
-      ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        // final item = availableFoods[index];
-        final item = data[index];
-        return CategoryFoodItem(foodDate: item,);
-      },
-    );
+    //   ListView.builder(
+    //   itemCount: data.length,
+    //   itemBuilder: (context, index) {
+    //     // final item = availableFoods[index];
+    //     final item = data[index];
+    //     return CategoryFoodItem(foodDate: item,);
+    //   },
+    // );
   }
 }
