@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:food_fly/framework/controller/payment_order_detail_controller/payment_order_detail_controller.dart';
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/ui/payment/mobile/helper/payment_order_detail.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
@@ -9,6 +10,7 @@ import 'package:food_fly/ui/utils/theme/app_assets.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
+import 'package:food_fly/ui/utils/widgets/common_loading.dart';
 
 class Payment extends ConsumerStatefulWidget {
   final FoodDataModel foodData;
@@ -23,38 +25,55 @@ class _PaymentMobileState extends ConsumerState<Payment> {
   @override
   Widget build(BuildContext context) {
     mobileDeviceConfig(context);
-    return Scaffold(
-      appBar: appBar,
-      body: _bodyWidget(),
-    );
-  }
+    final paymentOrderDetailWatch = ref.watch(paymentOrderDetailController);
 
-  Widget _bodyWidget() {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-        horizontal: 24.w,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            height: 48.h,
+    return CommonLoading(
+      show: paymentOrderDetailWatch.isLoadingOverlay,
+      child: Scaffold(
+        appBar: appBar,
+        body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(
+            horizontal: 24.w,
           ),
-           PaymentOrderDetail(foodData: widget.foodData,quantity: widget.quantity),
-          SizedBox(
-            height: 64.h,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: 48.h,
+              ),
+              PaymentOrderDetail(foodData: widget.foodData,quantity: widget.quantity),
+              SizedBox(
+                height: 64.h,
+              ),
+              CommonButton(
+                onTap: () {
+                  // paymentOrderDetailWatch.postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!);
+                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashBoard, (route) => false);
+                },
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                child: Text("Add To Cart",
+                  style: AppTextStyle.w5.copyWith(fontSize: 14.sp),
+                ),
+              ),
+              SizedBox(height: 10.h,),
+              CommonButton(
+                onTap: () async{
+                 await paymentOrderDetailWatch.postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!);
+                 if(context.mounted){
+                   Navigator.pushNamed(context, AppRoutes.successOrder);
+                 }
+                },
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                child: Text(
+                  ref.watch(appStringController).keyCheckoutNow,
+                  style: AppTextStyle.w5.copyWith(fontSize: 14.sp),
+                ),
+              ),
+
+
+            ],
           ),
-          CommonButton(
-            onTap: () {
-              Navigator.pushNamed(context, AppRoutes.successOrder);
-            },
-            padding: EdgeInsets.symmetric(vertical: 12.h),
-            child: Text(
-              ref.watch(appStringController).keyCheckoutNow,
-              style: AppTextStyle.w5.copyWith(fontSize: 14.sp),
-            ),
-          ),
-        ],
+        ) ,
       ),
     );
   }

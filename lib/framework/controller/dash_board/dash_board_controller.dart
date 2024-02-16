@@ -24,4 +24,11 @@ class DashBoardStateNotifier extends StateNotifier<int> {
   void navigateTo(int index) {
     state = index;
   }
+
+
+  bool isExitApp = false;
+
+  updateIsExitApp(bool value){
+    isExitApp = value;
+  }
 }

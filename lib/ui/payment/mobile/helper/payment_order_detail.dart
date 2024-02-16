@@ -8,6 +8,7 @@ import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
+import 'package:geocoding/geocoding.dart';
 
 class PaymentOrderDetail extends ConsumerStatefulWidget {
   final FoodDataModel foodData;
@@ -19,25 +20,26 @@ class PaymentOrderDetail extends ConsumerStatefulWidget {
 }
 
 class _PaymentOrderDetailState extends ConsumerState<PaymentOrderDetail> {
-  final user = BoxService.boxService.userModelBox.get(userModelDetailKey)!;
+
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.watch(paymentOrderDetailController).getUserAddress(user!);
+      final user = BoxService.boxService.userModelBox.get(userModelDetailKey)!;
+      ref.read(paymentOrderDetailController).getUserAddress(user);
     });
-  }
 
+  }
   @override
   Widget build(BuildContext context) {
-
     double productPrice = widget.foodData.price! - widget.foodData.offPrice!;
     double driver = 50.0;
     double productTax = productPrice*widget.quantity*(widget.foodData.tax!/100);
     double totalPrice =productTax+driver+productPrice*widget.quantity;
-
+    final user = BoxService.boxService.userModelBox.get(userModelDetailKey)!;
 
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
@@ -141,7 +143,6 @@ class _PaymentOrderDetailState extends ConsumerState<PaymentOrderDetail> {
               ],
             ),
             SizedBox(height: 32.h,),
-            
             /// Deliver TO:
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,60 +173,27 @@ class _PaymentOrderDetailState extends ConsumerState<PaymentOrderDetail> {
                         fontSize: 16.sp,
                         color: AppColors.kGrey
                     ),),
-                    Text(user.phone!.substring(3)??"",style: AppTextStyle.w4.copyWith(
+                    Text(user.phone!.substring(3),style: AppTextStyle.w4.copyWith(
                         fontSize: 16.sp,
                         color: AppColors.kBlack
                     ),)
                   ],
                 ),
                 SizedBox(height: 6.h,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(appStringWatch.keyAddress,style: AppTextStyle.w4.copyWith(
-                        fontSize: 16.sp,
-                        color: AppColors.kGrey
-                    ),),
-                    Text("Setra Duta Palima",style: AppTextStyle.w4.copyWith(
-                        fontSize: 16.sp,
-                        color: AppColors.kBlack
-                    ),)
-                  ],
-                ),
+                Text("${appStringWatch.keyAddress}: ",style: AppTextStyle.w4.copyWith(
+                    fontSize: 16.sp,
+                    color: AppColors.kGrey
+                ),),
                 SizedBox(height: 6.h,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(appStringWatch.keyHouseNo,style: AppTextStyle.w4.copyWith(
-                        fontSize: 16.sp,
-                        color: AppColors.kGrey
-                    ),),
-                    Text("A5 Hook",style: AppTextStyle.w4.copyWith(
-                        fontSize: 16.sp,
-                        color: AppColors.kBlack
-                    ),)
-                  ],
-                ),
-                SizedBox(height: 6.h,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(appStringWatch.keyCity,style: AppTextStyle.w4.copyWith(
-                        fontSize: 16.sp,
-                        color: AppColors.kGrey
-                    ),),
-                    Text("Bandung",style: AppTextStyle.w4.copyWith(
-                        fontSize: 16.sp,
-                        color: AppColors.kBlack
-                    ),)
-                  ],
-                ),
+                Text(paymentOrderDetailWatch.location,style: AppTextStyle.w4.copyWith(
+                    fontSize: 16.sp,
+                    color: AppColors.kBlack
+                ),)
               ],
             )
           ],
         );
       },
-
     );
   }
 }

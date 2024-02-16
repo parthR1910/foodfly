@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/framework/model/user/user_model.dart';
+import 'package:food_fly/framework/model/user_orders/user_orders_model.dart';
 import 'package:food_fly/framework/service/fire_base_singleton.dart';
 import 'auth_service.dart';
 
@@ -62,7 +63,7 @@ class FireStoreService{
 
 
 
-  ///-------------------food -----------///
+  ///-------------------food  admin-----------///
   Future<void> addFoodToFirebase(FoodDataModel newsTable) async {
     await FirebaseSingleTon.firebaseSingleTon.fireStore
         .collection('Foods')
@@ -99,4 +100,18 @@ class FireStoreService{
         .doc(id)
         .delete();
   }
+///-------------------food  admin-----------///
+
+
+
+///-------------------food Orders-----------///
+  
+Future<void> postFoodToFireStore(UserOrdersModel userOrdersModel)async {
+    await fireStoreService.fireStore.collection("UserOrders").doc(userOrdersModel.uOrderId).set(
+        userOrdersModel.toJson()
+    );
+}
+
+///-------------------food Orders-----------///
+
 }

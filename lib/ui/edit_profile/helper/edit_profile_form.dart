@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '../../../framework/controller/profile/edit_profile_controller/edit_profile_controller.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/theme.dart';
@@ -34,6 +36,11 @@ class EditProfileForm extends ConsumerWidget {
         // SizedBox(height: 20.h,),
         CommonFormField(
             controller: editProfileWatch.phoneController,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(10),
+              FilteringTextInputFormatter.digitsOnly,
+            ],
             onChanged: (v){
               editProfileWatch.checkIsUpdateOrNot();
             },
