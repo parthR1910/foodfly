@@ -27,8 +27,6 @@ class RegisterController extends ChangeNotifier{
     notifyListeners();
   }
 
-
-
   signUpWithEmailAndPassword(BuildContext context)async{
     loading = true;
     notifyListeners();

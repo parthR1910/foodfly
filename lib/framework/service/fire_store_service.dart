@@ -9,15 +9,10 @@ import 'auth_service.dart';
 
 
 class FireStoreService{
-
-
   FireStoreService._private();
   static FireStoreService  fireStoreService = FireStoreService._private();
 
   final fireStore = FirebaseFirestore.instance;
-
-
-
 
   Future<void> addUserToFireStore(UserModel user)async{
       await fireStore.collection("User").doc(user.uid).set(
