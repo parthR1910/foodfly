@@ -23,8 +23,8 @@ class ContinueButton extends ConsumerWidget {
            await addressWatch.updateDataToFireStore();
            addressWatch.clearForm();
             // ignore: use_build_context_synchronously
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => const Welcome()));
+           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const Welcome()), (route) => false);
+
           }
         }
 

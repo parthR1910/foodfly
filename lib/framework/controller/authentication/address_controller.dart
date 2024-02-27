@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_fly/framework/model/user/user_model.dart';
+import 'package:food_fly/ui/utils/theme/debug_print.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
 
 import '../../../ui/utils/constant/app_const_list.dart';
@@ -27,6 +28,7 @@ class AddressController extends ChangeNotifier {
 
   getCurrentLocation() async {
     loading = true;
+    notifyListeners();
     final permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
@@ -49,6 +51,7 @@ class AddressController extends ChangeNotifier {
             '${placeMark.name}, ${placeMark.street}, ${placeMark.subLocality}, ${placeMark.country}';
         postalCodeController.text = placeMark.postalCode ?? '';
         cityController.text = '${placeMark.administrativeArea}';
+        notifyListeners();
         loading = false;
         fullAddress = "${addressController.text}, ${cityController.text}, ${postalCodeController.text}";
         notifyListeners();
@@ -57,19 +60,35 @@ class AddressController extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? fcmToken;
+  getFcmToken()async{
+    try {
+      fcmToken = await FirebaseMessaging.instance.getToken();
+    } catch (e) {
+      Future.error("FCM Token error $e");
+    }
+  }
+
   Future updateDataToFireStore() async {
     loading = true;
-    if(lat==null){
+    if(fcmToken!=null){
+      if(lat==null){
+        loading = false;
+        notifyListeners();
+      }
+      final latLong = LatLng(latitude: lat,longitude: long);
+      await FireStoreService.fireStoreService.updateFireStore(
+          latLong: latLong, phone: "$countryCode${phoneController.text}",fcmToken: fcmToken!);
+      final uid = AuthService.authService.auth.currentUser!.uid;
+      final userModel = await FireStoreService.fireStoreService.fireStore.collection("User").doc(uid).get().then((value) => UserModel.fromJson(value.data()!));
+      BoxService.boxService.addUserDetailToHive(userModelDetailKey, userModel);
       loading = false;
-      notifyListeners();
+      fcmToken=null;
+    }else{
+      loading = false;
+      fcmToken=null;
+      kPrint("FCM Token Not found");
     }
-    final latLong = LatLng(latitude: lat,longitude: long);
-    await FireStoreService.fireStoreService.updateFireStore(
-        latLong: latLong, phone: "$countryCode${phoneController.text}");
-    final uid = AuthService.authService.auth.currentUser!.uid;
-    final userModel = await FireStoreService.fireStoreService.fireStore.collection("User").doc(uid).get().then((value) => UserModel.fromJson(value.data()!));
-    BoxService.boxService.addUserDetailToHive(userModelDetailKey, userModel);
-    loading = false;
     notifyListeners();
   }
 
@@ -78,5 +97,6 @@ class AddressController extends ChangeNotifier {
     addressController.clear();
     postalCodeController.clear();
     cityController.clear();
+    fcmToken=null;
   }
 }

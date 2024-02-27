@@ -1,6 +1,7 @@
 
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:food_fly/framework/model/user/user_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
 import 'package:food_fly/ui/utils/widgets/helper.dart';
@@ -36,12 +37,21 @@ class RegisterController extends ChangeNotifier{
     if(response.user != null){
        // ignore: use_build_context_synchronously
       final imgUrl = await StorageService.service.storeUserProfile(context, selectedFile!,fileName!);
-      final user = UserModel(uid: response.user!.uid, email: emailController.text,name: nameController.text,profileImage: imgUrl);
+      final user = UserModel(uid: response.user!.uid, email: emailController.text,name: nameController.text,profileImage: imgUrl,uType: "customer");
       FireStoreService.fireStoreService.addUserToFireStore(user);
       selectedFile = null;
       if(context.mounted){
         SharedPrefServices.services.setBool(isAdminKey, false);
-        Navigator.push(
+        Fluttertoast.showToast(
+            msg: "Successfully registered",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+        Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => const Address(),

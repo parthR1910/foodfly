@@ -26,12 +26,13 @@ class FireStoreService{
   }
 
 
- Future<void> updateFireStore({required LatLng latLong, required String phone}) async {
+ Future<void> updateFireStore({required LatLng latLong, required String phone,required String fcmToken}) async {
    final uid = AuthService.authService.auth.currentUser!.uid;
   await fireStore.collection('User').doc(uid).update(
       {
        "latLong": latLong.toJson(),
-       "phone": phone
+       "phone": phone,
+       "fcmToken": fcmToken
       }
     );
   }

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final userModel = userModelFromJson(jsonString);
-
 import 'package:hive/hive.dart';
 import 'dart:convert';
 
@@ -25,6 +21,10 @@ class UserModel {
   String? profileImage;
   @HiveField(6)
   String? uid;
+  @HiveField(7)
+  String? uType; // New field
+  @HiveField(8)
+  String? fcmToken; // New field
 
   UserModel({
     this.email,
@@ -33,6 +33,8 @@ class UserModel {
     this.phone,
     this.profileImage,
     this.uid,
+    this.uType,
+    this.fcmToken,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -42,6 +44,8 @@ class UserModel {
     phone: json["phone"],
     profileImage: json["profileImage"],
     uid: json["uid"],
+    uType: json["uType"], // Assign the value of uType
+    fcmToken: json["fcmToken"], // Assign the value of fcmToken
   );
 
   Map<String, dynamic> toJson() => {
@@ -51,6 +55,8 @@ class UserModel {
     "phone": phone,
     "profileImage": profileImage,
     "uid": uid,
+    "uType": uType, // Include uType in the JSON output
+    "fcmToken": fcmToken, // Include fcmToken in the JSON output
   };
 }
 

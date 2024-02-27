@@ -1,4 +1,4 @@
-import '../../../ui/utils/theme/theme.dart';
+import 'package:food_fly/ui/utils/theme/theme.dart';
 
 final categoryTabController =
     ChangeNotifierProvider<CategoryTabController>((ref) {
@@ -19,7 +19,7 @@ class CategoryTabController extends ChangeNotifier {
 
   @override
   void dispose() {
-    pageController.dispose();
-    super.dispose();
+
+    pageController.dispose();    super.dispose();
   }
 }

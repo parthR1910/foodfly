@@ -6,7 +6,10 @@ import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 
+import '../../../framework/model/user/user_model.dart';
 import '../../../framework/service/auth_service.dart';
+import '../../../framework/service/fire_store_service.dart';
+import '../../auth/address/mobile/address.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/theme.dart';
 
@@ -71,7 +74,17 @@ class _SplashState extends State<Splash> {
 Future<void> authStatus(BuildContext context)async{
   final user = AuthService.authService.auth.currentUser;
   if(user != null){
-    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashBoard, (route) => false);
+    final userModel = await FireStoreService.fireStoreService.fireStore.collection("User").doc(user.uid).get().then((value) => UserModel.fromJson(value.data()!));
+    if(userModel.latLong !=null && userModel.phone !=null){
+      if(context.mounted){
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashBoard, (route) => false);}
+    }else{
+      if(context.mounted){
+        Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(
+          builder: (context) => const Address()), (route) => false);
+      }
+    }
+
   }else{
     Navigator.pushNamedAndRemoveUntil(context, AppRoutes.signInRoute, (route) => false);
   }
