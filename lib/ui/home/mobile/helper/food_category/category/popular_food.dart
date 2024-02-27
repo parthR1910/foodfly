@@ -9,7 +9,7 @@ class PopularFood extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = foodList.where((element) => element.categoryId! == "Popular").toList();
+    final data = foodList.where((element) => element.deliveredCnt! > 0).toList();
     return SingleChildScrollView(
       child: Column(
         children: List.generate(data.length, (index) {

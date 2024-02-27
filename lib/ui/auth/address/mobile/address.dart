@@ -7,7 +7,6 @@ import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
-import '../../../../framework/service/auth_service.dart';
 import 'helper/address_view.dart';
 
 class Address extends ConsumerStatefulWidget {

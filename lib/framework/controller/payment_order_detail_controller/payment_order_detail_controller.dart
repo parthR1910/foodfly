@@ -20,11 +20,11 @@ class PaymentOrderDetailController extends ChangeNotifier {
   getUserAddress(UserModel user) async {
     isLoading = true;
     List<Placemark> placeMarks = await placemarkFromCoordinates(
-        user.latLong!.longitude!, user.latLong!.longitude!);
+        user.latLong!.latitude!, user.latLong!.longitude!);
     if (placeMarks.isNotEmpty) {
       placeMark = placeMarks.first;
       location =
-          '${placeMark.name}, ${placeMark.street}, ${placeMark.subLocality}, ${placeMark.country}';
+          '${placeMark.name}, ${placeMark.street},\n${placeMark.subLocality}, ${placeMark.administrativeArea}, \ncode: ${placeMark.postalCode}    City: ${placeMark.locality}';
       isLoading = false;
     }
     isLoading = false;

@@ -13,6 +13,7 @@ class FoodDataModel {
   final String? image;
   final double? tax;
   final double? offPrice;
+  final int? deliveredCnt; // New field added
 
   FoodDataModel({
     this.categoryId,
@@ -22,7 +23,8 @@ class FoodDataModel {
     this.description,
     this.image,
     this.tax,
-    this.offPrice
+    this.offPrice,
+    this.deliveredCnt, // Initialize the new field in the constructor
   });
 
   factory FoodDataModel.fromJson(Map<String, dynamic> json) => FoodDataModel(
@@ -34,6 +36,7 @@ class FoodDataModel {
     image: json["image"],
     tax: json["tax"]?.toDouble(),
     offPrice: json["offPrice"]?.toDouble(),
+    deliveredCnt: json["deliveredCnt"], // Parse the new field from JSON
   );
 
   Map<String, dynamic> toJson() => {
@@ -44,6 +47,7 @@ class FoodDataModel {
     "description": description,
     "image": image,
     "tax": tax,
-    "offPrice":offPrice
+    "offPrice": offPrice,
+    "deliveredCnt": deliveredCnt, // Include the new field in JSON
   };
 }

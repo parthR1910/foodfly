@@ -6,6 +6,7 @@ import 'package:food_fly/framework/service/hive_service/box_service.dart';
 import 'package:food_fly/framework/service/hive_service/hive_adapter.dart';
 import 'package:food_fly/ui/utils/constant/app_const_list.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:food_fly/ui/utils/extension/date_time_formater.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/app_theme.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
@@ -16,6 +17,7 @@ Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SharedPrefServices.services.init();
+
   registerHiveAdapters();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

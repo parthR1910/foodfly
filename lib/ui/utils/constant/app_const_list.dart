@@ -1,6 +1,5 @@
 List<String> catagories = [
   "New Taste",
-  "Popular",
   "Recommended",
 ];
 
