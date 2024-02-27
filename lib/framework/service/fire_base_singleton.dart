@@ -10,7 +10,4 @@ class FirebaseSingleTon{
    final firebaseAuth = FirebaseAuth.instance;
    final fireStore = FirebaseFirestore.instance;
    final firebaseStorage = firebase_storage.FirebaseStorage.instance;
-
-
-
 }

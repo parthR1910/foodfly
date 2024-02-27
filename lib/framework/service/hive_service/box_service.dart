@@ -9,8 +9,6 @@ class BoxService{
   late Box<UserModel> userModelBox;
   late Box<LatLng> latLngBox;
 
-
-
   BoxService._private();
   static BoxService boxService = BoxService._private();
 
@@ -18,8 +16,6 @@ class BoxService{
   Future<void> addUserDetailToHive(dynamic userDetailDataKey,UserModel userModel)async{
     await userModelBox.put(userDetailDataKey,userModel);
   }
-
-
 
   Future<void> clearAllBoxes() async {
     await userModelBox.clear();

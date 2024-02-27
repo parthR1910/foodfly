@@ -1,6 +1,6 @@
 # food_fly
 
-A new Flutter project.
+A food delivery app.
 
 ## Getting Started
 
