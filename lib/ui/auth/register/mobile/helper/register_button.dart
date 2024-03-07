@@ -1,5 +1,6 @@
 import 'package:food_fly/framework/controller/authentication/register_controller.dart';
 import 'package:food_fly/ui/auth/login/mobile/login.dart';
+import 'package:food_fly/ui/utils/widgets/helper.dart';
 
 import '../../../../utils/theme/app_colors.dart';
 import '../../../../utils/theme/app_string.dart';
@@ -20,8 +21,13 @@ class RegisterButton extends ConsumerWidget {
         CommonButton(
           onTap: () async{
             if(registerWatch.registerKey.currentState!.validate()) {
-              await registerWatch.signUpWithEmailAndPassword(context);
-              registerWatch.clearForm();
+              if(registerWatch.selectedFile !=null){
+                await registerWatch.signUpWithEmailAndPassword(context);
+                registerWatch.clearForm();
+              }else{
+                showSnackBar(context: context, error: "Please select profile image");
+              }
+
             }
           },
           padding: EdgeInsets.symmetric(vertical: 12.h),

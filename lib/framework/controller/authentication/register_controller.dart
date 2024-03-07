@@ -90,6 +90,7 @@ class RegisterController extends ChangeNotifier{
     emailController.clear();
     passwordController.clear();
     nameController.clear();
+    selectedFile = null;
     notifyListeners();
   }
 }

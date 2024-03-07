@@ -16,17 +16,21 @@ class Register extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     mobileDeviceConfig(context);
-    return CommonLoading(
-      show: ref.watch(registerController).loading,
-      child: GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        appBar: _appBar(ref, context),
-        body: const RegisterView(),
-      ),
-    ),);
+    final registerWatch = ref.watch(registerController);
+    return PopScope(
+      canPop: registerWatch.loading ? false : true,
+      child: CommonLoading(
+        show: registerWatch.loading,
+        child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          appBar: _appBar(ref, context),
+          body: const RegisterView(),
+        ),
+      ),),
+    );
   }
 
   AppBar _appBar(WidgetRef ref, BuildContext context) => AppBar(
