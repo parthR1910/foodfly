@@ -9,7 +9,6 @@ class UserFoodMarketDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Map<String,dynamic>> accountTileList =[
       {"title":"Rate App","icon":Icons.arrow_forward_ios},
-      {"title":"Help Center","icon":Icons.arrow_forward_ios},
       {"title":"Privacy & Policy","icon":Icons.arrow_forward_ios},
       {"title":"Terms & Condition","icon":Icons.arrow_forward_ios},
     ];

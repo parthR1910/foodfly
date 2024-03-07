@@ -14,14 +14,12 @@ class UserAccountItem extends ConsumerWidget {
     List<Map<String,dynamic>> accountTileList =[
       {"title":"Edit Profile","icon":Icons.arrow_forward_ios},
       {"title":"Home Address","icon":Icons.arrow_forward_ios},
-      {"title":"Security","icon":Icons.arrow_forward_ios},
       {"title":"Payment","icon":Icons.arrow_forward_ios},
       {"title":"Contact Us","icon":Icons.arrow_forward_ios},
     ];
 
     List<Map<String,dynamic>> adminAccTileList =[
       {"title":"Edit Profile","icon":Icons.arrow_forward_ios},
-      {"title":"Security","icon":Icons.arrow_forward_ios},
       {"title":"Privacy & Policy","icon":Icons.arrow_forward_ios},
       {"title":"Terms & Condition","icon":Icons.arrow_forward_ios},
       {"title":"Rate App","icon":Icons.arrow_forward_ios},
