@@ -1,4 +1,5 @@
-import 'package:food_fly/ui/cart/mobile/helper/cart_in_progress_item.dart';
+import 'package:food_fly/ui/cart/mobile/helper/cart_cart_item.dart';
+import 'package:food_fly/ui/cart/mobile/helper/cart_up_coming.dart';
 import 'package:food_fly/ui/cart/mobile/helper/cart_past_order_item.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
@@ -20,7 +21,8 @@ class Cart extends ConsumerWidget {
 
   Widget _bodyWidget(WidgetRef ref) =>  SafeArea(
     child: DefaultTabController(
-      length: 2, // Set the number of tabs
+      initialIndex: 0,
+      length: 3,
       child: Padding(
         padding:  EdgeInsets.only(top: 65.h),
         child: Column(
@@ -29,25 +31,36 @@ class Cart extends ConsumerWidget {
             Row(
               children: [
                 SizedBox(
-                  width: 300.w,
+                  height: 50.h,
+                  width: 370.w,
                   child:  TabBar(
-                    indicatorColor: AppColors.kBlack,
-                    labelColor: AppColors.kBlack,
-                    unselectedLabelColor: AppColors.kGrey,
+                    splashFactory: InkSplash.splashFactory,
+                    unselectedLabelColor: Colors.grey,
+                    labelColor: Colors.black,
+                    splashBorderRadius: BorderRadius.circular(8.r),
+                    indicatorColor: Colors.black,
+                    labelPadding: EdgeInsets.symmetric(horizontal: 3.w),
                     tabs: [
-                      Tab(text: ref.watch(appStringController).keyInProgress), // Tab 1 label
-                      Tab(text: ref.watch(appStringController).keyPastOrders), // Tab 2 label
+                      Tab(child: Text(
+                          "Up coming",style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
+                      ),),
+                      Tab(child: Text(
+                        "Cart",style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
+                      ),),
+                      Tab(child: Text(
+                        "Past Orders",style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
+                      ),),
                     ],
                   ),
                 ),
-                const Spacer()
               ],
             ),
             const Expanded(
               child: TabBarView(
                 children: [
-                  CartInProgressItem(),
-                 CartPastOrderItem(),
+                  CartUpComing(),
+                  CartCartItem(),
+                  CartPastOrderItem(),
                 ],
               ),
             ),

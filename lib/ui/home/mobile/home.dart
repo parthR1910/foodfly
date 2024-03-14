@@ -1,10 +1,12 @@
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
+import 'package:food_fly/ui/user_profile/mobile/user_profile.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
+import 'package:page_transition/page_transition.dart';
 import 'helper/home_view.dart';
 
 class Home extends ConsumerStatefulWidget {
@@ -44,14 +46,19 @@ class _HomeState extends ConsumerState<Home> {
             ],
           ),
           actions: [
-            Container(
-              height: 50.h,
-              width: 50.w,
-              margin: EdgeInsets.only(right: 10.w),
-              decoration: BoxDecoration(
-                  color: Colors.amberAccent,
-                  borderRadius: BorderRadius.circular(8.r)),
-              child: const Icon(Icons.person),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, PageTransition(child: const UserProfile(), type: PageTransitionType.bottomToTop));
+              },
+              child: Container(
+                height: 50.h,
+                width: 50.w,
+                margin: EdgeInsets.only(right: 10.w),
+                decoration: BoxDecoration(
+                    color: Colors.amberAccent,
+                    borderRadius: BorderRadius.circular(8.r)),
+                child: const Icon(Icons.person),
+              ),
             ),
           ]),
       body: StreamBuilder<List<FoodDataModel>>(

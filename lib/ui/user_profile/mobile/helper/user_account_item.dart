@@ -16,6 +16,7 @@ class UserAccountItem extends ConsumerWidget {
       {"title":"Home Address","icon":Icons.arrow_forward_ios},
       {"title":"Payment","icon":Icons.arrow_forward_ios},
       {"title":"Contact Us","icon":Icons.arrow_forward_ios},
+      {"title":"Log out","icon":Icons.arrow_forward_ios},
     ];
 
     List<Map<String,dynamic>> adminAccTileList =[
@@ -23,7 +24,9 @@ class UserAccountItem extends ConsumerWidget {
       {"title":"Privacy & Policy","icon":Icons.arrow_forward_ios},
       {"title":"Terms & Condition","icon":Icons.arrow_forward_ios},
       {"title":"Rate App","icon":Icons.arrow_forward_ios},
+      {"title":"Log out","icon":Icons.arrow_forward_ios},
     ];
+
     final profileWatch = ref.watch(profileController);
     return Consumer(
       builder: (context, ref, child) {

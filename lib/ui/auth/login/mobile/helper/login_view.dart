@@ -16,11 +16,11 @@ class LoginView extends ConsumerWidget {
         children: [
            LoginForm(),
           SizedBox(height: 10.h),
-          Text(
-            ref.watch(appStringController).keyORContinueWith,
-            style: AppTextStyle.w3.copyWith(color: AppColors.kGrey),
-          ),
-          const SocialAuthButtons()
+          // Text(
+          //   ref.watch(appStringController).keyORContinueWith,
+          //   style: AppTextStyle.w3.copyWith(color: AppColors.kGrey),
+          // ),
+          // const SocialAuthButtons()
         ],
       ),
     );

@@ -9,6 +9,7 @@ class AppAssets {
   static const String profileIconSvg = 'assets/images/svg/profile.svg';
   static const String homeActiveIconSvg = 'assets/images/svg/home_active.svg';
   static const String orderActiveIconSvg = 'assets/images/svg/order_active.svg';
+  static const String timerClockSvg = 'assets/images/svg/timer_clock.svg';
   static const String profileActiveIconSvg =
       'assets/images/svg/profile_active.svg';
 
@@ -17,6 +18,9 @@ class AppAssets {
   static const String deliveryBoyPng = 'assets/images/png/delivery_boy.png';
   static const String burgerBoyPng = 'assets/images/png/burger_boy.png';
   static const String girlWithFood = 'assets/images/png/girl_with_food.png';
+  static const String timerClockPng = 'assets/images/png/timer_clock.png';
+  static const String tickMarkPng = 'assets/images/png/tick_mark.png';
+
 
 
 }

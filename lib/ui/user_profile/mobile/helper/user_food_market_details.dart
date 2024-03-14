@@ -2,6 +2,8 @@ import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 
+import '../../../../framework/controller/profile/profile_controller.dart';
+
 class UserFoodMarketDetails extends StatelessWidget {
   const UserFoodMarketDetails({super.key});
 
@@ -14,12 +16,16 @@ class UserFoodMarketDetails extends StatelessWidget {
     ];
     return Consumer(
       builder: (context, ref, child) {
+        final profileWatch = ref.watch(profileController);
+
         return SingleChildScrollView(
           child: Column(
               children: List.generate(accountTileList.length, (index){
                 final list = accountTileList[index];
                 return  ListTile(
-                  onTap: (){},
+                  onTap: (){
+                    profileWatch.foodMarketNavigator(index, context);
+                  },
                   title: Text(list["title"],style: AppTextStyle.w4.copyWith(fontSize: 14.sp, color: AppColors.kBlack)),
                   trailing:  Icon(list["icon"], size: 20,color: AppColors.kGrey,),
                 );

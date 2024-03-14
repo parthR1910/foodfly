@@ -5,6 +5,7 @@ import 'package:food_fly/framework/model/user_orders/user_orders_model.dart';
 import 'package:food_fly/framework/service/auth_service.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 final paymentOrderDetailController =
@@ -31,6 +32,12 @@ class PaymentOrderDetailController extends ChangeNotifier {
     notifyListeners();
   }
 
+  String getCurrentDateTime() {
+    var now = DateTime.now();
+    var formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
+    return formatter.format(now);
+  }
+
   Future postUserFoodOrder({required int quantity, required String foodId}) async {
     isLoadingOverlay = true;
     Uuid uuid = const Uuid();
@@ -42,7 +49,9 @@ class PaymentOrderDetailController extends ChangeNotifier {
         paidOrNot: false,
         uOrderId: uniqueId,
         userId: userId,
-        isDelivered: false);
+        isDelivered: false,
+        dateTime:getCurrentDateTime(),
+    );
     await FireStoreService.fireStoreService
         .postFoodToFireStore(userOrdersModel);
     isLoadingOverlay = false;

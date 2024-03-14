@@ -11,6 +11,7 @@ class UserOrdersModel {
   String? userId;
   int? quantity;
   bool? isDelivered;
+  String? dateTime;
 
   UserOrdersModel({
     this.foodId,
@@ -18,7 +19,8 @@ class UserOrdersModel {
     this.uOrderId,
     this.userId,
     this.quantity,
-    this.isDelivered
+    this.isDelivered,
+    this.dateTime
   });
 
   factory UserOrdersModel.fromJson(Map<String, dynamic> json) => UserOrdersModel(
@@ -28,6 +30,7 @@ class UserOrdersModel {
     userId: json["userId"],
     quantity: json["quantity"],
     isDelivered: json["isDelivered"],
+    dateTime: json["dateTime"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +40,6 @@ class UserOrdersModel {
     "userId": userId,
     "quantity": quantity,
     "isDelivered": isDelivered,
+    "dateTime": dateTime,
   };
 }

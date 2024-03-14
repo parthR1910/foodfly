@@ -53,7 +53,7 @@ class AddressController extends ChangeNotifier {
         cityController.text = '${placeMark.administrativeArea}';
         notifyListeners();
         loading = false;
-        fullAddress = "${addressController.text}, ${cityController.text}, ${postalCodeController.text}";
+        fullAddress = "${addressController.text} ${cityController.text} ${postalCodeController.text}";
         notifyListeners();
       }
     }
@@ -78,7 +78,7 @@ class AddressController extends ChangeNotifier {
       }
       final latLong = LatLng(latitude: lat,longitude: long);
       await FireStoreService.fireStoreService.updateFireStore(
-          latLong: latLong, phone: "$countryCode${phoneController.text}",fcmToken: fcmToken!);
+          latLong: latLong, phone: "$countryCode${phoneController.text}",fcmToken: fcmToken!,address: fullAddress);
       final uid = AuthService.authService.auth.currentUser!.uid;
       final userModel = await FireStoreService.fireStoreService.fireStore.collection("User").doc(uid).get().then((value) => UserModel.fromJson(value.data()!));
       BoxService.boxService.addUserDetailToHive(userModelDetailKey, userModel);

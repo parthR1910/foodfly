@@ -68,6 +68,7 @@ class FoodController extends ChangeNotifier{
       price: int.parse(priceController.text),
       image: imgUrl,
       tax: double.parse(selectedTax),
+      deliveredCnt: 0,
       offPrice:selectedOffPrice!=""? double.parse(selectedOffPrice):0
     );
     await FireStoreService.fireStoreService.addFoodToFirebase(foodData);

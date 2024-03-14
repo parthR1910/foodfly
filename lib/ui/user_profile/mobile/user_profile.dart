@@ -20,99 +20,80 @@ class UserProfile extends ConsumerWidget {
     final loginWatch = ref.watch(loginController);
     mobileDeviceConfig(context);
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-         PopupMenuButton(itemBuilder: (context) {
-           return  [
-             PopupMenuItem(child: InkWell(
-               onTap: () {
-                  loginWatch.signOut(context);
-               },
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                   Text("LogOut", style:AppTextStyle.w6.copyWith(fontSize: 14.sp,color: AppColors.kBlack),),
-                   const Icon(Icons.logout,color: AppColors.kPrimary,)
-                 ],
-               ),
-             )),
-
-           ];
-         },)
-        ],
-      ),
-      body: StreamBuilder<UserModel>(
-        stream: FireStoreService.fireStoreService.getCUserDataFireStore(),
-        builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.waiting){
-            return const Center(child: CircularProgressIndicator(),);
-          }
-          else if(snapshot.hasData){
-            final UserModel userData = snapshot.data!;
-            return Column(
-              children: [
-                SizedBox(
-                  height: 26.h,
-                ),
-                 UserDetails(userModel: userData,),
-                Expanded(
-                  child: DefaultTabController(
-                    length:SharedPrefServices.services.getBool(isAdminKey)?1: 2, // Set the number of tabs
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 66.h),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                width:370.w,
-                                child: TabBar(
-                                  indicatorColor: AppColors.kBlack,
-                                  labelColor: AppColors.kBlack,
-                                  unselectedLabelColor: AppColors.kGrey,
-                                  tabs: SharedPrefServices.services.getBool(isAdminKey)?[
-                                    Tab(
-                                        text: ref
-                                            .watch(appStringController)
-                                            .keyAccount), //
-                                  ]: [
-                                    Tab(
-                                        text: ref
-                                            .watch(appStringController)
-                                            .keyAccount), // Tab 1 label
-                                    Tab(
-                                        text: ref
-                                            .watch(appStringController)
-                                            .keyFoodMarket), // Tab 2 label
-                                  ],
+      body: SafeArea(
+        child: StreamBuilder<UserModel>(
+          stream: FireStoreService.fireStoreService.getCUserDataFireStore(),
+          builder: (context, snapshot) {
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return const Center(child: CircularProgressIndicator(),);
+            }
+            else if(snapshot.hasData){
+              final UserModel userData = snapshot.data!;
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 26.h,
+                  ),
+                   UserDetails(userModel: userData,),
+                  Expanded(
+                    child: DefaultTabController(
+                      length:SharedPrefServices.services.getBool(isAdminKey)?1: 2, // Set the number of tabs
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 66.h),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width:370.w,
+                                  child: TabBar(
+                                    indicatorColor: AppColors.kBlack,
+                                    labelColor: AppColors.kBlack,
+                                    unselectedLabelColor: AppColors.kGrey,
+                                    tabs: SharedPrefServices.services.getBool(isAdminKey)?[
+                                      Tab(
+                                          text: ref
+                                              .watch(appStringController)
+                                              .keyAccount), //
+                                    ]: [
+                                      Tab(
+                                          text: ref
+                                              .watch(appStringController)
+                                              .keyAccount), // Tab 1 label
+                                      Tab(
+                                          text: ref
+                                              .watch(appStringController)
+                                              .keyFoodMarket), // Tab 2 label
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const Spacer()
-                            ],
-                          ),
-                           Expanded(
-                            child: TabBarView(
-                              children: SharedPrefServices.services.getBool(isAdminKey)?[
-                                const UserAccountItem(),
-                              ]: [
-                                const UserAccountItem(),
-                                const UserFoodMarketDetails(),
+                                const Spacer()
                               ],
                             ),
-                          ),
-                        ],
+                             Expanded(
+                              child: TabBarView(
+                                children: SharedPrefServices.services.getBool(isAdminKey)?[
+                                  const UserAccountItem(),
+                                ]: [
+                                  const UserAccountItem(),
+                                  const UserFoodMarketDetails(),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                )
-              ],
-            );
+                  )
+                ],
+              );
+            }
+            else{
+             return const Center(child: Text("No User found"),);
+            }
           }
-          else{
-           return const Center(child: Text("No User found"),);
-          }
-        }
+        ),
       )
     );
   }

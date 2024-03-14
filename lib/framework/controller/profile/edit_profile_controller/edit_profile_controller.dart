@@ -20,7 +20,6 @@ class EditProfileController extends ChangeNotifier{
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
-  final addressController = TextEditingController();
   final phoneController = TextEditingController();
 
 
@@ -36,13 +35,6 @@ class EditProfileController extends ChangeNotifier{
     profileImgUrl = user.profileImage!;
     final String number = user.phone!.substring(3);
     phoneController.text = number;
-
-    List<Placemark> placeMarks =
-        await placemarkFromCoordinates(user.latLong!.longitude!, user.latLong!.longitude!);
-    if (placeMarks.isNotEmpty) {
-      Placemark placeMark = placeMarks.first;
-      addressController.text =
-      '${placeMark.name}, ${placeMark.street}, ${placeMark.subLocality}, ${placeMark.country}';}
     notifyListeners();
   }
 
@@ -123,7 +115,6 @@ class EditProfileController extends ChangeNotifier{
     isUpdate = false;
     nameController.clear();
     emailController.clear();
-    addressController.clear();
     phoneController.clear();
     profileImgUrl ="";
     notifyListeners();
