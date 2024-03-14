@@ -2,6 +2,7 @@ import 'package:food_fly/ui/utils/theme/theme.dart';
 
 import '../../../utils/theme/app_colors.dart';
 import '../../../utils/theme/app_text_style.dart';
+import 'cart_tile.dart';
 
 class CartPastOrderItem extends StatelessWidget {
   const CartPastOrderItem({super.key});
@@ -16,20 +17,7 @@ class CartPastOrderItem extends StatelessWidget {
       itemCount: item.length,
       itemBuilder: (context, index) {
         final data = item[index];
-        return Padding(
-          padding:  EdgeInsets.only(top: 10.h),
-          child: ListTile(
-            leading: const FlutterLogo(size: 30,),
-            title: Text(data[0], style: AppTextStyle.w4.copyWith(fontSize: 16.sp,color: AppColors.kBlack),),
-            subtitle: Text(data[1],style: AppTextStyle.w4.copyWith(fontSize: 13.sp,color: AppColors.kGrey)),
-            trailing: Column(
-              children: [
-                Text(data[2],style: AppTextStyle.w4.copyWith(fontSize: 13.sp,color: AppColors.kGrey)),
-                Text(data[3],style: AppTextStyle.w4.copyWith(fontSize: 13.sp,color: AppColors.kLighRed))
-              ],
-            ),
-          ),
-        );
+        return const CartTile();
       },);
   }
 }

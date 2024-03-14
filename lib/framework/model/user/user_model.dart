@@ -25,6 +25,8 @@ class UserModel {
   String? uType; // New field
   @HiveField(8)
   String? fcmToken; // New field
+  @HiveField(9)
+  String? address; // New field
 
   UserModel({
     this.email,
@@ -35,17 +37,21 @@ class UserModel {
     this.uid,
     this.uType,
     this.fcmToken,
+    this.address,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     email: json["email"],
-    latLong: json["latLong"] == null ? null : LatLng.fromJson(json["latLong"]),
+    latLong: json["latLong"] == null
+        ? null
+        : LatLng.fromJson(json["latLong"]),
     name: json["name"],
     phone: json["phone"],
     profileImage: json["profileImage"],
     uid: json["uid"],
-    uType: json["uType"], // Assign the value of uType
-    fcmToken: json["fcmToken"], // Assign the value of fcmToken
+    uType: json["uType"],
+    fcmToken: json["fcmToken"],
+    address: json["address"], // Assign the value of address
   );
 
   Map<String, dynamic> toJson() => {
@@ -55,8 +61,9 @@ class UserModel {
     "phone": phone,
     "profileImage": profileImage,
     "uid": uid,
-    "uType": uType, // Include uType in the JSON output
-    "fcmToken": fcmToken, // Include fcmToken in the JSON output
+    "uType": uType,
+    "fcmToken": fcmToken,
+    "address": address, // Include address in the JSON output
   };
 }
 

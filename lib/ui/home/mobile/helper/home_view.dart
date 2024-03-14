@@ -14,7 +14,7 @@ import 'food_category/category/recommanded_food.dart';
 import 'food_category/food_category.dart';
 
 class HomeView extends ConsumerWidget {
-  final List<FoodDataModel> foodList;
+    final List<FoodDataModel> foodList;
   const HomeView({super.key,required this.foodList});
 
   @override
