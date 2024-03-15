@@ -27,7 +27,7 @@ class UserAccountItem extends ConsumerWidget {
       {"title":"Log out","icon":Icons.arrow_forward_ios},
     ];
 
-    final profileWatch = ref.watch(profileController);
+    final profileWatch = ref.read(profileController);
     return Consumer(
       builder: (context, ref, child) {
         return SingleChildScrollView(

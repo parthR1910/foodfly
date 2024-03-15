@@ -1,14 +1,13 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_fly/ui/utils/theme/app_assets.dart';
 import 'package:food_fly/ui/utils/widgets/common_button.dart';
-import 'package:hive/hive.dart';
-
 import '../../../utils/theme/app_colors.dart';
 import '../../../utils/theme/app_text_style.dart';
 import '../../../utils/theme/theme.dart';
 
 class CartTile extends StatelessWidget {
-  const CartTile({super.key});
+  const CartTile({super.key, this.orderStatusColor, this.orderStatusText});
+  final Color? orderStatusColor;
+  final String? orderStatusText;
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +64,8 @@ class CartTile extends StatelessWidget {
                       SizedBox(height: 6.h,),
                       Row(
                         children: [
-                          Image.asset(AppAssets.tickMarkPng,height: 30,width: 30,),
-                          Text("Order on way",style: AppTextStyle.w5.copyWith(fontSize: 11.sp,color: AppColors.kLightGreen)),
+                          Image.asset(AppAssets.tickMarkPng,height: 30,width: 30,color: orderStatusColor,),
+                          Text(orderStatusText??"Order on way",style: AppTextStyle.w5.copyWith(fontSize: 11.sp,color:orderStatusColor?? AppColors.kLightGreen)),
                         ],
                       ),
 

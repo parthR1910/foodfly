@@ -14,18 +14,18 @@ class LogoutBottomSheet extends ConsumerStatefulWidget{
 
 class _LogoutBottomSheet extends ConsumerState<LogoutBottomSheet> with SingleTickerProviderStateMixin {
 
-  late AnimationController deleteController;
+  // late AnimationController deleteController;
 
-  @override
-  void initState() {
-    super.initState();
-    deleteController = AnimationController(vsync: this,duration: const Duration(seconds: 2));
-  }
-  @override
-  void deactivate() {
-    super.deactivate();
-    deleteController.dispose();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   deleteController = AnimationController(vsync: this,duration: const Duration(seconds: 2));
+  // }
+  // @override
+  // void deactivate() {
+  //   super.deactivate();
+  //   deleteController.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +44,8 @@ class _LogoutBottomSheet extends ConsumerState<LogoutBottomSheet> with SingleTic
             child: Align(
                 alignment: Alignment.center,
                 child: Lottie.asset(
-                  controller: deleteController,
                   "assets/lottie/logout.json",
-                  onLoaded: (_){
-                    deleteController.repeat();
-                  },
+                  repeat: true,
                   fit: BoxFit.fill,)),
           ),
           Row(

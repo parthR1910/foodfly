@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_fly/framework/model/food_cart_model/food_cart_model.dart';
 import 'package:food_fly/framework/model/user/user_model.dart';
 import 'package:food_fly/framework/model/user_orders/user_orders_model.dart';
 import 'package:food_fly/framework/service/auth_service.dart';
@@ -40,6 +41,7 @@ class PaymentOrderDetailController extends ChangeNotifier {
 
   Future postUserFoodOrder({required int quantity, required String foodId}) async {
     isLoadingOverlay = true;
+    notifyListeners();
     Uuid uuid = const Uuid();
     String uniqueId = uuid.v4();
     final userId = AuthService.authService.auth.currentUser!.uid;
@@ -53,7 +55,29 @@ class PaymentOrderDetailController extends ChangeNotifier {
         dateTime:getCurrentDateTime(),
     );
     await FireStoreService.fireStoreService
-        .postFoodToFireStore(userOrdersModel);
+        .postUserFoodOrderToFireStore(userOrdersModel);
     isLoadingOverlay = false;
+    notifyListeners();
+  }
+
+  Future postUserFoodCartOrder({required int quantity, required String foodId}) async {
+    isLoadingOverlay = true;
+    notifyListeners();
+    Uuid uuid = const Uuid();
+    String uniqueId = uuid.v4();
+    final userId = AuthService.authService.auth.currentUser!.uid;
+    final FoodCartModel foodCartModel = FoodCartModel(
+      quantity: quantity,
+      foodId: foodId,
+      paidOrNot: false,
+      uOrderId: uniqueId,
+      userId: userId,
+      isDelivered: false,
+      dateTime:getCurrentDateTime(),
+    );
+    await FireStoreService.fireStoreService
+        .postUserFoodOrderCartToFireStore(foodCartModel);
+    isLoadingOverlay = false;
+    notifyListeners();
   }
 }

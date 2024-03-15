@@ -1,8 +1,8 @@
-import 'package:food_fly/ui/utils/theme/app_colors.dart';
-import 'package:food_fly/ui/utils/theme/app_string.dart';
-import 'package:food_fly/ui/utils/theme/app_text_style.dart';
+import 'package:food_fly/ui/auth/login/mobile/helper/social_button.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
-import 'social_button.dart';
+import '../../../../utils/theme/app_colors.dart';
+import '../../../../utils/theme/app_string.dart';
+import '../../../../utils/theme/app_text_style.dart';
 import 'login_form.dart';
 
 class LoginView extends ConsumerWidget {
@@ -16,11 +16,11 @@ class LoginView extends ConsumerWidget {
         children: [
            LoginForm(),
           SizedBox(height: 10.h),
-          // Text(
-          //   ref.watch(appStringController).keyORContinueWith,
-          //   style: AppTextStyle.w3.copyWith(color: AppColors.kGrey),
-          // ),
-          // const SocialAuthButtons()
+          Text(
+            ref.watch(appStringController).keyORContinueWith,
+            style: AppTextStyle.w3.copyWith(color: AppColors.kGrey),
+          ),
+          const SocialAuthButtons()
         ],
       ),
     );

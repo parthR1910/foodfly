@@ -46,10 +46,13 @@ class _PaymentMobileState extends ConsumerState<Payment> {
                 height: 64.h,
               ),
               CommonButton(
-                onTap: () {
-                  // paymentOrderDetailWatch.postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!);
-                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.dashBoard, (route) => false);
-                },
+                onTap: () async {
+                  await paymentOrderDetailWatch.postUserFoodCartOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!);
+                  if(context.mounted) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, AppRoutes.dashBoard, (route) => false);
+                  }
+                  },
                 padding: EdgeInsets.symmetric(vertical: 12.h),
                 child: Text("Add To Cart",
                   style: AppTextStyle.w5.copyWith(fontSize: 14.sp),
