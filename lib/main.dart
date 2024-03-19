@@ -26,8 +26,7 @@ BoxService.boxService.userModelBox =await Hive.openBox<UserModel>(userModelBoxKe
 BoxService.boxService.latLngBox =await Hive.openBox<LatLng>(latLngBoxKey);
   runApp(ProviderScope(
       child: EasyLocalization(
-          supportedLocales: const [
-        Locale('en'),],
+          supportedLocales: const [Locale('en'),],
           path: 'assets/lang',
           useOnlyLangCode: true,
           startLocale: const Locale('en'),

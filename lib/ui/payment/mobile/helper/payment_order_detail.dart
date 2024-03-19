@@ -8,7 +8,6 @@ import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
-import 'package:geocoding/geocoding.dart';
 
 class PaymentOrderDetail extends ConsumerStatefulWidget {
   final FoodDataModel foodData;

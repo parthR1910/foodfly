@@ -21,9 +21,11 @@ class CartCartItem extends StatelessWidget {
             final uid = AuthService.authService.auth.currentUser!.uid;
             final foodCartList = snapshot.data!;
             final List<String> cUserFoodIdList = [];
+            final List<int> foodQuantity = [];
             for (var i in foodCartList) {
               if (i.userId == uid) {
                 cUserFoodIdList.add(i.foodId!);
+                foodQuantity.add(i.quantity!);
               }
             }
             return StreamBuilder(
@@ -48,7 +50,14 @@ class CartCartItem extends StatelessWidget {
                    ListView.builder(
                     itemCount: foodDataModel.length,
                     itemBuilder: (context, index) {
-                      return const CartTile(
+                      final foodData = foodDataModel[index];
+                      final foodQnt = foodQuantity[index];
+                      return  CartTile(
+                        buttonText: "Order now",
+                        quantity: foodQnt,
+                        onButtonTap: (){},
+                        backgroundColor: AppColors.kPrimary,
+                        foodData: foodData,
                         orderStatusText: "Order this food",
                         orderStatusColor: AppColors.orangeColor,
                       );

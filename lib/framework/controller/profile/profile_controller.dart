@@ -50,12 +50,6 @@ class ProfileController extends ChangeNotifier {
           ref.watch(loginController).signOut(context);
           },
         ).show();
-        // showBottomSheet(
-        //     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-        //     context: context,
-        //     builder: (context) => SizedBox(
-        //         width: double.infinity.w,
-        //         child: const LogoutBottomSheet()));
         break;
     }
   }
@@ -78,13 +72,17 @@ class ProfileController extends ChangeNotifier {
             context, MaterialPageRoute(builder: (_) => const Scaffold()));
         break;
       case 4:
-        showModalBottomSheet(
-            shape:
-                const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-            context: context,
-            builder: (context) => SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: const LogoutBottomSheet()));
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.question,
+          animType: AnimType.rightSlide,
+          title: 'Logout!',
+          desc: 'Are you sure you want to logout?',
+          btnCancelOnPress: () {},
+          btnOkOnPress: () {
+            ref.watch(loginController).signOut(context);
+          },
+        ).show();
         break;
     }
   }

@@ -1,7 +1,10 @@
+import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/ui/cart/mobile/helper/cart_tile.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
+
+import '../../../../framework/service/fire_store_service.dart';
 
 class CartUpComing extends StatelessWidget {
   const CartUpComing({super.key});
@@ -14,20 +17,24 @@ class CartUpComing extends StatelessWidget {
       ["Es Tong-Tong","2 items • IDR 900.500"],
       ["Bwang Puttie","10 items • IDR 450.000"],
     ];
-    return ListView.builder(
-      itemCount: item.length,
-      itemBuilder: (context, index) {
-        final data = item[index];
-        return CartTile();
-      // return Padding(
-      //   padding:  EdgeInsets.only(top: 10.h),
-      //   child: ListTile(
-      //     leading: const FlutterLogo(size: 30,),
-      //     title: Text(data[0], style: AppTextStyle.w4.copyWith(fontSize: 16.sp,color: AppColors.kBlack),),
-      //     subtitle: Text(data[1],style: AppTextStyle.w4.copyWith(fontSize: 13.sp,color: AppColors.kGrey)),
-      //   ),
-      // );
-    },);
+    return StreamBuilder(
+        stream: FireStoreService.fireStoreService.getFoodDataFireStore(),
+      builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return const Center(child: CircularProgressIndicator(),);
+          } else if(snapshot.hasData){
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final foodData = snapshot.data![index];
+                return  CartTile(foodData: foodData,);
+              },);
+          }else{
+            return const Center(child: Text("Order food now"),);
+          }
+
+      }
+    );
 
   }
 }

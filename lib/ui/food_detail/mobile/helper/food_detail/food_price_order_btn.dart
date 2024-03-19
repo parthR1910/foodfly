@@ -50,7 +50,7 @@ class FoodPriceAndOrderButton extends ConsumerWidget {
         final appString = ref.watch(appStringController);
         return CommonButton(
             backgroundColor: const Color(0xFF241719),
-            padding: EdgeInsets.symmetric(horizontal: 44.w, vertical: 12.h),
+            padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 12.h),
             child: Text(appString.keyOrderNow),
             onTap: () {
               int quantity = ref.watch(quantityStateProvider);

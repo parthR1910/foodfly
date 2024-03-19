@@ -1,4 +1,5 @@
 import 'package:food_fly/ui/auth/login/mobile/helper/social_button.dart';
+import 'package:food_fly/ui/utils/theme/app_assets.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import '../../../../utils/theme/app_colors.dart';
 import '../../../../utils/theme/app_string.dart';
@@ -14,12 +15,12 @@ class LoginView extends ConsumerWidget {
       padding: EdgeInsets.only(top: 62.h, left: 24.w, right: 24.w),
       child: Column(
         children: [
+          Image.asset(AppAssets.burgerBoyPng,height: 250.h,width: 300.w,),
            LoginForm(),
-          SizedBox(height: 10.h),
-          Text(
-            ref.watch(appStringController).keyORContinueWith,
-            style: AppTextStyle.w3.copyWith(color: AppColors.kGrey),
-          ),
+          // Text(
+          //   ref.watch(appStringController).keyORContinueWith,
+          //   style: AppTextStyle.w3.copyWith(color: AppColors.kGrey),
+          // ),
           const SocialAuthButtons()
         ],
       ),

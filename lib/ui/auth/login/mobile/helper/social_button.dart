@@ -18,13 +18,13 @@ class SocialAuthButtons extends ConsumerWidget {
     final loginWatch = ref.watch(loginController);
     return Column(
       children: [
-        SizedBox(
-          height: 20.h,
-        ),
-        socialLogin(appString, loginWatch, context),
-        SizedBox(
-          height: 24.h,
-        ),
+        // SizedBox(
+        //   height: 20.h,
+        // ),
+        // socialLogin(appString, loginWatch, context),
+        // SizedBox(
+        //   height: 24.h,
+        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
