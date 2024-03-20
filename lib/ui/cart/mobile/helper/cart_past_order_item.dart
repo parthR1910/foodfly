@@ -1,8 +1,9 @@
 import 'package:food_fly/ui/utils/theme/theme.dart';
-
+import '../../../../framework/model/food_data_model/food_data_model.dart';
+import '../../../../framework/model/user_orders/user_orders_model.dart';
+import '../../../../framework/service/auth_service.dart';
 import '../../../../framework/service/fire_store_service.dart';
 import '../../../utils/theme/app_colors.dart';
-import '../../../utils/theme/app_text_style.dart';
 import 'cart_tile.dart';
 
 class CartPastOrderItem extends StatelessWidget {
@@ -10,27 +11,59 @@ class CartPastOrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List item =[
-      ["Kari Sleman","1 item • IDR 289.000","Jun 12, 14:00",""],
-      ["Avosalado","1 item • IDR 6.000.000","Mei 2, 09:00","Cancelled"],
-    ];
-    return StreamBuilder(
-        stream: FireStoreService.fireStoreService.getFoodDataFireStore(),
-        builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.waiting){
-            return const Center(child: CircularProgressIndicator(),);
-          } else if(snapshot.hasData){
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final foodData = snapshot.data![index];
-                return  CartTile(foodData: foodData,);
-              },);
-          }else{
-            return const Center(child: Text("Order food now"),);
-          }
 
-        }
-    );
+    return StreamBuilder<List<UserOrdersModel>>(
+        stream: FireStoreService.fireStoreService.getUserFoodOrdersFireStore(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator(),);
+          } else if (snapshot.hasData) {
+            final uid = AuthService.authService.auth.currentUser!.uid;
+            final currentUserPastOderList = snapshot.data!.where((element) => element.userId == uid && element.isDelivered!).toList();
+
+            return ListView.builder(
+              itemCount: currentUserPastOderList.length,
+              itemBuilder: (context, index) {
+                final order = currentUserPastOderList[index];
+                return StreamBuilder(
+                stream: FireStoreService.fireStoreService.getFoodDataByIfFireStore(order.foodId!),
+                builder: (context, snapshot) {
+                  ///-------------- LOADING-----------///
+                  if(snapshot.connectionState == ConnectionState.waiting){
+                    return const Center(child: CircularProgressIndicator(),);
+                  }
+
+                  /// -------------- DATA LOADED -------///
+                  else if(snapshot.hasData){
+                   final foodData = snapshot.data!;
+                    return currentUserPastOderList.isEmpty?
+                    const Center(child: Text("ADD data to cart"),):
+                    CartTile(
+                      buttonText: "Order again",
+                      quantity: order.quantity??1,
+                      dateTime: order.dateTime,
+                      onButtonTap: (){},
+                      backgroundColor: AppColors.kLightGreen,
+                      foodData: foodData,
+                      orderStatusText: "Successfully delivered",
+                      orderStatusColor: AppColors.kLightGreen,
+                    );
+                  }
+
+                  ///------------ NO DATA FOUND ----------- ///
+                  else{
+                    return const Center(
+                      child: Text("No data available"),
+                    );
+                  }
+                },
+              );
+            },);
+          } else {
+            return const Center(
+              child: Text("No data available"),
+            );
+          }
+        });
   }
 }

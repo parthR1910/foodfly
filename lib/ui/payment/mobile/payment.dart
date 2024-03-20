@@ -1,4 +1,8 @@
 import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:food_fly/framework/model/payment_model/payment_model.dart';
+import 'package:food_fly/framework/service/auth_service.dart';
+import 'package:food_fly/framework/service/fire_store_service.dart';
 import "package:http/http.dart" as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,13 +42,26 @@ class _PaymentMobileState extends ConsumerState<Payment> {
 
   void handlerPaymentSuccess(PaymentSuccessResponse response) async{
     msg = "SUCCESS: ${response.paymentId}";
+    // print(response.paymentId);
     Navigator.pop(context);
+
+    double productPrice = widget.foodData.price! - widget.foodData.offPrice!;
+    double driver = 50.0;
+    double productTax = productPrice*widget.quantity*(widget.foodData.tax!/100);
+    double totalPrice =productTax+driver+productPrice*widget.quantity;
+
     await ref.watch(paymentOrderDetailController).postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!);
+    String uid = AuthService.authService.auth.currentUser!.uid;
+    var now = DateTime.now();
+    var formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
+    PaymentModel paymentModel = PaymentModel(amount: totalPrice, foodId: widget.foodData.foodId, payType: "online", paymentId: response.paymentId, time: formatter.format(now), transactionId: response.paymentId, userId: uid);
+    await FireStoreService.fireStoreService.setPaymentToFirebase(paymentModel: paymentModel);
     if(context.mounted){
       Navigator.pushNamed(context, AppRoutes.successOrder);
     }
     print(msg);
   }
+
 
   void handlerErrorFailure(PaymentFailureResponse response) {
     msg = "ERROR: ${response.code} - ${jsonDecode(response.message ?? '')['error']['description']}";
@@ -113,6 +130,7 @@ class _PaymentMobileState extends ConsumerState<Payment> {
   Widget build(BuildContext context) {
     mobileDeviceConfig(context);
     final paymentOrderDetailWatch = ref.watch(paymentOrderDetailController);
+
     double productPrice = widget.foodData.price! - widget.foodData.offPrice!;
     double driver = 50.0;
     double productTax = productPrice*widget.quantity*(widget.foodData.tax!/100);

@@ -7,7 +7,7 @@ import '../../../utils/theme/app_text_style.dart';
 import '../../../utils/theme/theme.dart';
 
 class CartTile extends StatelessWidget {
-  const CartTile({super.key, this.orderStatusColor, this.orderStatusText, this.foodData, this.backgroundColor, this.textStyle, this.onButtonTap,  this.quantity =1, this.buttonText});
+  const CartTile({super.key, this.orderStatusColor, this.orderStatusText, this.foodData, this.backgroundColor, this.textStyle, this.onButtonTap,  this.quantity =1, this.buttonText, this.remainTime, this.dateTime});
   final FoodDataModel? foodData;
   final Color? orderStatusColor;
   final Color? backgroundColor;
@@ -15,6 +15,8 @@ class CartTile extends StatelessWidget {
   final String? orderStatusText;
   final String? buttonText;
   final TextStyle? textStyle;
+  final String? remainTime;
+  final String? dateTime;
   final int quantity;
 
   @override
@@ -63,21 +65,21 @@ class CartTile extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(foodData!.name ??"Berry Toast",style: AppTextStyle.w5.copyWith(fontSize: 16.sp)),
-                          Text("\$${totalPrice.toStringAsFixed(2)}",style: AppTextStyle.w5.copyWith(fontSize: 18.sp,color: AppColors.kPrimary)),
+                          Expanded(child: Text(foodData!.name ??"Berry Toast",style: AppTextStyle.w5.copyWith(fontSize: 16.sp))),
+                          Text("₹ ${totalPrice.toStringAsFixed(2)}",style: AppTextStyle.w5.copyWith(fontSize: 18.sp,color: AppColors.kPrimary)),
                         ],
                       ),
                         SizedBox(height: 6.h,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("10 september 2024",style: AppTextStyle.w4.copyWith(fontSize: 12.sp,color: AppColors.textGreyColor)),
-                            Row(
+                            Text(dateTime??"10 september 2024",style: AppTextStyle.w4.copyWith(fontSize: 12.sp,color: AppColors.textGreyColor)),
+                            remainTime!=null?Row(
                               children: [
                                 Image.asset(AppAssets.timerClockPng,height: 25.h,width: 25.w,),
                                 Text("20 min",style: AppTextStyle.w4.copyWith(fontSize: 12.sp,color: AppColors.kBlack)),
                               ],
-                            ),
+                            ):const SizedBox(),
                           ],
                         ),
                         SizedBox(height: 6.h,),

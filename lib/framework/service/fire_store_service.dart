@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_fly/framework/model/food_cart_model/food_cart_model.dart';
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
+import 'package:food_fly/framework/model/payment_model/payment_model.dart';
 import 'package:food_fly/framework/model/user/user_model.dart';
 import 'package:food_fly/framework/model/user_orders/user_orders_model.dart';
 import 'package:food_fly/framework/service/fire_base_singleton.dart';
@@ -93,6 +94,13 @@ class FireStoreService {
     return foodData;
   }
 
+
+  Stream<FoodDataModel> getFoodDataByIfFireStore(String id) {
+    final foodData = fireStore.collection("Foods").doc(id).snapshots().map((event) =>
+        FoodDataModel.fromJson(event.data()!));
+    return foodData;
+  }
+
   Future<void> deleteFoodToFirebase({required String id}) async {
     await FirebaseSingleTon.firebaseSingleTon.fireStore
         .collection('Foods')
@@ -129,7 +137,25 @@ class FireStoreService {
         event.docs.map((e) => FoodCartModel.fromJson(e.data())).toList());
     return foodData;
   }
+  Stream<List<UserOrdersModel>> getUserFoodOrdersFireStore() {
+    final foodData = fireStore.collection("UserOrders").snapshots().map((
+        event) =>
+        event.docs.map((e) => UserOrdersModel.fromJson(e.data())).toList());
+    return foodData;
+  }
 
 ///------------------------food to cart ----------------------///
 
+
+
+///------------------------- Payment -------------------------///
+
+  Future<void> setPaymentToFirebase({required PaymentModel paymentModel}) async{
+    await fireStoreService.fireStore.collection("userPayment").doc(
+        paymentModel.paymentId).set(
+        paymentModel.toJson()
+    );
+  }
+
+///------------------------- Payment -------------------------///
 }

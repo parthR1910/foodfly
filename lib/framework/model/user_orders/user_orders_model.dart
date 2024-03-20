@@ -12,6 +12,7 @@ class UserOrdersModel {
   int? quantity;
   bool? isDelivered;
   String? dateTime;
+  String? deliveryBoyId;
 
   UserOrdersModel({
     this.foodId,
@@ -20,7 +21,8 @@ class UserOrdersModel {
     this.userId,
     this.quantity,
     this.isDelivered,
-    this.dateTime
+    this.dateTime,
+    this.deliveryBoyId
   });
 
   factory UserOrdersModel.fromJson(Map<String, dynamic> json) => UserOrdersModel(
@@ -31,6 +33,7 @@ class UserOrdersModel {
     quantity: json["quantity"],
     isDelivered: json["isDelivered"],
     dateTime: json["dateTime"],
+    deliveryBoyId: json["deliveryBoyId"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -41,5 +44,6 @@ class UserOrdersModel {
     "quantity": quantity,
     "isDelivered": isDelivered,
     "dateTime": dateTime,
+    "deliveryBoyId": deliveryBoyId ??"",
   };
 }

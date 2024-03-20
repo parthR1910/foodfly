@@ -11,6 +11,7 @@ class CartCartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // stream: FireStoreService.fireStoreService.getUserFoodCartOrdersFireStore(),
 
     return StreamBuilder<List<FoodCartModel>>(
         stream: FireStoreService.fireStoreService.getUserFoodCartOrdersFireStore(),
@@ -19,59 +20,43 @@ class CartCartItem extends StatelessWidget {
             return const Center(child: CircularProgressIndicator(),);
           } else if (snapshot.hasData) {
             final uid = AuthService.authService.auth.currentUser!.uid;
-            final foodCartList = snapshot.data!;
-            final List<String> cUserFoodIdList = [];
-            final List<int> foodQuantity = [];
-            for (var i in foodCartList) {
-              if (i.userId == uid) {
-                cUserFoodIdList.add(i.foodId!);
-                foodQuantity.add(i.quantity!);
-              }
-            }
-            return StreamBuilder(
-              stream: FireStoreService.fireStoreService.getFoodDataFireStore(),
-              builder: (context, snapshot) {
-                ///-------------- LOADING-----------///
-                if(snapshot.connectionState == ConnectionState.waiting){
-                  return const Center(child: CircularProgressIndicator(),);
-                }
-
-                /// -------------- DATA LOADED -------///
-                else if(snapshot.hasData){
-                  List<FoodDataModel> foodDataModel = [];
-                  ///------- food list ----///
-                for(var foodData in snapshot.data!){
-                  for(var cUserFid in cUserFoodIdList){
-                    if(cUserFid == foodData.foodId){
-                      foodDataModel.add(foodData);
-                    }}}
-                  return foodDataModel.isEmpty?
-                      const Center(child: Text("ADD data to cart"),):
-                   ListView.builder(
-                    itemCount: foodDataModel.length,
-                    itemBuilder: (context, index) {
-                      final foodData = foodDataModel[index];
-                      final foodQnt = foodQuantity[index];
-                      return  CartTile(
-                        buttonText: "Order now",
-                        quantity: foodQnt,
-                        onButtonTap: (){},
-                        backgroundColor: AppColors.kPrimary,
-                        foodData: foodData,
-                        orderStatusText: "Order this food",
-                        orderStatusColor: AppColors.orangeColor,
-                      );
-                    },);
-                }
-
-                ///------------ NO DATA FOUND ----------- ///
-                else{
-                  return const Center(
-                    child: Text("No data available"),
-                  );
-                }
-              },
-            );
+            final foodCartList = snapshot.data!.where((element) => element.userId == uid).toList();
+            return ListView.builder(
+              itemCount: foodCartList.length,
+              itemBuilder: (context, index) {
+                final order = foodCartList[index];
+              return StreamBuilder(
+                stream: FireStoreService.fireStoreService.getFoodDataByIfFireStore(order.foodId!),
+                builder: (context, snapshot) {
+                  ///-------------- LOADING-----------///
+                  if(snapshot.connectionState == ConnectionState.waiting){
+                    return const Center(child: CircularProgressIndicator(),);
+                  }
+                  /// -------------- DATA LOADED -------///
+                  else if(snapshot.hasData){
+                    final foodData = snapshot.data!;
+                    return foodCartList.isEmpty?
+                    const Center(child: Text("ADD data to cart"),):
+                    CartTile(
+                      buttonText: "Order now",
+                      quantity: order.quantity!,
+                      dateTime: order.dateTime,
+                      onButtonTap: (){},
+                      backgroundColor: AppColors.orangeColor,
+                      foodData: foodData,
+                      orderStatusText: "Order this food",
+                      orderStatusColor: AppColors.orangeColor,
+                    );
+                  }
+                  ///------------ NO DATA FOUND ----------- ///
+                  else{
+                    return const Center(
+                      child: Text("No data available"),
+                    );
+                  }
+                },
+              );
+            },);
           } else {
             return const Center(
               child: Text("No data available"),
