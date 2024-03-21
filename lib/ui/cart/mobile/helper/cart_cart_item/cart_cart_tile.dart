@@ -138,13 +138,14 @@ class _CartCartTileState extends ConsumerState<CartCartTile> {
       iconWidget: ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r))),
-          onPressed: ()async{
+              padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: 0.h),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.r))),
+           onPressed: ()async{
             await cartWatch.removeCartDataFromFirebase(widget.order.uOrderId!);
             commonToast("Removed ${widget.foodData.name}");
           },
-          icon: const Icon(Icons.delete,color:AppColors.orangeColor ,),
-          label: Text("Remove",style: AppTextStyle.w5.copyWith(color: AppColors.orangeColor),)),
+          icon:  const Icon(Icons.delete,color:AppColors.orangeColor,),
+          label: Text("Remove",style: AppTextStyle.w5.copyWith(color: AppColors.orangeColor,fontSize: 12.sp),)),
       quantity: widget.order.quantity!,
       dateTime: widget.order.dateTime,
       onButtonTap: (){
@@ -155,9 +156,6 @@ class _CartCartTileState extends ConsumerState<CartCartTile> {
           ///===================== Online payment=================///
           btnOk: CommonButton(onTap: () async{
             await placeOrder(totalPrice);
-            // if(context.mounted){
-            //   Navigator.pushNamed(context, AppRoutes.successOrder);
-            // }
             commonToast("${widget.foodData.name} Ordered Successfully");
           },padding: EdgeInsets.symmetric(vertical: 6.h,horizontal: 20.w),child: const Text("Pay UPI"),),
           ///======================= Cash on delivery ============///
@@ -165,9 +163,6 @@ class _CartCartTileState extends ConsumerState<CartCartTile> {
             Navigator.pop(context);
             await cartWatch.postUserFoodOrder(quantity: widget.order.quantity??1, foodId: widget.order.foodId!, paidOrNot: false);
             await cartWatch.removeCartDataFromFirebase(widget.order.uOrderId!);
-            // if(context.mounted){
-            //   Navigator.pushNamed(context, AppRoutes.successOrder);
-            // }
             commonToast("${widget.foodData.name} Ordered Successfully");
 
           },padding: EdgeInsets.symmetric(vertical: 6.h,),child: const Text("Cash on delivery"),),

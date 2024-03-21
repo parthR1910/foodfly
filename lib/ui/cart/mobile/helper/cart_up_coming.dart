@@ -4,8 +4,7 @@ import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:food_fly/framework/service/auth_service.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
-
-import '../../../utils/theme/app_text_style.dart';
+import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 
 class CartUpComing extends StatelessWidget {
   const CartUpComing({super.key});

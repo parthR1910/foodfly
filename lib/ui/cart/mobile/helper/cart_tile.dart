@@ -35,71 +35,68 @@ class CartTile extends StatelessWidget {
         surfaceTintColor: Colors.white,
         shadowColor: Colors.grey,
         child: Container(
-          height: 160.h,
-          width: 379.h,
+          width: double.infinity,
           margin: EdgeInsets.symmetric(vertical:8.h,horizontal: 10.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.r)
           ),
           child: Column(
             children: [
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 75.w,
-                      height: 80.h,
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.r)
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: foodData!.image!,
-                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => const FlutterLogo(),
-                        fit: BoxFit.cover,
-                      ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 75.w,
+                    height: 80.h,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.r)
                     ),
-                    SizedBox(width: 15.w,),
-                    Expanded(child: Column(
+                    child: CachedNetworkImage(
+                      imageUrl: foodData!.image!,
+                      placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => const FlutterLogo(),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(width: 15.w,),
+                  Expanded(child: Column(
+                    children: [
+                      SizedBox(height: 10.h,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(height: 10.h,),
+                        Expanded(child: Text(foodData!.name ??"Berry Toast",style: AppTextStyle.w5.copyWith(fontSize: 16.sp))),
+                        Text("₹ ${totalPrice.toStringAsFixed(2)}",style: AppTextStyle.w5.copyWith(fontSize: 18.sp,color: AppColors.kPrimary)),
+                      ],
+                    ),
+                      SizedBox(height: 6.h,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(child: Text(foodData!.name ??"Berry Toast",style: AppTextStyle.w5.copyWith(fontSize: 16.sp))),
-                          Text("₹ ${totalPrice.toStringAsFixed(2)}",style: AppTextStyle.w5.copyWith(fontSize: 18.sp,color: AppColors.kPrimary)),
+                          Text(dateTime??"10 september 2024",style: AppTextStyle.w4.copyWith(fontSize: 12.sp,color: AppColors.textGreyColor)),
+                          paidStatus!=null?
+                             paidStatus??const SizedBox()
+                              :remainTime!=null?Row(
+                            children: [
+                              Image.asset(AppAssets.timerClockPng,height: 25.h,width: 25.w,),
+                              Text("20 min",style: AppTextStyle.w4.copyWith(fontSize: 12.sp,color: AppColors.kBlack)),
+                            ],
+                          ):const SizedBox(),
                         ],
                       ),
-                        SizedBox(height: 6.h,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(dateTime??"10 september 2024",style: AppTextStyle.w4.copyWith(fontSize: 12.sp,color: AppColors.textGreyColor)),
-                            paidStatus!=null?
-                               paidStatus??const SizedBox()
-                                :remainTime!=null?Row(
-                              children: [
-                                Image.asset(AppAssets.timerClockPng,height: 25.h,width: 25.w,),
-                                Text("20 min",style: AppTextStyle.w4.copyWith(fontSize: 12.sp,color: AppColors.kBlack)),
-                              ],
-                            ):const SizedBox(),
-                          ],
-                        ),
-                        SizedBox(height: 6.h,),
-                        Row(
-                          children: [
-                            Image.asset(AppAssets.tickMarkPng,height: 30,width: 30,color: orderStatusColor,),
-                            Text(orderStatusText??"Order on way",style: AppTextStyle.w5.copyWith(fontSize: 11.sp,color:orderStatusColor?? AppColors.kLightGreen)),
-                           SizedBox(width: 8.w,),
-                            Expanded(child: iconWidget??const SizedBox())
-                          ],
-                        ),
+                      SizedBox(height: 6.h,),
+                      Row(
+                        children: [
+                          Image.asset(AppAssets.tickMarkPng,height: 30,width: 30,color: orderStatusColor,),
+                          Text(orderStatusText??"Order on way",style: AppTextStyle.w5.copyWith(fontSize: 10.sp,color:orderStatusColor?? AppColors.kLightGreen)),
+                         SizedBox(width: 8.w,),
+                          Expanded(child: iconWidget??const SizedBox())
+                        ],
+                      ),
 
-                      ],))
-                  ],
-                ),
+                    ],))
+                ],
               ),
               /// ------------------------------------ Button -----------------------///
               Row(
