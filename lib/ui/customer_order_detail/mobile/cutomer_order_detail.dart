@@ -11,7 +11,11 @@ import '../../utils/widgets/common_button.dart';
 import 'helper/customer_order_detail_view.dart';
 
 class CustomerOderDetail extends ConsumerStatefulWidget {
-  const CustomerOderDetail({super.key});
+  final int quantity;
+  final String foodId;
+  final String deliveryBoyId;
+  final bool isPaid;
+  const CustomerOderDetail( {super.key,required this.quantity,required this.foodId, required this.deliveryBoyId, this.isPaid = false,});
 
   @override
   ConsumerState<CustomerOderDetail> createState() => _CancelOrderMobileState();
@@ -24,37 +28,33 @@ class _CancelOrderMobileState extends ConsumerState<CustomerOderDetail> {
     mobileDeviceConfig(context);
     return Scaffold(
       appBar: appBar,
-      body: _bodyWidget(),
-    );
-  }
-
-  Widget _bodyWidget() {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-        horizontal: 24.w,
-        vertical: 10.h
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            height: 48.h,
-          ),
-          const CustomerOrderDetailView(),
-          SizedBox(
-            height: 40.h,
-          ),
-          CommonButton(
-            onTap: () {
-              Navigator.pushNamed(context, AppRoutes.findFoods);
-            },
-            padding: EdgeInsets.symmetric(vertical: 12.h),
-            child: Text(
-              ref.watch(appStringController).keyCancelMyOrder,
-              style: AppTextStyle.w5.copyWith(fontSize: 14.sp),
+      body:SingleChildScrollView(
+        padding: EdgeInsets.symmetric(
+            horizontal: 24.w,
+            vertical: 10.h
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              height: 48.h,
             ),
-          )
-        ],
+             CustomerOrderDetailView(quantity: widget.quantity, foodId: widget.foodId, deliveryBoyId: widget.deliveryBoyId, isPaid: widget.isPaid,),
+            SizedBox(
+              height: 40.h,
+            ),
+            CommonButton(
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.findFoods);
+              },
+              padding: EdgeInsets.symmetric(vertical: 12.h),
+              child: Text(
+                ref.watch(appStringController).keyCancelMyOrder,
+                style: AppTextStyle.w5.copyWith(fontSize: 14.sp),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

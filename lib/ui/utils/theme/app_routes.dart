@@ -59,7 +59,12 @@ class AppRoutes {
       case userprofile:
         return MaterialPageRoute(builder: (context)=> const UserProfile());
       case customerOderDetail:
-        return MaterialPageRoute(builder: (context)=> const CustomerOderDetail());
+        final Map<String,dynamic> argument  = settings.arguments as Map<String,dynamic>;
+        final int quantity = argument["quantity"];
+        final String foodId = argument["foodId"];
+        final String deliveryBoyId = argument["deliveryBoyId"];
+        final bool isPaid = argument["isPaid"];
+        return MaterialPageRoute(builder: (context)=>  CustomerOderDetail(quantity: quantity, foodId: foodId, deliveryBoyId: deliveryBoyId,isPaid: isPaid,));
       case successOrder:
         return MaterialPageRoute(builder: (context)=> const SuccessOrder());
       case findFoods:

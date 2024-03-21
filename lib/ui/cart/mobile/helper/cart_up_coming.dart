@@ -1,6 +1,7 @@
 import 'package:food_fly/framework/model/user_orders/user_orders_model.dart';
 import 'package:food_fly/ui/cart/mobile/helper/cart_tile.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
+import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:food_fly/framework/service/auth_service.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
@@ -26,7 +27,7 @@ class CartUpComing extends StatelessWidget {
               itemBuilder: (context, index) {
                 final order = currentUserOrdersList[index];
               return StreamBuilder(
-                stream: FireStoreService.fireStoreService.getFoodDataByIfFireStore(order.foodId!),
+                stream: FireStoreService.fireStoreService.getFoodDataByIdFireStore(order.foodId!),
                 builder: (context, snapshot) {
                   ///-------------- LOADING-----------///
                   if(snapshot.connectionState == ConnectionState.waiting){
@@ -42,7 +43,14 @@ class CartUpComing extends StatelessWidget {
                       quantity: order.quantity!,
                       dateTime: order.dateTime,
                       paidStatus: Text((order.paidOrNot??false)?"Paid":"Unpaid",style: AppTextStyle.w5.copyWith(fontSize: 12.sp,color:(order.paidOrNot??false)?AppColors.kLightGreen:AppColors.kPrimary)),
-                      onButtonTap: (order.deliveryBoyId?.isNotEmpty??false)?(){}:null,
+                      onButtonTap: (order.deliveryBoyId?.isNotEmpty??false)?(){
+                        Navigator.pushNamed(context, AppRoutes.customerOderDetail,arguments: {
+                          "quantity":order.quantity,
+                          "foodId":order.foodId,
+                          "deliveryBoyId":order.deliveryBoyId,
+                          "isPaid":order.paidOrNot,
+                        },);
+                      }:null,
                       backgroundColor: AppColors.kPrimary,
                       foodData: food,
                       orderStatusText: "Order on the way",

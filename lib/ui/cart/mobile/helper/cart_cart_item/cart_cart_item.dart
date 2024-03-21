@@ -24,7 +24,7 @@ final mainContext = context;
               itemBuilder: (context, index) {
                 final order =foodCartList[index];
                 return StreamBuilder(
-                  stream: FireStoreService.fireStoreService.getFoodDataByIfFireStore(order.foodId!),
+                  stream: FireStoreService.fireStoreService.getFoodDataByIdFireStore(order.foodId!),
                   builder: (context, snapshot) {
                     ///-------------- LOADING-----------///
                     if(snapshot.connectionState == ConnectionState.waiting){

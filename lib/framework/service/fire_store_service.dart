@@ -50,6 +50,16 @@ class FireStoreService {
     return myUser;
   }
 
+  Stream<UserModel> getDeliveryBoyDataFireStore({required String deliveryBoyId}) {
+    final myUser =
+    fireStore.collection("User").doc(deliveryBoyId).snapshots().map((snapshot) {
+      // print(snapshot.data()!);
+      return UserModel.fromJson(snapshot.data()!);
+    });
+    // print("user name ${myUser.first}");
+    return myUser;
+  }
+
 
   // Future<UserModel> getCUserDataFireStore() {
   //   final uid = AuthService.authService.auth.currentUser!.uid;
@@ -95,7 +105,7 @@ class FireStoreService {
   }
 
 
-  Stream<FoodDataModel> getFoodDataByIfFireStore(String id) {
+  Stream<FoodDataModel> getFoodDataByIdFireStore(String id) {
     final foodData = fireStore.collection("Foods").doc(id).snapshots().map((event) =>
         FoodDataModel.fromJson(event.data()!));
     return foodData;
