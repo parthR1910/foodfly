@@ -7,7 +7,7 @@ import '../../../utils/theme/app_text_style.dart';
 import '../../../utils/theme/theme.dart';
 
 class CartTile extends StatelessWidget {
-  const CartTile({super.key, this.orderStatusColor, this.orderStatusText, this.foodData, this.backgroundColor, this.textStyle, this.onButtonTap,  this.quantity =1, this.buttonText, this.remainTime, this.dateTime});
+  const CartTile({super.key, this.orderStatusColor, this.orderStatusText, this.foodData, this.backgroundColor, this.textStyle, this.onButtonTap,  this.quantity =1, this.buttonText, this.remainTime, this.dateTime, this.iconWidget, this.paidStatus});
   final FoodDataModel? foodData;
   final Color? orderStatusColor;
   final Color? backgroundColor;
@@ -16,8 +16,11 @@ class CartTile extends StatelessWidget {
   final String? buttonText;
   final TextStyle? textStyle;
   final String? remainTime;
+  final Widget? paidStatus;
   final String? dateTime;
   final int quantity;
+  final Widget? iconWidget;
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class CartTile extends StatelessWidget {
         surfaceTintColor: Colors.white,
         shadowColor: Colors.grey,
         child: Container(
-          height: 155.h,
+          height: 160.h,
           width: 379.h,
           margin: EdgeInsets.symmetric(vertical:8.h,horizontal: 10.w),
           decoration: BoxDecoration(
@@ -74,7 +77,9 @@ class CartTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(dateTime??"10 september 2024",style: AppTextStyle.w4.copyWith(fontSize: 12.sp,color: AppColors.textGreyColor)),
-                            remainTime!=null?Row(
+                            paidStatus!=null?
+                               paidStatus??const SizedBox()
+                                :remainTime!=null?Row(
                               children: [
                                 Image.asset(AppAssets.timerClockPng,height: 25.h,width: 25.w,),
                                 Text("20 min",style: AppTextStyle.w4.copyWith(fontSize: 12.sp,color: AppColors.kBlack)),
@@ -87,6 +92,8 @@ class CartTile extends StatelessWidget {
                           children: [
                             Image.asset(AppAssets.tickMarkPng,height: 30,width: 30,color: orderStatusColor,),
                             Text(orderStatusText??"Order on way",style: AppTextStyle.w5.copyWith(fontSize: 11.sp,color:orderStatusColor?? AppColors.kLightGreen)),
+                           SizedBox(width: 8.w,),
+                            Expanded(child: iconWidget??const SizedBox())
                           ],
                         ),
 

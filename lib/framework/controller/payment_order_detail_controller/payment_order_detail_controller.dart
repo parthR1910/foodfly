@@ -39,7 +39,7 @@ class PaymentOrderDetailController extends ChangeNotifier {
     return formatter.format(now);
   }
 
-  Future postUserFoodOrder({required int quantity, required String foodId}) async {
+  Future postUserFoodOrder({required int quantity, required String foodId,required bool paidOrNot}) async {
     isLoadingOverlay = true;
     notifyListeners();
     Uuid uuid = const Uuid();
@@ -48,7 +48,7 @@ class PaymentOrderDetailController extends ChangeNotifier {
     final UserOrdersModel userOrdersModel = UserOrdersModel(
         quantity: quantity,
         foodId: foodId,
-        paidOrNot: false,
+        paidOrNot: paidOrNot,
         uOrderId: uniqueId,
         userId: userId,
         isDelivered: false,

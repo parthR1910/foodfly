@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:food_fly/framework/model/payment_model/payment_model.dart';
 import 'package:food_fly/framework/service/auth_service.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
+import 'package:food_fly/ui/utils/widgets/common_snackbar.dart';
 import "package:http/http.dart" as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,6 +20,8 @@ import 'package:food_fly/ui/utils/theme/app_string.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/widgets/common_loading.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+
+import '../../../framework/data/providers/quantity_state_provider.dart';
 
 class Payment extends ConsumerStatefulWidget {
   final FoodDataModel foodData;
@@ -50,7 +53,7 @@ class _PaymentMobileState extends ConsumerState<Payment> {
     double productTax = productPrice*widget.quantity*(widget.foodData.tax!/100);
     double totalPrice =productTax+driver+productPrice*widget.quantity;
 
-    await ref.watch(paymentOrderDetailController).postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!);
+    await ref.watch(paymentOrderDetailController).postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!, paidOrNot: true);
     String uid = AuthService.authService.auth.currentUser!.uid;
     var now = DateTime.now();
     var formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
@@ -59,6 +62,8 @@ class _PaymentMobileState extends ConsumerState<Payment> {
     if(context.mounted){
       Navigator.pushNamed(context, AppRoutes.successOrder);
     }
+    ref.read(quantityStateProvider.notifier).update((state) => 1);
+
     print(msg);
   }
 
@@ -160,6 +165,7 @@ class _PaymentMobileState extends ConsumerState<Payment> {
                     Navigator.pushNamedAndRemoveUntil(
                         context, AppRoutes.dashBoard, (route) => false);
                   }
+                  commonToast("${widget.foodData.name} added to the cart");
                   },
                 padding: EdgeInsets.symmetric(vertical: 12.h),
                 child: Text("Add To Cart",
@@ -176,20 +182,21 @@ class _PaymentMobileState extends ConsumerState<Payment> {
                     ///===================== Online payment=================///
                     btnOk: CommonButton(onTap: (){
                       placeOrder(totalPrice);
+                      commonToast("${widget.foodData.name} Ordered successfully");
                     },padding: EdgeInsets.symmetric(vertical: 6.h,horizontal: 20.w),child: const Text("Pay UPI"),),
                     ///======================= Cash on delivery ============///
                     btnCancel:  CommonButton(onTap: () async{
                       Navigator.pop(context);
-                      await paymentOrderDetailWatch.postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!);
+                      await paymentOrderDetailWatch.postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!, paidOrNot: false);
                       if(context.mounted){
                         Navigator.pushNamed(context, AppRoutes.successOrder);
                       }
+                      commonToast("${widget.foodData.name} Ordered successfully");
+                      ref.read(quantityStateProvider.notifier).update((state) => 1);
                     },padding: EdgeInsets.symmetric(vertical: 6.h,),child: const Text("Cash on delivery"),),
                       title: 'Payment',
                       desc: 'Choose your payment type',
                   ).show();
-
-
                 },
                 padding: EdgeInsets.symmetric(vertical: 12.h),
                 child: Text(
@@ -197,8 +204,6 @@ class _PaymentMobileState extends ConsumerState<Payment> {
                   style: AppTextStyle.w5.copyWith(fontSize: 14.sp),
                 ),
               ),
-
-
             ],
           ),
         ) ,

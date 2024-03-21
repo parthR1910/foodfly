@@ -1,4 +1,4 @@
-import 'package:food_fly/ui/cart/mobile/helper/cart_cart_item.dart';
+import 'package:food_fly/ui/cart/mobile/helper/cart_cart_item/cart_cart_item.dart';
 import 'package:food_fly/ui/cart/mobile/helper/cart_up_coming.dart';
 import 'package:food_fly/ui/cart/mobile/helper/cart_past_order_item.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';

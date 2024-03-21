@@ -5,6 +5,8 @@ import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:food_fly/framework/service/auth_service.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
 
+import '../../../utils/theme/app_text_style.dart';
+
 class CartUpComing extends StatelessWidget {
   const CartUpComing({super.key});
 
@@ -40,6 +42,7 @@ class CartUpComing extends StatelessWidget {
                       buttonText:(order.deliveryBoyId?.isNotEmpty??false)?"Track order":"Pending",
                       quantity: order.quantity!,
                       dateTime: order.dateTime,
+                      paidStatus: Text((order.paidOrNot??false)?"Paid":"Unpaid",style: AppTextStyle.w5.copyWith(fontSize: 12.sp,color:(order.paidOrNot??false)?AppColors.kLightGreen:AppColors.kPrimary)),
                       onButtonTap: (order.deliveryBoyId?.isNotEmpty??false)?(){}:null,
                       backgroundColor: AppColors.kPrimary,
                       foodData: food,

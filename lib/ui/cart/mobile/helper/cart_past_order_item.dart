@@ -1,9 +1,11 @@
+import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
 import '../../../../framework/model/food_data_model/food_data_model.dart';
 import '../../../../framework/model/user_orders/user_orders_model.dart';
 import '../../../../framework/service/auth_service.dart';
 import '../../../../framework/service/fire_store_service.dart';
 import '../../../utils/theme/app_colors.dart';
+import '../../../utils/theme/app_text_style.dart';
 import 'cart_tile.dart';
 
 class CartPastOrderItem extends StatelessWidget {
@@ -42,9 +44,12 @@ class CartPastOrderItem extends StatelessWidget {
                       buttonText: "Order again",
                       quantity: order.quantity??1,
                       dateTime: order.dateTime,
-                      onButtonTap: (){},
+                      onButtonTap: (){
+                        Navigator.pushNamed(context, AppRoutes.foodDetail,arguments: foodData);
+                      },
                       backgroundColor: AppColors.kLightGreen,
                       foodData: foodData,
+                      paidStatus: Text("Paid",style: AppTextStyle.w5.copyWith(fontSize: 16.sp,color:AppColors.kLightGreen)),
                       orderStatusText: "Successfully delivered",
                       orderStatusColor: AppColors.kLightGreen,
                     );

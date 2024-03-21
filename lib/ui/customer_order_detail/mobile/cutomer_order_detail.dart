@@ -8,16 +8,16 @@ import '../../utils/theme/app_string.dart';
 import '../../utils/theme/app_text_style.dart';
 import '../../utils/theme/theme.dart';
 import '../../utils/widgets/common_button.dart';
-import 'helper/cancel_order_details.dart';
+import 'helper/customer_order_detail_view.dart';
 
-class CancelOrder extends ConsumerStatefulWidget {
-  const CancelOrder({super.key});
+class CustomerOderDetail extends ConsumerStatefulWidget {
+  const CustomerOderDetail({super.key});
 
   @override
-  ConsumerState<CancelOrder> createState() => _CancelOrderMobileState();
+  ConsumerState<CustomerOderDetail> createState() => _CancelOrderMobileState();
 }
 
-class _CancelOrderMobileState extends ConsumerState<CancelOrder> {
+class _CancelOrderMobileState extends ConsumerState<CustomerOderDetail> {
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _CancelOrderMobileState extends ConsumerState<CancelOrder> {
           SizedBox(
             height: 48.h,
           ),
-          const CancelOrderDetails(),
+          const CustomerOrderDetailView(),
           SizedBox(
             height: 40.h,
           ),
@@ -72,7 +72,7 @@ class _CancelOrderMobileState extends ConsumerState<CancelOrder> {
     title: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(ref.watch(appStringController).keyPayment,
+        Text("Your order",
             style: AppTextStyle.w5
                 .copyWith(color: AppColors.kBlack, fontSize: 22.sp)),
         Text(ref.watch(appStringController).keyYouDeserveBetterMeal,

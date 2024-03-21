@@ -3,8 +3,8 @@ import '../../../utils/theme/app_string.dart';
 import '../../../utils/theme/app_text_style.dart';
 import '../../../utils/theme/theme.dart';
 
-class CancelOrderDetails extends StatelessWidget {
-  const CancelOrderDetails({super.key});
+class CustomerOrderDetailView extends StatelessWidget {
+  const CustomerOrderDetailView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -120,8 +120,17 @@ class FireStoreService {
         userOrdersModel.toJson()
     );
   }
+  Stream<List<UserOrdersModel>> getUserFoodOrdersFireStore() {
+      final foodData = fireStore.collection("UserOrders").snapshots().map((
+        event) =>
+        event.docs.map((e) => UserOrdersModel.fromJson(e.data())).toList());
+    return foodData;
+  }
+
 
   ///-------------------food Orders-----------///
+
+  ///------------------------food to cart ----------------------///
 
   Future<void> postUserFoodOrderCartToFireStore(
       FoodCartModel foodCartModel) async {
@@ -137,13 +146,10 @@ class FireStoreService {
         event.docs.map((e) => FoodCartModel.fromJson(e.data())).toList());
     return foodData;
   }
-  Stream<List<UserOrdersModel>> getUserFoodOrdersFireStore() {
-    final foodData = fireStore.collection("UserOrders").snapshots().map((
-        event) =>
-        event.docs.map((e) => UserOrdersModel.fromJson(e.data())).toList());
-    return foodData;
-  }
 
+Future<void>  removeFoodCartData(String foodId)async{
+    fireStore.collection("UserCartOrders").doc(foodId).delete();
+}
 ///------------------------food to cart ----------------------///
 
 

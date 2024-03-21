@@ -62,7 +62,7 @@ class SuccessOrder extends ConsumerWidget {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context,  AppRoutes.cancelOrder);
+              Navigator.pushNamed(context,  AppRoutes.customerOderDetail);
             },
             child: Container(
               height: 45.h,

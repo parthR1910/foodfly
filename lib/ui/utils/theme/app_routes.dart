@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/ui/add_food/add_food.dart';
 import 'package:food_fly/ui/auth/login/mobile/login.dart';
+import 'package:food_fly/ui/customer_order_detail/mobile/cutomer_order_detail.dart';
 import 'package:food_fly/ui/edit_profile/edit_profile.dart';
 import 'package:food_fly/ui/splash/mobile/splash.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../auth/register/mobile/register.dart';
-import '../../cancel_order/mobile/cancel_order.dart';
 import '../../cart/mobile/cart.dart';
 import '../../dashboard/mobile/dashboard.dart';
 import '../../food_detail/mobile/food_detail.dart';
@@ -26,7 +26,7 @@ class AppRoutes {
   static const String payment = '/payment';
   static const String cart = '/cart';
   static const String userprofile = '/userprofile';
-  static const String cancelOrder = '/cancelOrder';
+  static const String customerOderDetail = '/customerOderDetail';
   static const String successOrder = '/successOrder';
   static const String findFoods = '/findFoods';
   static const String addFood = '/addFood';
@@ -58,8 +58,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context)=> const Cart());
       case userprofile:
         return MaterialPageRoute(builder: (context)=> const UserProfile());
-      case cancelOrder:
-        return MaterialPageRoute(builder: (context)=> const CancelOrder());
+      case customerOderDetail:
+        return MaterialPageRoute(builder: (context)=> const CustomerOderDetail());
       case successOrder:
         return MaterialPageRoute(builder: (context)=> const SuccessOrder());
       case findFoods:

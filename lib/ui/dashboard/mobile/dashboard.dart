@@ -3,6 +3,7 @@ import 'package:food_fly/framework/controller/dash_board/dash_board_controller.d
 import 'package:food_fly/framework/service/shared_pref_services.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
 import 'package:food_fly/ui/utils/constant/app_const_list.dart';
+import 'package:food_fly/ui/utils/widgets/common_snackbar.dart';
 
 import '../../utils/theme/theme.dart';
 import 'helper/my_bottom_navigationbar.dart';
@@ -27,15 +28,8 @@ class _DashBoardState extends ConsumerState<DashBoard> {
         setState(() {
           isExitApp = true;
         });
-        Fluttertoast.showToast(
-            msg: "Please again to close app",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0
-        );
+        commonToast("Please again to close app");
+
         await Future.delayed(const Duration(seconds: 2),(){
           setState(() {
             isExitApp = false;
