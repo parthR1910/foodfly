@@ -47,16 +47,14 @@ class _CartCartTileState extends ConsumerState<CartCartTile> {
     double productTax = productPrice*widget.order.quantity!*(widget.foodData.tax!/100);
     double totalPrice =productTax+driver+productPrice*widget.order.quantity!;
 
-    await ref.watch(cartController).postUserFoodOrder(quantity: widget.order.quantity!, foodId: widget.foodData.foodId!, paidOrNot: true);
+   final uOrderId =  await ref.watch(cartController).postUserFoodOrder(quantity: widget.order.quantity!, foodId: widget.foodData.foodId!, paidOrNot: true);
     await ref.watch(cartController).removeCartDataFromFirebase(widget.order.uOrderId!);
     String uid = AuthService.authService.auth.currentUser!.uid;
     var now = DateTime.now();
     var formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
-    PaymentModel paymentModel = PaymentModel(amount: totalPrice, foodId: widget.foodData.foodId, payType: "online", paymentId: response.paymentId, time: formatter.format(now), transactionId: response.paymentId, userId: uid);
+    PaymentModel paymentModel = PaymentModel(amount: totalPrice, foodId: widget.foodData.foodId, payType: "online", paymentId: response.paymentId, time: formatter.format(now), transactionId: response.paymentId, userId: uid, uOrderID: uOrderId);
     await FireStoreService.fireStoreService.setPaymentToFirebase(paymentModel: paymentModel);
-    if(context.mounted){
-      Navigator.pushNamed(context, AppRoutes.successOrder);
-    }
+    commonToast("${widget.foodData.name} Ordered Successfully");
     print(msg);
   }
 
@@ -156,7 +154,7 @@ class _CartCartTileState extends ConsumerState<CartCartTile> {
           ///===================== Online payment=================///
           btnOk: CommonButton(onTap: () async{
             await placeOrder(totalPrice);
-            commonToast("${widget.foodData.name} Ordered Successfully");
+
           },padding: EdgeInsets.symmetric(vertical: 6.h,horizontal: 20.w),child: const Text("Pay UPI"),),
           ///======================= Cash on delivery ============///
           btnCancel:  CommonButton(onTap: () async{
@@ -164,8 +162,7 @@ class _CartCartTileState extends ConsumerState<CartCartTile> {
             await cartWatch.postUserFoodOrder(quantity: widget.order.quantity??1, foodId: widget.order.foodId!, paidOrNot: false);
             await cartWatch.removeCartDataFromFirebase(widget.order.uOrderId!);
             commonToast("${widget.foodData.name} Ordered Successfully");
-
-          },padding: EdgeInsets.symmetric(vertical: 6.h,),child: const Text("Cash on delivery"),),
+          },padding: EdgeInsets.symmetric(vertical: 6.h,),child: const Text("COD"),),
           title: 'Payment',
           desc: 'Choose your payment type',
         ).show();

@@ -19,6 +19,7 @@ class LoginController extends ChangeNotifier{
   LoginController(this.ref);
 
   final emailController = TextEditingController();
+  final forgetEmailController = TextEditingController();
   final passwordController = TextEditingController();
   bool loading = false;
   bool isPassNotShow = true;

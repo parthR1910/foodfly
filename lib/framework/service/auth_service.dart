@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_fly/framework/model/user/auth_response.dart';
+import 'package:food_fly/framework/service/fire_base_singleton.dart';
+import 'package:food_fly/ui/utils/widgets/common_snackbar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../model/user/user_model.dart';
 
 class AuthService {
@@ -66,5 +67,22 @@ class AuthService {
      if(isGoogleLogin == true){
        await googleSignIn.disconnect();
      }
+  }
+
+  Future forgetPass({required String email}) async{
+    try{
+      await FirebaseSingleTon.firebaseSingleTon.firebaseAuth.sendPasswordResetEmail(email: email);
+      commonToast("code hase been sent to your mail");
+    }on FirebaseAuthException catch(e){
+      Future.error(e.toString());
+      commonToast("Something went wrong");
+    }
+  }
+
+  Future deleteAcc()async{
+    User? user = FirebaseSingleTon.firebaseSingleTon.firebaseAuth.currentUser;
+    if(user != null){
+      await user.delete();
+    }
   }
 }

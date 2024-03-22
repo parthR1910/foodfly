@@ -6,6 +6,7 @@ class PaymentModel {
   String? time;
   String? transactionId;
   String? userId;
+  String? uOrderID;
 
   PaymentModel({
     required this.amount,
@@ -15,6 +16,7 @@ class PaymentModel {
     required this.time,
     required this.transactionId,
     required this.userId,
+    required this.uOrderID,
   });
 
   factory PaymentModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class PaymentModel {
       time: json['time'],
       transactionId: json['transactionId'],
       userId: json['userId'],
+      uOrderID: json['uOrderID'],
     );
   }
 
@@ -38,6 +41,7 @@ class PaymentModel {
     data['time'] = time;
     data['transactionId'] = transactionId;
     data['userId'] = userId;
+    data['uOrderID'] = uOrderID;
     return data;
   }
 }

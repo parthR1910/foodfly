@@ -53,11 +53,11 @@ class _PaymentMobileState extends ConsumerState<Payment> {
     double productTax = productPrice*widget.quantity*(widget.foodData.tax!/100);
     double totalPrice =productTax+driver+productPrice*widget.quantity;
 
-    await ref.watch(paymentOrderDetailController).postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!, paidOrNot: true);
+   final uOrderId =  await ref.watch(paymentOrderDetailController).postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!, paidOrNot: true);
     String uid = AuthService.authService.auth.currentUser!.uid;
     var now = DateTime.now();
     var formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
-    PaymentModel paymentModel = PaymentModel(amount: totalPrice, foodId: widget.foodData.foodId, payType: "online", paymentId: response.paymentId, time: formatter.format(now), transactionId: response.paymentId, userId: uid);
+    PaymentModel paymentModel = PaymentModel(amount: totalPrice, foodId: widget.foodData.foodId, payType: "online", paymentId: response.paymentId, time: formatter.format(now), transactionId: response.paymentId, userId: uid, uOrderID: uOrderId);
     await FireStoreService.fireStoreService.setPaymentToFirebase(paymentModel: paymentModel);
     if(context.mounted){
       Navigator.pushNamed(context, AppRoutes.successOrder);

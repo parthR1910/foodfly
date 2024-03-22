@@ -39,17 +39,18 @@ class PaymentOrderDetailController extends ChangeNotifier {
     return formatter.format(now);
   }
 
+
   Future postUserFoodOrder({required int quantity, required String foodId,required bool paidOrNot}) async {
     isLoadingOverlay = true;
     notifyListeners();
     Uuid uuid = const Uuid();
-    String uniqueId = uuid.v4();
+    String uOrderId = uuid.v4();
     final userId = AuthService.authService.auth.currentUser!.uid;
     final UserOrdersModel userOrdersModel = UserOrdersModel(
         quantity: quantity,
         foodId: foodId,
         paidOrNot: paidOrNot,
-        uOrderId: uniqueId,
+        uOrderId: uOrderId,
         userId: userId,
         isDelivered: false,
         dateTime:getCurrentDateTime(),
@@ -58,6 +59,7 @@ class PaymentOrderDetailController extends ChangeNotifier {
         .postUserFoodOrderToFireStore(userOrdersModel);
     isLoadingOverlay = false;
     notifyListeners();
+    return uOrderId;
   }
 
   Future postUserFoodCartOrder({required int quantity, required String foodId}) async {

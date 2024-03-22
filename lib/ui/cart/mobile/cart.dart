@@ -23,49 +23,46 @@ class Cart extends ConsumerWidget {
     child: DefaultTabController(
       initialIndex: 0,
       length: 3,
-      child: Padding(
-        padding:  EdgeInsets.only(top: 65.h),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  height: 50.h,
-                  width: 370.w,
-                  child:  TabBar(
-                    splashFactory: InkSplash.splashFactory,
-                    unselectedLabelColor: Colors.grey,
-                    labelColor: Colors.black,
-                    splashBorderRadius: BorderRadius.circular(8.r),
-                    indicatorColor: Colors.black,
-                    labelPadding: EdgeInsets.symmetric(horizontal: 3.w),
-                    tabs: [
-                      Tab(child: Text(
-                          "Up coming",style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
-                      ),),
-                      Tab(child: Text(
-                        "Cart",style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
-                      ),),
-                      Tab(child: Text(
-                        "Past Orders",style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
-                      ),),
-                    ],
-                  ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                height: 50.h,
+                width: 370.w,
+                child:  TabBar(
+                  splashFactory: InkSplash.splashFactory,
+                  unselectedLabelColor: Colors.grey,
+                  labelColor: Colors.black,
+                  splashBorderRadius: BorderRadius.circular(8.r),
+                  indicatorColor: Colors.black,
+                  labelPadding: EdgeInsets.symmetric(horizontal: 3.w),
+                  tabs: [
+                    Tab(child: Text(
+                        "Up coming",style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
+                    ),),
+                    Tab(child: Text(
+                      "Cart",style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
+                    ),),
+                    Tab(child: Text(
+                      "Past Orders",style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
+                    ),),
+                  ],
                 ),
+              ),
+            ],
+          ),
+          const Expanded(
+            child: TabBarView(
+              children: [
+                CartUpComing(),
+                CartCartItem(),
+                CartPastOrderItem(),
               ],
             ),
-            const Expanded(
-              child: TabBarView(
-                children: [
-                  CartUpComing(),
-                  CartCartItem(),
-                  CartPastOrderItem(),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     ),
   );

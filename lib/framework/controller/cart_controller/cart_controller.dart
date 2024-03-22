@@ -32,13 +32,13 @@ class CartController extends ChangeNotifier{
   Future postUserFoodOrder({required int quantity, required String foodId,required bool paidOrNot}) async {
     notifyListeners();
     Uuid uuid = const Uuid();
-    String uniqueId = uuid.v4();
+    String uOrderId = uuid.v4();
     final userId = AuthService.authService.auth.currentUser!.uid;
     final UserOrdersModel userOrdersModel = UserOrdersModel(
       quantity: quantity,
       foodId: foodId,
       paidOrNot: paidOrNot,
-      uOrderId: uniqueId,
+      uOrderId: uOrderId,
       userId: userId,
       isDelivered: false,
       dateTime:getCurrentDateTime(),
@@ -46,5 +46,6 @@ class CartController extends ChangeNotifier{
     await FireStoreService.fireStoreService
         .postUserFoodOrderToFireStore(userOrdersModel);
     notifyListeners();
+    return uOrderId;
   }
 }
