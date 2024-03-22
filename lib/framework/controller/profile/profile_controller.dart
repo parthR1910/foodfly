@@ -3,6 +3,7 @@ import 'package:food_fly/framework/controller/authentication/login_controller.da
 import 'package:food_fly/ui/home_address/home_address.dart';
 import 'package:food_fly/ui/privacy_policy/privacy_policy.dart';
 import 'package:food_fly/ui/terms_and_condition/terms_and_condition.dart';
+import 'package:food_fly/ui/user_payment/user_payment.dart';
 import 'package:food_fly/ui/user_profile/helper/logout_bottom_sheet.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/theme.dart';
@@ -26,9 +27,8 @@ class ProfileController extends ChangeNotifier {
             context, MaterialPageRoute(builder: (_) => const HomeAddress()));
         break;
       case 2:
-        // Navigator.pushNamed(context, AppRoutes.editProfile);
         Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const Scaffold()));
+            context, MaterialPageRoute(builder: (_) => const UserPayment()));
         break;
       case 3:
         Future.delayed(const Duration(milliseconds: 700), () async {

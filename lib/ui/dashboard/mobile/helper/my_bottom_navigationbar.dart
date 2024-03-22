@@ -32,8 +32,7 @@ class MyBottomNavigationBar extends ConsumerWidget {
               icon: homeIcon, activeIcon: homeActiveIcon, label: 'Home'),
           BottomNavigationBarItem(
               icon:
-                  Badge(backgroundColor: AppColors.kPrimary, child: orderIcon),
-              activeIcon: orderActiveIcon,
+              orderIcon,activeIcon: orderActiveIcon,
               label: 'Cart'),
           BottomNavigationBarItem(
               icon: profileIcon,

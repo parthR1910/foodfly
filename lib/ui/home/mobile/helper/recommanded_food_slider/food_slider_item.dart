@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
@@ -16,6 +19,7 @@ class FoodSliderItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final random = Random();
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, AppRoutes.foodDetail, arguments: foodData);
@@ -72,7 +76,7 @@ class FoodSliderItem extends ConsumerWidget {
                     ],
                   ),
                   SizedBox(height: 4.h),
-                  const FoodRatingStar(ratingStar: 4),
+                   const FoodRatingStar(ratingStar:4),
                 ],
               ),
             )
