@@ -12,25 +12,14 @@ class MapFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OpenContainer(
-      closedShape: const CircleBorder(),
-      closedColor: Colors.black,
-      openColor: Colors.black,
-      transitionDuration: 500.ms,
-      closedBuilder: (context, action) {
-        return FloatingActionButton(
-          enableFeedback: true,
-          backgroundColor: Colors.black,
-          shape: const CircleBorder(),
-          onPressed: () async {
-            action.call();
-          },
-          child:const Icon(Icons.map,color: Colors.white,),
-        );
+    return FloatingActionButton(
+      enableFeedback: true,
+      backgroundColor: Colors.black,
+      shape: const CircleBorder(),
+      onPressed: () async {
+        context.push(const MapScreen());
       },
-      openBuilder: (context, action) {
-        return const MapScreen();
-      },
+      child:const Icon(Icons.map,color: Colors.white,),
     );
   }
 }

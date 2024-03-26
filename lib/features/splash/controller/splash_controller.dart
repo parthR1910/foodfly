@@ -17,10 +17,10 @@ final splashControllerProvider = ChangeNotifierProvider<SplashController>((ref) 
 class SplashController extends ChangeNotifier{
   init(BuildContext context){
     Timer(const Duration(seconds: 2),() {
-      if(AuthService.authService.auth.currentUser != null) {
-        context.pushAndRemoveUntilNamed(AppRoutes.dasboard);
-      }else{
+      if(AuthService.authService.auth.currentUser == null) {
         context.pushAndRemoveUntilNamed(AppRoutes.login);
+      }else{
+        context.pushAndRemoveUntilNamed(AppRoutes.dashboard);
       }
     },);
   }

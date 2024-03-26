@@ -1,14 +1,66 @@
-import '../../../../common/config/theme/theme_export.dart';
+import 'package:food_fly_delivery_partner/common/config/theme/theme_export.dart';
+import 'package:food_fly_delivery_partner/common/model/notification_model.dart';
+import 'package:food_fly_delivery_partner/common/utils/services/auth_service.dart';
+import 'package:food_fly_delivery_partner/common/utils/services/fire_store_service.dart';
 
-class NotificationListScreen extends StatelessWidget {
+class NotificationListScreen extends ConsumerWidget {
   const NotificationListScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar:AppBar(),
-      body:           Center(child: Text('No Record Found',style: TextStyle(fontSize: 15.sp,fontWeight: FontWeight.w600),),)
+      appBar: AppBar(
+        title: const Text('Notifications'),
+      ),
+      body: StreamBuilder<List<NotificationDataModel>>(
+        stream: FireStoreService.fireStoreService.getNotificationsFireStore(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasData) {
+            final notifications = snapshot.data!
+                .where((element) =>
+                    element.uid ==
+                    AuthService.authService.auth.currentUser!.uid)
+                .toList();
+            return notifications.isEmpty
+                ? const Center(
+                    child: const Text('No Record Found'),
+                  )
+                : ListView.builder(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                    itemCount: notifications.length,
+                    itemBuilder: (context, index) {
+                      final notificationModel = notifications[index];
+                      return NotificationCard(
+                          notificationModel: notificationModel);
+                    },
+                  );
+          }
+          return const Center(
+            child: Text('No Notifications Found'),
+          );
+        },
+      ),
+    );
+  }
+}
 
+class NotificationCard extends StatelessWidget {
+  const NotificationCard({super.key, required this.notificationModel});
+  final NotificationDataModel notificationModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const CircleAvatar(child: Icon(Icons.notifications)),
+        title: Text(notificationModel.title),
+        subtitle: Text(notificationModel.body),
+      ),
     );
   }
 }

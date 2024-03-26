@@ -1,32 +1,44 @@
+import 'package:food_fly_delivery_partner/common/model/user_model.dart';
+
+import 'food_model.dart';
+
 class OrderModel {
   final String id;
   final String foodId;
-  final String status;
   final bool paidOrNot;
+  final String orderDate;
   final bool isDelivered;
   final int qty;
+  final String deliveryBoyId;
   final String userId;
+  final UserModel? userModel;
+  final FoodDataModel? foodModel;
+  final String? confirmationOTP;
 
-  OrderModel({
-    required this.id,
-    required this.foodId,
-    required this.status,
-    required this.isDelivered,
-    required this.paidOrNot,
-    required this.qty,
-    required this.userId,
-  });
+  OrderModel(
+      {required this.id,
+      required this.foodId,
+      required this.isDelivered,
+      required this.paidOrNot,
+      required this.qty,
+      required this.userId,
+      required this.orderDate,
+      this.confirmationOTP,
+      required this.deliveryBoyId,
+      this.userModel,
+      this.foodModel});
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
-      id: json['foodId'],
-      foodId: json['foodId'],
-      isDelivered: json['isDelivered'],
-      status:json['isDelivered']==true?'Deliverd':'Pending',
-      paidOrNot: json['paidOrNot'],
-      qty: json['quantity'],
-      userId: json['userId'],
-    );
+        id: json['uOrderID'] ?? '',
+        foodId: json['foodId'] ?? '',
+        isDelivered: json['isDelivered'] ?? false,
+        paidOrNot: json['paidOrNot'] ?? false,
+        qty: json['quantity'] ?? 0,
+        deliveryBoyId: json['deliveryBoyId'] ?? '',
+        userId: json['userId'] ?? '',
+        confirmationOTP: json['confirmationOTP'] ?? '',
+        orderDate: json['dateTime']);
   }
 }
 

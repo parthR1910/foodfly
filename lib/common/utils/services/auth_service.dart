@@ -3,7 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../model/auth_response.dart';
 import '../../model/user_model.dart';
-
+import '../helper/debug_print.dart';
 
 class AuthService {
   AuthService._private();
@@ -19,8 +19,10 @@ class AuthService {
       final userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User user = userCredential.user!;
-    return AuthResponse(user: user);
+      return AuthResponse(user: user);
     } on FirebaseAuthException catch (e) {
+      kprint('fire base login error');
+      kprint(e.toString());
       return AuthResponse(error: e.message.toString());
     }
   }
@@ -38,7 +40,7 @@ class AuthService {
   }
 
   Future<AuthResponse> signInWithGoogle() async {
-    try{
+    try {
       final gAccount = await googleSignIn.signIn();
       final authentication = await gAccount!.authentication;
       final credential = GoogleAuthProvider.credential(
@@ -47,17 +49,16 @@ class AuthService {
       final result = await auth.signInWithCredential(credential);
       final user = result.user!;
 
-      return AuthResponse(
-          user: user);
-    }on FirebaseAuthException catch(e){
+      return AuthResponse(user: user);
+    } on FirebaseAuthException catch (e) {
       return AuthResponse(error: e.message.toString());
     }
   }
 
-  Future<void> signOut(bool? isGoogleLogin)async{
-     await auth.signOut();
-     if(isGoogleLogin == true){
-       await googleSignIn.disconnect();
-     }
+  Future<void> signOut(bool? isGoogleLogin) async {
+    await auth.signOut();
+    if (isGoogleLogin == true) {
+      await googleSignIn.disconnect();
+    }
   }
 }

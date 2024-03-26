@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.foodFly.food_fly_delivery_partner"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {

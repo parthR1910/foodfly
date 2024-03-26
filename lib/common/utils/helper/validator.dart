@@ -6,6 +6,24 @@ String? nameValidator(String? input) {
   }
 }
 
+
+String? addressValidator(String? input) {
+  if (input == null || input == '') {
+    return 'Please enter your address';
+  } else if (input.trim().length < 5) {
+    return 'Address must be 5 characters long';
+  } else {
+    return null;
+  }
+}
+String? requiredFieldValidator(String? input) {
+  if (input == null || input.trim().isEmpty) {
+    return 'Required field';
+  } else {
+    return null;
+  }
+}
+
 String? otpValidator(String? input, String otp) {
   if (input != null && input.isEmpty) {
     return 'Please Enter your Otp Number';

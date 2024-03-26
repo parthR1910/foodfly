@@ -1,58 +1,72 @@
 class UserModel {
-  final int id;
-  final String phoneNumber;
-  final String firstName;
-  final String lastName;
-  final String idProof;
-  final String accountNumber;
-  final String bankName;
-  final String ifscCode;
-  final String photo;
-  final String address;
-  final String pincode;
-  final String city;
-  final String state;
-  final String latLong;
-  final String emailAddress;
-  final String fcmToken;
+  String? email;
+  LatLong? latLong;
+  String? name;
+  String? phone;
+  String? profileImage;
+  String? uid;
+  String? address;
+  String? type;
+  String? fcmToken;
 
   UserModel({
-    required this.id,
-    required this.phoneNumber,
-    required this.firstName,
-    required this.lastName,
-    required this.idProof,
-    required this.accountNumber,
-    required this.bankName,
-    required this.ifscCode,
-    required this.photo,
-    required this.address,
-    required this.pincode,
-    required this.latLong,
-    required this.city,
-    required this.state,
-    required this.emailAddress,
-    required this.fcmToken,
+    this.email,
+    this.latLong,
+    this.name,
+    this.phone,
+    this.profileImage,
+    this.uid,
+    this.type,
+    this.address,
+    this.fcmToken,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['id'] ?? 0,
-      phoneNumber: json['phone_number'] ?? '',
-      firstName: json['first_name'] ?? '',
-      lastName: json['last_name'] ?? '',
-      idProof: json['id_proof'] ?? '',
-      accountNumber: json['account_number'] ?? '',
-      bankName: json['bank_name'] ?? '',
-      ifscCode: json['ifsc_code'] ?? '',
-      photo: json['photo'] ?? '',
-      latLong: json['latLong']??'',
-      address: json['address'] ?? '',
-      pincode: json['pincode'] ?? '',
-      city: json['city'] ?? '',
-      state: json['state'] ?? '',
-      emailAddress: json['email_address'] ?? '',
-      fcmToken: json['fcm_token'] ?? '',
-    );
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        email: json["email"],
+        latLong:
+            json["latLong"] == null ? null : LatLong.fromJson(json["latLong"]),
+        name: json["name"],
+        phone: json["phone"],
+        profileImage: json["profileImage"],
+        uid: json["uid"],
+        type: json['type'],
+        fcmToken: json['fcmToken'],
+        address: json['address'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "email": email,
+        "latLong": latLong?.toJson(),
+        "name": name,
+        "phone": phone,
+        "fcmToken": fcmToken,
+        "profileImage": profileImage,
+        "uid": uid,
+        "type": type,
+        'address': address
+      };
+}
+
+class LatLong {
+  double? latitude;
+  double? longitude;
+
+  LatLong({
+    this.latitude,
+    this.longitude,
+  });
+
+  factory LatLong.fromJson(Map<String, dynamic> json) => LatLong(
+        latitude: json["latitude"]?.toDouble(),
+        longitude: json["longitude"]?.toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "latitude": latitude,
+        "longitude": longitude,
+      };
+  @override
+  String toString() {
+    return 'Lat: $latitude, Long: $longitude';
   }
 }

@@ -1,22 +1,40 @@
-
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LocalDb{
-  static late SharedPreferences _preferences;
-  static Future<void> init()async{
-    _preferences = await SharedPreferences.getInstance();
+
+class SharedPrefServices{
+
+  SharedPrefServices._();
+
+  static final SharedPrefServices services = SharedPrefServices._();
+  late SharedPreferences pref;
+
+  Future<void> init()async{
+    pref = await SharedPreferences.getInstance();
   }
 
-  static Future<void> setString(String key,String value)async {
-    await _preferences.setString(key, value);
+  Future<void> setBool(String key,bool value)async{
+    pref.setBool(key, value);
   }
-  static String getString(String key,{String? defaultValue}) {
-    return _preferences.getString(key)??defaultValue??'';
+
+  bool getBool(String key){
+    return pref.getBool(key) ?? false;
   }
-  static Future<void> setInt(String key,int value)async {
-    await _preferences.setInt(key, value);
+
+
+  Future<void> setString(String key,String value)async{
+    await pref.setString(key, value);
   }
-  static int getInt(String key,{int? defaultValue}) {
-    return _preferences.getInt(key)??defaultValue??-1;
+
+  String getString(String key,){
+    return pref.getString(key)?? "";
   }
+
+  Future<void> setList(String key,List<String> list)async{
+    await pref.setStringList(key, list);
+  }
+
+  List<String>? getList(String key,){
+    return pref.getStringList(key)?? [];
+  }
+
 }

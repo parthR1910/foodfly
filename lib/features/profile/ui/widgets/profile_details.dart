@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_fly_delivery_partner/common/config/router/app_routes.dart';
 import 'package:food_fly_delivery_partner/common/model/user_model.dart';
 import 'package:food_fly_delivery_partner/common/utils/extentions/context_extention.dart';
+import 'package:food_fly_delivery_partner/features/dashboard/controller/dashboard_controller.dart';
 import 'package:food_fly_delivery_partner/features/profile/controller/profile_controller.dart';
 import '../../../../common/config/theme/theme_export.dart';
 
@@ -25,7 +26,7 @@ class ProfileDetails extends ConsumerWidget {
               children: [
                 ListTile(
                   leading: CachedNetworkImage(
-                    imageUrl: userModel.photo,
+                    imageUrl: userModel.profileImage ?? '',
                     imageBuilder: (context, imageProvider) => InkWell(
                         onTap: () {
                           showDialog(
@@ -57,7 +58,7 @@ class ProfileDetails extends ConsumerWidget {
                         const Icon(Icons.error),
                   ),
                   title: Text(
-                    '${userModel.firstName} ${userModel.lastName}',
+                    userModel.name ?? '',
                     style:
                         TextStyle(fontSize: 19.sp, fontWeight: FontWeight.w700),
                   ),
@@ -68,7 +69,7 @@ class ProfileDetails extends ConsumerWidget {
                         height: 5.h,
                       ),
                       Text(
-                        userModel.emailAddress,
+                        userModel.email ?? '',
                         style: TextStyle(
                             fontSize: 13.sp, fontWeight: FontWeight.w600),
                       ),
@@ -76,7 +77,7 @@ class ProfileDetails extends ConsumerWidget {
                         height: 5.h,
                       ),
                       Text(
-                        '${userModel.city} - ${userModel.pincode}',
+                        userModel.phone ?? '',
                         style: TextStyle(
                             fontSize: 12.sp, fontWeight: FontWeight.w500),
                       ),
@@ -96,13 +97,13 @@ class ProfileDetails extends ConsumerWidget {
                     arguments: userModel);
               },
               title: Text(
-                'Personal Details',
+                'Edit Profile',
                 style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
               ),
               trailing: const Icon(Icons.arrow_forward_ios_rounded),
             ),
           ),
-          SizedBox(height: 10.h),
+          /*SizedBox(height: 10.h),
           Card(
             child: ListTile(
               shape: RoundedRectangleBorder(
@@ -116,7 +117,7 @@ class ProfileDetails extends ConsumerWidget {
               ),
               trailing: const Icon(Icons.arrow_forward_ios_rounded),
             ),
-          ),
+          ),*/
           SizedBox(height: 10.h),
           Card(
             child: ListTile(
