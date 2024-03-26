@@ -2,6 +2,8 @@ import 'dart:ffi';
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:food_fly/framework/controller/food_controller/food_controlller.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
@@ -16,9 +18,10 @@ class FoodSliderItem extends ConsumerWidget {
     super.key,
   });
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final foodWatch = ref.watch(foodController);
+
     final random = Random();
     return GestureDetector(
       onTap: () {
@@ -39,7 +42,7 @@ class FoodSliderItem extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: foodData.image??"",
+              tag: foodData.image ?? "",
               child: Banner(
                 location: BannerLocation.topEnd,
                 message: '₹ ${foodData.offPrice} OFF ',
@@ -50,7 +53,8 @@ class FoodSliderItem extends ConsumerWidget {
                   width: 200.w,
                   child: CachedNetworkImage(
                     imageUrl: foodData.image!,
-                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
                     errorWidget: (context, url, error) => const FlutterLogo(),
                     fit: BoxFit.fill,
                   ),
@@ -72,11 +76,27 @@ class FoodSliderItem extends ConsumerWidget {
                       Text('Price : ',
                           style: AppTextStyle.w5.copyWith(fontSize: 12.sp)),
                       Text(' ₹ ${foodData.price! - foodData.offPrice!} ',
-                          style: AppTextStyle.w5.copyWith(fontSize: 16.sp,color: AppColors.kPrimary))
+                          style: AppTextStyle.w5.copyWith(
+                              fontSize: 16.sp, color: AppColors.kPrimary))
                     ],
                   ),
                   SizedBox(height: 4.h),
-                   const FoodRatingStar(ratingStar:4),
+                  RatingBar.builder(
+                    initialRating: foodWatch
+                        .calculateAverageRating(foodData.ratings ?? []),
+                    minRating: 0,
+                    itemSize: 15,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    ignoreGestures: true,
+                    glowColor: AppColors.kPrimary.withOpacity(.5),
+                    glow: false,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(Icons.star_rounded,
+                        color: AppColors.kPrimary),
+                    onRatingUpdate: (rating) {},
+                  ),
                 ],
               ),
             )

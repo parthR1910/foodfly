@@ -4,6 +4,7 @@ import 'package:food_fly/firebase_options.dart';
 import 'package:food_fly/framework/model/user/user_model.dart';
 import 'package:food_fly/framework/service/hive_service/box_service.dart';
 import 'package:food_fly/framework/service/hive_service/hive_adapter.dart';
+import 'package:food_fly/framework/service/notificaion_service.dart';
 import 'package:food_fly/ui/utils/constant/app_const_list.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
@@ -12,21 +13,25 @@ import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'framework/service/shared_pref_services.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SharedPrefServices.services.init();
+  await NotificationService.init();
   registerHiveAdapters();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       systemNavigationBarColor: Colors.transparent,
       systemNavigationBarDividerColor: Colors.transparent));
-await Hive.initFlutter();
-BoxService.boxService.userModelBox =await Hive.openBox<UserModel>(userModelBoxKey);
-BoxService.boxService.latLngBox =await Hive.openBox<LatLng>(latLngBoxKey);
+  await Hive.initFlutter();
+  BoxService.boxService.userModelBox =
+      await Hive.openBox<UserModel>(userModelBoxKey);
+  BoxService.boxService.latLngBox = await Hive.openBox<LatLng>(latLngBoxKey);
   runApp(ProviderScope(
       child: EasyLocalization(
-          supportedLocales: const [Locale('en'),],
+          supportedLocales: const [
+        Locale('en'),
+      ],
           path: 'assets/lang',
           useOnlyLangCode: true,
           startLocale: const Locale('en'),
@@ -35,22 +40,23 @@ BoxService.boxService.latLngBox =await Hive.openBox<LatLng>(latLngBoxKey);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) => ScreenUtilInit(
-    designSize: const Size(375, 812),
-    minTextAdapt: true,
-    builder: (context, child) {
-      return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      supportedLocales: EasyLocalization.of(context)!.supportedLocales,
-      localizationsDelegates: context.localizationDelegates,
-      locale: EasyLocalization.of(context)!.locale,
-      theme:AppTheme.lightTheme,
-      initialRoute: AppRoutes.splashRoute,
-      onGenerateRoute: AppRoutes.onGenerateRoute,
+        designSize: const Size(375, 812),
+        minTextAdapt: true,
+        builder: (context, child) {
+          return MaterialApp(
+            navigatorKey: navigatorKey,
+            debugShowCheckedModeBanner: false,
+            supportedLocales: EasyLocalization.of(context)!.supportedLocales,
+            localizationsDelegates: context.localizationDelegates,
+            locale: EasyLocalization.of(context)!.locale,
+            theme: AppTheme.lightTheme,
+            initialRoute: AppRoutes.splashRoute,
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+          );
+        },
       );
-    },
-    );
 }
-

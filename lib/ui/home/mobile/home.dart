@@ -1,5 +1,7 @@
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
+import 'package:food_fly/framework/model/notification_model.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
+import 'package:food_fly/ui/notificaions/notification.dart';
 import 'package:food_fly/ui/user_profile/mobile/user_profile.dart';
 import 'package:food_fly/ui/utils/common_device_config.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
@@ -17,7 +19,6 @@ class Home extends ConsumerStatefulWidget {
 }
 
 class _HomeState extends ConsumerState<Home> {
-
   // @override
   // void initState() {
   //   super.initState();
@@ -26,7 +27,9 @@ class _HomeState extends ConsumerState<Home> {
   // }
 
   @override
-  Widget build(BuildContext context, ) {
+  Widget build(
+    BuildContext context,
+  ) {
     mobileDeviceConfig(context);
     final appString = ref.watch(appStringController);
     return Scaffold(
@@ -47,8 +50,12 @@ class _HomeState extends ConsumerState<Home> {
           ),
           actions: [
             GestureDetector(
-              onTap: (){
-                Navigator.push(context, PageTransition(child: const UserProfile(), type: PageTransitionType.bottomToTop));
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: const NotificationScreen(),
+                        type: PageTransitionType.bottomToTop));
               },
               child: Container(
                 height: 50.h,
@@ -57,25 +64,32 @@ class _HomeState extends ConsumerState<Home> {
                 decoration: BoxDecoration(
                     color: Colors.amberAccent,
                     borderRadius: BorderRadius.circular(8.r)),
-                child: const Icon(Icons.person),
+                child: const Icon(Icons.notifications),
               ),
             ),
           ]),
       body: StreamBuilder<List<FoodDataModel>>(
-        stream: FireStoreService.fireStoreService.getFoodDataFireStore(),
-        builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.waiting){
-            return const Center(child: CircularProgressIndicator(),);
-          } else if(snapshot.hasData){
-            final foodDataList = snapshot.data!;
-            // for(var i in foodDataList){
-            //   print(i.name);
-            // }
-            return  HomeView(foodList: foodDataList,);
-          }
-         else{ return const Center(child: Text("No data is inserted"),);}
-        }
-      ),
+          stream: FireStoreService.fireStoreService.getFoodDataFireStore(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasData) {
+              final foodDataList = snapshot.data!;
+              // for(var i in foodDataList){
+              //   print(i.name);
+              // }
+              return HomeView(
+                foodList: foodDataList,
+              );
+            } else {
+              print(snapshot.error);
+              return Center(
+                child: Text("${snapshot.error}No data is inserted"),
+              );
+            }
+          }),
     );
   }
 }

@@ -4,10 +4,11 @@ import 'package:food_fly/ui/add_food/add_food.dart';
 import 'package:food_fly/ui/auth/login/mobile/login.dart';
 import 'package:food_fly/ui/customer_order_detail/mobile/cutomer_order_detail.dart';
 import 'package:food_fly/ui/edit_profile/edit_profile.dart';
+import 'package:food_fly/ui/notificaions/notification.dart';
 import 'package:food_fly/ui/splash/mobile/splash.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../auth/register/mobile/register.dart';
-import '../../cart/mobile/cart.dart';
+import '../../cart/mobile/orders.dart';
 import '../../dashboard/mobile/dashboard.dart';
 import '../../food_detail/mobile/food_detail.dart';
 import '../../payment/mobile/payment.dart';
@@ -31,7 +32,7 @@ class AppRoutes {
   static const String findFoods = '/findFoods';
   static const String addFood = '/addFood';
   static const String editProfile = '/editProfile';
-
+  static const String notificationRoute = '/notification';
 
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -45,36 +46,61 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => const Welcome());
       case dashBoard:
         return MaterialPageRoute(builder: (context) => const DashBoard());
+      case notificationRoute:
+        return MaterialPageRoute(
+            builder: (context) => const NotificationScreen());
       case foodDetail:
         return MaterialPageRoute(
-            builder: (context) =>
-                FoodDetail(foodData: settings.arguments as FoodDataModel,));
+            builder: (context) => FoodDetail(
+                  foodData: settings.arguments as FoodDataModel,
+                ));
       case payment:
-        final Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        final Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
         final FoodDataModel foodData = arguments['foodData'];
         final int quantity = arguments['quantity'];
-        return MaterialPageRoute(builder: (context)=>  Payment(foodData: foodData,quantity: quantity,));
+        return MaterialPageRoute(
+            builder: (context) => Payment(
+                  foodData: foodData,
+                  quantity: quantity,
+                ));
       case cart:
-        return MaterialPageRoute(builder: (context)=> const Cart());
+        return MaterialPageRoute(builder: (context) => const Orders());
       case userprofile:
-        return MaterialPageRoute(builder: (context)=> const UserProfile());
+        return MaterialPageRoute(builder: (context) => const UserProfile());
       case customerOderDetail:
-        final Map<String,dynamic> argument  = settings.arguments as Map<String,dynamic>;
+        final Map<String, dynamic> argument =
+            settings.arguments as Map<String, dynamic>;
         final int quantity = argument["quantity"];
         final String foodId = argument["foodId"];
         final String deliveryBoyId = argument["deliveryBoyId"];
         final bool isPaid = argument["isPaid"];
-        return MaterialPageRoute(builder: (context)=>  CustomerOderDetail(quantity: quantity, foodId: foodId, deliveryBoyId: deliveryBoyId,isPaid: isPaid,));
+        final String dateTime = argument["dateTime"];
+        final String orderId = argument["orderId"];
+        final String paymentId = argument["paymentId"] ?? '';
+        return MaterialPageRoute(
+            builder: (context) => CustomerOderDetail(
+                  quantity: quantity,
+                  paymentId: paymentId,
+                  orderId: orderId,
+                  dateTime: dateTime,
+                  foodId: foodId,
+                  deliveryBoyId: deliveryBoyId,
+                  isPaid: isPaid,
+                ));
       case successOrder:
-        return MaterialPageRoute(builder: (context)=> const SuccessOrder());
+        return MaterialPageRoute(builder: (context) => const SuccessOrder());
       case findFoods:
-        return MaterialPageRoute(builder: (context)=> const FindFoods());
+        return MaterialPageRoute(builder: (context) => const FindFoods());
       case addFood:
-        return MaterialPageRoute(builder: (context)=> const AddFood());
+        return MaterialPageRoute(builder: (context) => const AddFood());
 
       case editProfile:
-        return PageTransition(child: const EditProfile(),type: PageTransitionType.rightToLeft,duration: const Duration(milliseconds: 400));
-        // return MaterialPageRoute(builder: (context)=> const EditProfile());
+        return PageTransition(
+            child: const EditProfile(),
+            type: PageTransitionType.rightToLeft,
+            duration: const Duration(milliseconds: 400));
+      // return MaterialPageRoute(builder: (context)=> const EditProfile());
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

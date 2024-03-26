@@ -13,22 +13,19 @@ import 'package:geocoding/geocoding.dart';
 
 import '../../../../ui/utils/widgets/helper.dart';
 
-final editProfileController = ChangeNotifierProvider((ref) => EditProfileController());
+final editProfileController =
+    ChangeNotifierProvider((ref) => EditProfileController());
 
-class EditProfileController extends ChangeNotifier{
-
-
+class EditProfileController extends ChangeNotifier {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
 
-
-  String profileImgUrl ="";
+  String profileImgUrl = "";
 
   bool isLoading = false;
 
-
-  addDataToTextField()async{
+  addDataToTextField() async {
     final user = BoxService.boxService.userModelBox.get(userModelDetailKey)!;
     nameController.text = user.name!;
     emailController.text = user.email!;
@@ -38,20 +35,20 @@ class EditProfileController extends ChangeNotifier{
     notifyListeners();
   }
 
-
   bool isUpdate = false;
 
-  checkIsUpdateOrNot(){
+  checkIsUpdateOrNot() {
     final user = BoxService.boxService.userModelBox.get(userModelDetailKey)!;
-    if(user.name != nameController.text || user.email !=emailController.text || user.phone!.substring(3)!=phoneController.text || selectedFile != null ){
+    if (user.name != nameController.text ||
+        user.email != emailController.text ||
+        user.phone!.substring(3) != phoneController.text ||
+        selectedFile != null) {
       isUpdate = true;
-    }else{
+    } else {
       isUpdate = false;
     }
     notifyListeners();
   }
-
-
 
   File? selectedFile;
   String? fileName;
@@ -62,8 +59,7 @@ class EditProfileController extends ChangeNotifier{
         allowMultiple: true,
         type: FileType.custom);
     if (result != null) {
-      fileName = result.files.
-        single.name;
+      fileName = result.files.single.name;
       selectedFile = File(result.files.single.path!);
       isUpdate = true;
       notifyListeners();
@@ -77,46 +73,52 @@ class EditProfileController extends ChangeNotifier{
     notifyListeners();
   }
 
-
-  Future updateUserDataOnFireStore(BuildContext context)async{
-   try{
-     isLoading = true;
-     notifyListeners();
-     final user = BoxService.boxService.userModelBox.get(userModelDetailKey)!;
-     String profileImage = user.profileImage!;
-     if(selectedFile != null) {
-       final userImage = await StorageService.service.upLoadFoodImage(selectedFile!);
-       profileImage = userImage;
-     }
-     final userDataModel = UserModel(name: nameController.text,phone: "+91${phoneController.text}",profileImage:profileImage , latLong: user.latLong,email: user.email);
-     await BoxService.boxService.addUserDetailToHive(userModelDetailKey,userDataModel );
-     final uid = AuthService.authService.auth.currentUser!.uid;
-     FireStoreService.fireStoreService.fireStore.collection("User").doc(uid).update({
-       "name":nameController.text,
-       "phone": "+91${phoneController.text}",
-       "profileImage": profileImage,
-     });
-     Navigator.pop(context);
-     isLoading = false;
-     notifyListeners();
-     clearData();
-   }catch (e){
-     Future.error("-----update profile$e");
-     isLoading = false;
-   }
-   notifyListeners();
+  Future updateUserDataOnFireStore(BuildContext context) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      final user = BoxService.boxService.userModelBox.get(userModelDetailKey)!;
+      String profileImage = user.profileImage!;
+      if (selectedFile != null) {
+        final userImage =
+            await StorageService.service.upLoadFoodImage(selectedFile!);
+        profileImage = userImage;
+      }
+      final userDataModel = UserModel(
+          name: nameController.text,
+          phone: "+91${phoneController.text}",
+          profileImage: profileImage,
+          latLong: user.latLong,
+          email: user.email);
+      await BoxService.boxService
+          .addUserDetailToHive(userModelDetailKey, userDataModel);
+      final uid = AuthService.authService.auth.currentUser!.uid;
+      FireStoreService.fireStoreService.fireStore
+          .collection("User")
+          .doc(uid)
+          .update({
+        "name": nameController.text,
+        "phone": "+91${phoneController.text}",
+        "profileImage": profileImage,
+      });
+      Navigator.pop(context);
+      isLoading = false;
+      notifyListeners();
+      clearData();
+    } catch (e) {
+      Future.error("-----update profile$e");
+      isLoading = false;
+    }
+    notifyListeners();
   }
-  
-  
-  
-  
-  clearData(){
+
+  clearData() {
     selectedFile = null;
     isUpdate = false;
     nameController.clear();
     emailController.clear();
     phoneController.clear();
-    profileImgUrl ="";
+    profileImgUrl = "";
     notifyListeners();
   }
 }

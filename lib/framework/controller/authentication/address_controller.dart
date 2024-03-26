@@ -37,7 +37,7 @@ class AddressController extends ChangeNotifier {
       notifyListeners();
     } else {
       final position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+          desiredAccuracy: LocationAccuracy.bestForNavigation);
       double longitude = position.longitude;
       double latitude = position.latitude;
       lat = position.latitude;
@@ -53,7 +53,8 @@ class AddressController extends ChangeNotifier {
         cityController.text = '${placeMark.administrativeArea}';
         notifyListeners();
         loading = false;
-        fullAddress = "${addressController.text} ${cityController.text} ${postalCodeController.text}";
+        fullAddress =
+            "${addressController.text} ${cityController.text} ${postalCodeController.text}";
         notifyListeners();
       }
     }
@@ -61,7 +62,7 @@ class AddressController extends ChangeNotifier {
   }
 
   String? fcmToken;
-  getFcmToken()async{
+  getFcmToken() async {
     try {
       fcmToken = await FirebaseMessaging.instance.getToken();
     } catch (e) {
@@ -71,32 +72,39 @@ class AddressController extends ChangeNotifier {
 
   Future updateDataToFireStore() async {
     loading = true;
-    if(fcmToken!=null){
-      if(lat==null){
+    if (fcmToken != null) {
+      if (lat == null) {
         loading = false;
         notifyListeners();
       }
-      final latLong = LatLng(latitude: lat,longitude: long);
+      final latLong = LatLng(latitude: lat, longitude: long);
       await FireStoreService.fireStoreService.updateFireStore(
-          latLong: latLong, phone: "$countryCode${phoneController.text}",fcmToken: fcmToken!,address: fullAddress);
+          latLong: latLong,
+          phone: "$countryCode${phoneController.text}",
+          fcmToken: fcmToken!,
+          address: fullAddress);
       final uid = AuthService.authService.auth.currentUser!.uid;
-      final userModel = await FireStoreService.fireStoreService.fireStore.collection("User").doc(uid).get().then((value) => UserModel.fromJson(value.data()!));
+      final userModel = await FireStoreService.fireStoreService.fireStore
+          .collection("User")
+          .doc(uid)
+          .get()
+          .then((value) => UserModel.fromJson(value.data()!));
       BoxService.boxService.addUserDetailToHive(userModelDetailKey, userModel);
       loading = false;
-      fcmToken=null;
-    }else{
+      fcmToken = null;
+    } else {
       loading = false;
-      fcmToken=null;
+      fcmToken = null;
       kPrint("FCM Token Not found");
     }
     notifyListeners();
   }
 
-  clearForm(){
+  clearForm() {
     phoneController.clear();
     addressController.clear();
     postalCodeController.clear();
     cityController.clear();
-    fcmToken=null;
+    fcmToken = null;
   }
 }

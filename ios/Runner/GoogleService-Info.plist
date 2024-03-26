@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1029434166416-nhefkskapajpk89binh4gijgoh6eg1h3.apps.googleusercontent.com</string>
+	<string>819838946571-mb868gdo8buuft0jifa817vah3iv92tp.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1029434166416-nhefkskapajpk89binh4gijgoh6eg1h3</string>
+	<string>com.googleusercontent.apps.819838946571-mb868gdo8buuft0jifa817vah3iv92tp</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>819838946571-1i4vjffqfvuvjar4c8bumrcug00f63kh.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAk5TUDj4-4gXT1gi5fddV4Vrf0pQlt5YM</string>
+	<string>AIzaSyAnmeIQ4Otghqzmn0vdIZAdeeqgRUuojeI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1029434166416</string>
+	<string>819838946571</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.foodFly</string>
 	<key>PROJECT_ID</key>
-	<string>foodfly-c8656</string>
+	<string>foodfly-baf3c</string>
 	<key>STORAGE_BUCKET</key>
-	<string>foodfly-c8656.appspot.com</string>
+	<string>foodfly-baf3c.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1029434166416:ios:0840ccd68f7af70764dc15</string>
+	<string>1:819838946571:ios:7883ce3452d55b7b3f660e</string>
 </dict>
 </plist>

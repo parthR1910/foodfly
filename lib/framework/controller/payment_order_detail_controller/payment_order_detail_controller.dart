@@ -16,7 +16,7 @@ class PaymentOrderDetailController extends ChangeNotifier {
   bool isLoading = false;
   bool isLoadingOverlay = false;
 
-  Placemark placeMark = Placemark();
+  Placemark placeMark = const Placemark();
   String location = "";
 
   getUserAddress(UserModel user) async {
@@ -39,21 +39,25 @@ class PaymentOrderDetailController extends ChangeNotifier {
     return formatter.format(now);
   }
 
-
-  Future postUserFoodOrder({required int quantity, required String foodId,required bool paidOrNot}) async {
+  Future postUserFoodOrder(
+      {required int quantity,
+      required String foodId,
+      required bool paidOrNot,
+      String? paymentId}) async {
     isLoadingOverlay = true;
     notifyListeners();
     Uuid uuid = const Uuid();
     String uOrderId = uuid.v4();
     final userId = AuthService.authService.auth.currentUser!.uid;
     final UserOrdersModel userOrdersModel = UserOrdersModel(
-        quantity: quantity,
-        foodId: foodId,
-        paidOrNot: paidOrNot,
-        uOrderId: uOrderId,
-        userId: userId,
-        isDelivered: false,
-        dateTime:getCurrentDateTime(),
+      quantity: quantity,
+      foodId: foodId,
+      paidOrNot: paidOrNot,
+      uOrderId: uOrderId,
+      userId: userId,
+      paymentId: paymentId,
+      isDelivered: false,
+      dateTime: getCurrentDateTime(),
     );
     await FireStoreService.fireStoreService
         .postUserFoodOrderToFireStore(userOrdersModel);
@@ -62,7 +66,8 @@ class PaymentOrderDetailController extends ChangeNotifier {
     return uOrderId;
   }
 
-  Future postUserFoodCartOrder({required int quantity, required String foodId}) async {
+  Future postUserFoodCartOrder(
+      {required int quantity, required String foodId}) async {
     isLoadingOverlay = true;
     notifyListeners();
     Uuid uuid = const Uuid();
@@ -75,7 +80,7 @@ class PaymentOrderDetailController extends ChangeNotifier {
       uOrderId: uniqueId,
       userId: userId,
       isDelivered: false,
-      dateTime:getCurrentDateTime(),
+      dateTime: getCurrentDateTime(),
     );
     await FireStoreService.fireStoreService
         .postUserFoodOrderCartToFireStore(foodCartModel);
