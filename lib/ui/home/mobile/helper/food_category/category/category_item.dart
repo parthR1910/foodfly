@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:food_fly/framework/controller/food_controller/food_controlller.dart';
 import 'package:food_fly/framework/model/food_data_model/food_data_model.dart';
 import 'package:food_fly/ui/utils/theme/app_colors.dart';
 import 'package:food_fly/ui/utils/theme/app_text_style.dart';
@@ -6,13 +8,14 @@ import 'package:food_fly/ui/utils/theme/theme.dart';
 import 'package:food_fly/ui/utils/theme/app_routes.dart';
 import 'package:food_fly/ui/home/mobile/helper/food_rating_star.dart';
 
-class CategoryFoodItem extends StatelessWidget {
+class CategoryFoodItem extends ConsumerWidget {
   final FoodDataModel foodData;
-  const CategoryFoodItem({super.key,
-    required this.foodData});
+  const CategoryFoodItem({super.key, required this.foodData});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final foodWatch = ref.watch(foodController);
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, AppRoutes.foodDetail, arguments: foodData);
@@ -25,12 +28,12 @@ class CategoryFoodItem extends StatelessWidget {
               height: 60.h,
               width: 70.w,
               clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                borderRadius:BorderRadius.circular(10.r)
-              ),
-              child:  CachedNetworkImage(
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
+              child: CachedNetworkImage(
                 imageUrl: foodData.image!,
-                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => const FlutterLogo(),
                 fit: BoxFit.cover,
               ),
@@ -41,23 +44,46 @@ class CategoryFoodItem extends StatelessWidget {
               children: [
                 Text(
                   // foodItem.name,
-                  foodData.name??"",
+                  foodData.name ?? "",
                   style: AppTextStyle.w4.copyWith(fontSize: 14.sp),
                 ),
                 Row(
                   children: [
                     Text('Price : ',
                         style: AppTextStyle.w5.copyWith(fontSize: 12.sp)),
-                    foodData.offPrice! == 0? const SizedBox(): Text(foodData.price.toString(),
-                        style: AppTextStyle.w5.copyWith(fontSize: 14.sp,color: AppColors.textGreyColor,decoration: TextDecoration.lineThrough, )),
+                    foodData.offPrice! == 0
+                        ? const SizedBox()
+                        : Text(foodData.price.toString(),
+                            style: AppTextStyle.w5.copyWith(
+                              fontSize: 14.sp,
+                              color: AppColors.textGreyColor,
+                              decoration: TextDecoration.lineThrough,
+                            )),
                     Text(' ₹ ${foodData.price! - foodData.offPrice!} ',
-                        style: AppTextStyle.w5.copyWith(fontSize: 16.sp,color: AppColors.kPrimary))
+                        style: AppTextStyle.w5.copyWith(
+                            fontSize: 16.sp, color: AppColors.kPrimary))
                   ],
                 ),
               ],
             ),
             const Spacer(),
-            const FoodRatingStar(ratingStar: 3),
+            RatingBar.builder(
+              initialRating:
+                  foodWatch.calculateAverageRating(foodData.ratings ?? []),
+              minRating: 0,
+              itemSize: 15,
+              direction: Axis.horizontal,
+              wrapAlignment: WrapAlignment.center,
+              allowHalfRating: true,
+              ignoreGestures: true,
+              glowColor: AppColors.kPrimary.withOpacity(.5),
+              glow: false,
+              itemCount: 5,
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) =>
+                  const Icon(Icons.star_rounded, color: AppColors.kPrimary),
+              onRatingUpdate: (rating) {},
+            ),
           ],
         ),
       ),

@@ -16,29 +16,31 @@ class DashBoard extends ConsumerStatefulWidget {
 }
 
 class _DashBoardState extends ConsumerState<DashBoard> {
-
   bool isExitApp = false;
   @override
-  Widget build(BuildContext context,) {
+  Widget build(
+    BuildContext context,
+  ) {
     mobileDeviceConfig(context);
     final dashBoardWatch = ref.watch(dashBoardStateProvider.notifier);
     return PopScope(
       canPop: isExitApp,
-      onPopInvoked: (val) async{
+      onPopInvoked: (val) async {
         setState(() {
           isExitApp = true;
         });
-        commonToast("Please again to close app");
+        // commonToast("Press again to close app");
 
-        await Future.delayed(const Duration(seconds: 2),(){
+        await Future.delayed(const Duration(seconds: 2), () {
           setState(() {
             isExitApp = false;
           });
         });
       },
       child: Scaffold(
-        body:SharedPrefServices.services.getBool(isAdminKey)?dashBoardWatch.adminScreens[ref.watch(dashBoardStateProvider)]:
-        dashBoardWatch.screens[ref.watch(dashBoardStateProvider)],
+        body: SharedPrefServices.services.getBool(isAdminKey)
+            ? dashBoardWatch.adminScreens[ref.watch(dashBoardStateProvider)]
+            : dashBoardWatch.screens[ref.watch(dashBoardStateProvider)],
         bottomNavigationBar: const MyBottomNavigationBar(),
       ),
     );

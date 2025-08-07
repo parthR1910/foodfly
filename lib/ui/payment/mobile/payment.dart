@@ -26,14 +26,13 @@ import '../../../framework/data/providers/quantity_state_provider.dart';
 class Payment extends ConsumerStatefulWidget {
   final FoodDataModel foodData;
   final int quantity;
-  const Payment({super.key,required this.foodData,required this.quantity});
+  const Payment({super.key, required this.foodData, required this.quantity});
 
   @override
   ConsumerState<Payment> createState() => _PaymentMobileState();
 }
 
 class _PaymentMobileState extends ConsumerState<Payment> {
-
   String msg = '';
   Razorpay razorpay = Razorpay();
 
@@ -43,23 +42,39 @@ class _PaymentMobileState extends ConsumerState<Payment> {
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
   }
 
-  void handlerPaymentSuccess(PaymentSuccessResponse response) async{
+  void handlerPaymentSuccess(PaymentSuccessResponse response) async {
     msg = "SUCCESS: ${response.paymentId}";
     // print(response.paymentId);
     Navigator.pop(context);
 
     double productPrice = widget.foodData.price! - widget.foodData.offPrice!;
     double driver = 50.0;
-    double productTax = productPrice*widget.quantity*(widget.foodData.tax!/100);
-    double totalPrice =productTax+driver+productPrice*widget.quantity;
+    double productTax =
+        productPrice * widget.quantity * (widget.foodData.tax! / 100);
+    double totalPrice = productTax + driver + productPrice * widget.quantity;
 
-   final uOrderId =  await ref.watch(paymentOrderDetailController).postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!, paidOrNot: true);
+    final uOrderId = await ref
+        .watch(paymentOrderDetailController)
+        .postUserFoodOrder(
+            quantity: widget.quantity,
+            paymentId: response.paymentId,
+            foodId: widget.foodData.foodId!,
+            paidOrNot: true);
     String uid = AuthService.authService.auth.currentUser!.uid;
     var now = DateTime.now();
     var formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
-    PaymentModel paymentModel = PaymentModel(amount: totalPrice, foodId: widget.foodData.foodId, payType: "online", paymentId: response.paymentId, time: formatter.format(now), transactionId: response.paymentId, userId: uid, uOrderID: uOrderId);
-    await FireStoreService.fireStoreService.setPaymentToFirebase(paymentModel: paymentModel);
-    if(context.mounted){
+    PaymentModel paymentModel = PaymentModel(
+        amount: totalPrice,
+        foodId: widget.foodData.foodId,
+        payType: "online",
+        paymentId: response.paymentId,
+        time: formatter.format(now),
+        transactionId: response.paymentId,
+        userId: uid,
+        uOrderID: uOrderId);
+    await FireStoreService.fireStoreService
+        .setPaymentToFirebase(paymentModel: paymentModel);
+    if (context.mounted) {
       Navigator.pushNamed(context, AppRoutes.successOrder);
     }
     ref.read(quantityStateProvider.notifier).update((state) => 1);
@@ -67,9 +82,9 @@ class _PaymentMobileState extends ConsumerState<Payment> {
     print(msg);
   }
 
-
   void handlerErrorFailure(PaymentFailureResponse response) {
-    msg = "ERROR: ${response.code} - ${jsonDecode(response.message ?? '')['error']['description']}";
+    msg =
+        "ERROR: ${response.code} - ${jsonDecode(response.message ?? '')['error']['description']}";
     print(msg);
   }
 
@@ -92,14 +107,14 @@ class _PaymentMobileState extends ConsumerState<Payment> {
 
   Map<String, dynamic> getOrder(double amount) {
     Map<String, dynamic> orderMap = ({
-      'amount': amount*100,
+      'amount': amount * 100,
       'currency': 'INR',
       'receipt': 'rcptid_11',
     });
     return orderMap;
   }
 
-  Future<void> placeOrder(double amount) async{
+  Future<void> placeOrder(double amount) async {
     http
         .post(
       Uri.parse('https://api.razorpay.com/v1/orders'),
@@ -131,6 +146,7 @@ class _PaymentMobileState extends ConsumerState<Payment> {
     super.initState();
     initRazorpay();
   }
+
   @override
   Widget build(BuildContext context) {
     mobileDeviceConfig(context);
@@ -138,8 +154,9 @@ class _PaymentMobileState extends ConsumerState<Payment> {
 
     double productPrice = widget.foodData.price! - widget.foodData.offPrice!;
     double driver = 50.0;
-    double productTax = productPrice*widget.quantity*(widget.foodData.tax!/100);
-    double totalPrice =productTax+driver+productPrice*widget.quantity;
+    double productTax =
+        productPrice * widget.quantity * (widget.foodData.tax! / 100);
+    double totalPrice = productTax + driver + productPrice * widget.quantity;
     return CommonLoading(
       show: paymentOrderDetailWatch.isLoadingOverlay,
       child: Scaffold(
@@ -154,48 +171,74 @@ class _PaymentMobileState extends ConsumerState<Payment> {
               SizedBox(
                 height: 48.h,
               ),
-              PaymentOrderDetail(foodData: widget.foodData,quantity: widget.quantity),
+              PaymentOrderDetail(
+                  foodData: widget.foodData, quantity: widget.quantity),
               SizedBox(
                 height: 64.h,
               ),
               CommonButton(
                 onTap: () async {
-                  await paymentOrderDetailWatch.postUserFoodCartOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!);
-                  if(context.mounted) {
+                  await paymentOrderDetailWatch.postUserFoodCartOrder(
+                      quantity: widget.quantity,
+                      foodId: widget.foodData.foodId!);
+                  if (context.mounted) {
                     Navigator.pushNamedAndRemoveUntil(
                         context, AppRoutes.dashBoard, (route) => false);
                   }
                   commonToast("${widget.foodData.name} added to the cart");
-                  },
+                },
                 padding: EdgeInsets.symmetric(vertical: 12.h),
-                child: Text("Add To Cart",
+                child: Text(
+                  "Add To Cart",
                   style: AppTextStyle.w5.copyWith(fontSize: 14.sp),
                 ),
               ),
-              SizedBox(height: 10.h,),
+              SizedBox(
+                height: 10.h,
+              ),
               CommonButton(
-                onTap: () async{
+                onTap: () async {
                   AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.success,
-                      animType: AnimType.rightSlide,
+                    context: context,
+                    dialogType: DialogType.success,
+                    animType: AnimType.rightSlide,
+
                     ///===================== Online payment=================///
-                    btnOk: CommonButton(onTap: (){
-                      placeOrder(totalPrice);
-                      commonToast("${widget.foodData.name} Ordered successfully");
-                    },padding: EdgeInsets.symmetric(vertical: 6.h,horizontal: 20.w),child: const Text("Pay UPI"),),
+                    btnOk: CommonButton(
+                      onTap: () {
+                        placeOrder(totalPrice);
+                        commonToast(
+                            "${widget.foodData.name} Ordered successfully");
+                      },
+                      padding:
+                          EdgeInsets.symmetric(vertical: 6.h, horizontal: 20.w),
+                      child: const Text("Pay UPI"),
+                    ),
+
                     ///======================= Cash on delivery ============///
-                    btnCancel:  CommonButton(onTap: () async{
-                      Navigator.pop(context);
-                      await paymentOrderDetailWatch.postUserFoodOrder(quantity: widget.quantity, foodId: widget.foodData.foodId!, paidOrNot: false);
-                      if(context.mounted){
-                        Navigator.pushNamed(context, AppRoutes.successOrder);
-                      }
-                      commonToast("${widget.foodData.name} Ordered successfully");
-                      ref.read(quantityStateProvider.notifier).update((state) => 1);
-                    },padding: EdgeInsets.symmetric(vertical: 6.h,),child: const Text("Cash on delivery"),),
-                      title: 'Payment',
-                      desc: 'Choose your payment type',
+                    btnCancel: CommonButton(
+                      onTap: () async {
+                        Navigator.pop(context);
+                        await paymentOrderDetailWatch.postUserFoodOrder(
+                            quantity: widget.quantity,
+                            foodId: widget.foodData.foodId!,
+                            paidOrNot: false);
+                        if (context.mounted) {
+                          Navigator.pushNamed(context, AppRoutes.successOrder);
+                        }
+                        commonToast(
+                            "${widget.foodData.name} Ordered successfully");
+                        ref
+                            .read(quantityStateProvider.notifier)
+                            .update((state) => 1);
+                      },
+                      padding: EdgeInsets.symmetric(
+                        vertical: 6.h,
+                      ),
+                      child: const Text("Cash on delivery"),
+                    ),
+                    title: 'Payment',
+                    desc: 'Choose your payment type',
                   ).show();
                 },
                 padding: EdgeInsets.symmetric(vertical: 12.h),
@@ -206,7 +249,7 @@ class _PaymentMobileState extends ConsumerState<Payment> {
               ),
             ],
           ),
-        ) ,
+        ),
       ),
     );
   }

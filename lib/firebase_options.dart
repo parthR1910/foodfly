@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,16 +49,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDSD9HI0glE3TgwBvS1gQ1hh4e1QOd5R9w',
-    appId: '1:819838946571:web:3d7ae4563ffe07d53f660e',
-    messagingSenderId: '819838946571',
-    projectId: 'foodfly-baf3c',
-    authDomain: 'foodfly-baf3c.firebaseapp.com',
-    storageBucket: 'foodfly-baf3c.appspot.com',
-    measurementId: 'G-Q1CJEXH5KJ',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBJexXbNOTl524SbfZa8wOzAOX_svZajeQ',
     appId: '1:819838946571:android:743bb03cbf6b32ab3f660e',
@@ -70,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '819838946571',
     projectId: 'foodfly-baf3c',
     storageBucket: 'foodfly-baf3c.appspot.com',
+    androidClientId: '819838946571-1i4vjffqfvuvjar4c8bumrcug00f63kh.apps.googleusercontent.com',
     iosClientId: '819838946571-mb868gdo8buuft0jifa817vah3iv92tp.apps.googleusercontent.com',
     iosBundleId: 'com.example.foodFly',
   );

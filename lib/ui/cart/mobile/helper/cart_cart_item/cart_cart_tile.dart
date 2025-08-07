@@ -21,15 +21,17 @@ class CartCartTile extends ConsumerStatefulWidget {
   final FoodDataModel foodData;
   final FoodCartModel order;
   final BuildContext parenteContext;
-  const CartCartTile( {super.key,required this.foodData,required this.order,required this.parenteContext});
+  const CartCartTile(
+      {super.key,
+      required this.foodData,
+      required this.order,
+      required this.parenteContext});
 
   @override
   ConsumerState createState() => _CartCartTileState();
 }
 
 class _CartCartTileState extends ConsumerState<CartCartTile> {
-
-
   String msg = '';
   Razorpay razorpay = Razorpay();
 
@@ -39,28 +41,45 @@ class _CartCartTileState extends ConsumerState<CartCartTile> {
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
   }
 
-  void handlerPaymentSuccess(PaymentSuccessResponse response) async{
+  void handlerPaymentSuccess(PaymentSuccessResponse response) async {
     msg = "SUCCESS: ${response.paymentId}";
     Navigator.pop(context);
     double productPrice = widget.foodData.price! - widget.foodData.offPrice!;
     double driver = 50.0;
-    double productTax = productPrice*widget.order.quantity!*(widget.foodData.tax!/100);
-    double totalPrice =productTax+driver+productPrice*widget.order.quantity!;
+    double productTax =
+        productPrice * widget.order.quantity! * (widget.foodData.tax! / 100);
+    double totalPrice =
+        productTax + driver + productPrice * widget.order.quantity!;
 
-   final uOrderId =  await ref.watch(cartController).postUserFoodOrder(quantity: widget.order.quantity!, foodId: widget.foodData.foodId!, paidOrNot: true);
-    await ref.watch(cartController).removeCartDataFromFirebase(widget.order.uOrderId!);
+    final uOrderId = await ref.watch(cartController).postUserFoodOrder(
+        paymentId: response.paymentId ?? '',
+        quantity: widget.order.quantity!,
+        foodId: widget.foodData.foodId!,
+        paidOrNot: true);
+    await ref
+        .watch(cartController)
+        .removeCartDataFromFirebase(widget.order.uOrderId!);
     String uid = AuthService.authService.auth.currentUser!.uid;
     var now = DateTime.now();
     var formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
-    PaymentModel paymentModel = PaymentModel(amount: totalPrice, foodId: widget.foodData.foodId, payType: "online", paymentId: response.paymentId, time: formatter.format(now), transactionId: response.paymentId, userId: uid, uOrderID: uOrderId);
-    await FireStoreService.fireStoreService.setPaymentToFirebase(paymentModel: paymentModel);
+    PaymentModel paymentModel = PaymentModel(
+        amount: totalPrice,
+        foodId: widget.foodData.foodId,
+        payType: "online",
+        paymentId: response.paymentId,
+        time: formatter.format(now),
+        transactionId: response.paymentId,
+        userId: uid,
+        uOrderID: uOrderId);
+    await FireStoreService.fireStoreService
+        .setPaymentToFirebase(paymentModel: paymentModel);
     commonToast("${widget.foodData.name} Ordered Successfully");
     print(msg);
   }
 
-
   void handlerErrorFailure(PaymentFailureResponse response) {
-    msg = "ERROR: ${response.code} - ${jsonDecode(response.message ?? '')['error']['description']}";
+    msg =
+        "ERROR: ${response.code} - ${jsonDecode(response.message ?? '')['error']['description']}";
     print(msg);
   }
 
@@ -83,14 +102,14 @@ class _CartCartTileState extends ConsumerState<CartCartTile> {
 
   Map<String, dynamic> getOrder(double amount) {
     Map<String, dynamic> orderMap = ({
-      'amount': amount*100,
+      'amount': amount * 100,
       'currency': 'INR',
       'receipt': 'rcptid_11',
     });
     return orderMap;
   }
 
-  Future<void> placeOrder(double amount) async{
+  Future<void> placeOrder(double amount) async {
     http
         .post(
       Uri.parse('https://api.razorpay.com/v1/orders'),
@@ -129,40 +148,66 @@ class _CartCartTileState extends ConsumerState<CartCartTile> {
     final cartWatch = ref.watch(cartController);
     double productPrice = widget.foodData.price! - widget.foodData.offPrice!;
     double driver = 50.0;
-    double productTax = productPrice*widget.order.quantity!*(widget.foodData.tax!/100);
-    double totalPrice =productTax+driver+productPrice*widget.order.quantity!;
-    return  CartTile(
+    double productTax =
+        productPrice * widget.order.quantity! * (widget.foodData.tax! / 100);
+    double totalPrice =
+        productTax + driver + productPrice * widget.order.quantity!;
+    return CartTile(
       buttonText: "Order now",
       iconWidget: ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: 0.h),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.r))),
-           onPressed: ()async{
+              padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.h),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6.r))),
+          onPressed: () async {
             await cartWatch.removeCartDataFromFirebase(widget.order.uOrderId!);
             commonToast("Removed ${widget.foodData.name}");
           },
-          icon:  const Icon(Icons.delete,color:AppColors.orangeColor,),
-          label: Text("Remove",style: AppTextStyle.w5.copyWith(color: AppColors.orangeColor,fontSize: 12.sp),)),
+          icon: const Icon(
+            Icons.delete,
+            color: AppColors.orangeColor,
+          ),
+          label: Text(
+            "Remove",
+            style: AppTextStyle.w5
+                .copyWith(color: AppColors.orangeColor, fontSize: 12.sp),
+          )),
       quantity: widget.order.quantity!,
       dateTime: widget.order.dateTime,
-      onButtonTap: (){
+      onButtonTap: () {
         AwesomeDialog(
           context: context,
           dialogType: DialogType.success,
           animType: AnimType.rightSlide,
-          ///===================== Online payment=================///
-          btnOk: CommonButton(onTap: () async{
-            await placeOrder(totalPrice);
 
-          },padding: EdgeInsets.symmetric(vertical: 6.h,horizontal: 20.w),child: const Text("Pay UPI"),),
+          ///===================== Online payment=================///
+          btnOk: CommonButton(
+            onTap: () async {
+              await placeOrder(totalPrice);
+            },
+            padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 20.w),
+            child: const Text("Pay UPI"),
+          ),
+
           ///======================= Cash on delivery ============///
-          btnCancel:  CommonButton(onTap: () async{
-            Navigator.pop(context);
-            await cartWatch.postUserFoodOrder(quantity: widget.order.quantity??1, foodId: widget.order.foodId!, paidOrNot: false);
-            await cartWatch.removeCartDataFromFirebase(widget.order.uOrderId!);
-            commonToast("${widget.foodData.name} Ordered Successfully");
-          },padding: EdgeInsets.symmetric(vertical: 6.h,),child: const Text("COD"),),
+          btnCancel: CommonButton(
+            onTap: () async {
+              Navigator.pop(context);
+              await cartWatch.postUserFoodOrder(
+                  paymentId: '',
+                  quantity: widget.order.quantity ?? 1,
+                  foodId: widget.order.foodId!,
+                  paidOrNot: false);
+              await cartWatch
+                  .removeCartDataFromFirebase(widget.order.uOrderId!);
+              commonToast("${widget.foodData.name} Ordered Successfully");
+            },
+            padding: EdgeInsets.symmetric(
+              vertical: 6.h,
+            ),
+            child: const Text("COD"),
+          ),
           title: 'Payment',
           desc: 'Choose your payment type',
         ).show();

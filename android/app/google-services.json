@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "819838946571-1i4vjffqfvuvjar4c8bumrcug00f63kh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.food_fly",
+            "certificate_hash": "40f7f412667982489adcaa5830ed95d523132c13"
+          }
+        },
+        {
           "client_id": "819838946571-ojgqn48mcdvfdscti5ciq2rvo0rugcsa.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,49 @@
             {
               "client_id": "819838946571-ojgqn48mcdvfdscti5ciq2rvo0rugcsa.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "819838946571-mb868gdo8buuft0jifa817vah3iv92tp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.foodFly"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819838946571:android:05d722211272e7e23f660e",
+        "android_client_info": {
+          "package_name": "com.foodFly.food_fly_delivery_partner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819838946571-ojgqn48mcdvfdscti5ciq2rvo0rugcsa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJexXbNOTl524SbfZa8wOzAOX_svZajeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819838946571-ojgqn48mcdvfdscti5ciq2rvo0rugcsa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "819838946571-mb868gdo8buuft0jifa817vah3iv92tp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.foodFly"
+              }
             }
           ]
         }

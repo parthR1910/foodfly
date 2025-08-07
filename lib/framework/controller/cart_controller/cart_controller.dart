@@ -1,7 +1,8 @@
-
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:food_fly/framework/service/fire_store_service.dart';
+import 'package:food_fly/framework/service/notificaion_service.dart';
+import 'package:food_fly/ui/utils/extension/context_extension.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../ui/utils/theme/theme.dart';
@@ -11,15 +12,11 @@ import '../../service/auth_service.dart';
 
 final cartController = ChangeNotifierProvider((ref) => CartController());
 
-class CartController extends ChangeNotifier{
-
-
-
-
-  removeCartDataFromFirebase(String foodId) async{
-    try{
+class CartController extends ChangeNotifier {
+  removeCartDataFromFirebase(String foodId) async {
+    try {
       await FireStoreService.fireStoreService.removeFoodCartData(foodId);
-    }catch (e){
+    } catch (e) {
       Future.error(e.toString());
     }
   }
@@ -29,7 +26,12 @@ class CartController extends ChangeNotifier{
     var formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
     return formatter.format(now);
   }
-  Future postUserFoodOrder({required int quantity, required String foodId,required bool paidOrNot}) async {
+
+  Future postUserFoodOrder(
+      {required int quantity,
+      required String foodId,
+      required String paymentId,
+      required bool paidOrNot}) async {
     notifyListeners();
     Uuid uuid = const Uuid();
     String uOrderId = uuid.v4();
@@ -41,11 +43,44 @@ class CartController extends ChangeNotifier{
       uOrderId: uOrderId,
       userId: userId,
       isDelivered: false,
-      dateTime:getCurrentDateTime(),
+      dateTime: getCurrentDateTime(),
     );
     await FireStoreService.fireStoreService
         .postUserFoodOrderToFireStore(userOrdersModel);
     notifyListeners();
     return uOrderId;
+  }
+
+  Future<void> cancelOrder(String orderId, BuildContext context,
+      String? paymentId, String deliveryBoyId) async {
+    final deliveryBoyData = await FireStoreService.fireStoreService.fireStore
+        .collection('User')
+        .doc(deliveryBoyId)
+        .get();
+
+    await FireStoreService.fireStoreService.fireStore
+        .collection('UserOrders')
+        .doc(orderId)
+        .delete();
+    if (paymentId != null && paymentId.isNotEmpty) {
+      await FireStoreService.fireStoreService.fireStore
+          .collection('userPayment')
+          .doc(paymentId)
+          .delete();
+    }
+    // NotificationService.sendNotification(, title, body)
+    AwesomeDialog(
+        context: context,
+        onDismissCallback: (type) {
+          if (type == DismissType.modalBarrier) {
+            context.pop();
+          }
+        },
+        dialogType: DialogType.success,
+        titleTextStyle: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
+        title: 'Order cancel successfully',
+        btnOkOnPress: () {
+          context.pop();
+        }).show();
   }
 }
